@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Grupp 3. All rights reserved.
 //
 
-//Using SDL and standard IO
 #include <SDL2/SDL.h>
 #include <SDL2_net/SDL_net.h>
 #include <SDL2_image/SDL_image.h>
@@ -22,25 +21,19 @@ const int SCREEN_HEIGHT = 480;
 
 //Starts up SDL and creates window
 bool init();
-
 //Loads media
 bool loadMedia();
-
 //Frees media and shuts down SDL
 void closeW();
-
 // The music woll be played
 Mix_Music *gMusic = NULL;
-
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
-
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
-
 //The image we will load and show on the screen
 SDL_Surface* gXOut = NULL;
-
+//=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     //Start up SDL and create window
     if( !init() ){
@@ -76,68 +69,54 @@ int main( int argc, char* args[] ){
     closeW();
     return 0;
 }
-
-bool init()
-{
+//==============================================INIT=================================================
+bool init(){
     //Initialization flag
     bool success = true;
     
     //Initialize SDL
-    if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 )
-    {
+    if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
         printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
         success = false;
-    }
-    else
-    {
+    }else{
         //Create window
         gWindow = SDL_CreateWindow( "Hello, World!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-        if( gWindow == NULL )
-        {
+        if( gWindow == NULL ){
             printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
             success = false;
-        }
-        else
-        {
+        }else{
             //Get window surface
             gScreenSurface = SDL_GetWindowSurface( gWindow );
         }
         //Initialize SDL_mixer
-        if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-        {
+        if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ){
             printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
             success = false;
         }
     }
-    
     return success;
 }
-
-bool loadMedia()
-{
+//============================================LOAD MEDIA================================================
+bool loadMedia(){
     //Loading success flag
     bool success = true;
     
     //Load splash image
     gXOut = IMG_Load( "bilder/bild.png" );
-    if( gXOut == NULL )
-    {
+    if( gXOut == NULL ){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/bild.png", SDL_GetError() );
         success = false;
     }
     //Load music
     gMusic = Mix_LoadMUS( "musik/bg.wav" );
-    if( gMusic == NULL )
-    {
+    if( gMusic == NULL ){
         printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
         success = false;
     }
-    
     return success;
 }
-
-void closeW()
-{
+//==================================================CLOSE===============================================
+void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
@@ -153,3 +132,4 @@ void closeW()
     //Quit SDL subsystems
     SDL_Quit();
 }
+//====================================================================================================
