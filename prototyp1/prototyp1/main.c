@@ -34,7 +34,7 @@ SDL_Surface* gScreenSurface = NULL;
 
 //The image we will load and show on the screen
 SDL_Surface* gXOut = NULL;
-
+ 
 int main( int argc, char* args[] )
 {
     //Start up SDL and create window
