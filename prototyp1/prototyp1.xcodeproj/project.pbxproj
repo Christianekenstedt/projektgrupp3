@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */; };
+		AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */; };
 		AAF82F921ADFE6A1009DE13C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F911ADFE6A1009DE13C /* main.c */; };
 		AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F981ADFE71E009DE13C /* SDL2_image.framework */; };
 		AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F991ADFE71E009DE13C /* SDL2_net.framework */; };
@@ -26,6 +28,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
+		AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
 		AAF82F8E1ADFE6A1009DE13C /* prototyp1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prototyp1; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF82F911ADFE6A1009DE13C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		AAF82F981ADFE71E009DE13C /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
@@ -39,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */,
+				AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */,
 				AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */,
 				AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */,
 				AAF82F9D1ADFE71E009DE13C /* SDL2.framework in Frameworks */,
@@ -51,6 +57,8 @@
 		AAF82F851ADFE6A0009DE13C = {
 			isa = PBXGroup;
 			children = (
+				AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */,
+				AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */,
 				AAF82F981ADFE71E009DE13C /* SDL2_image.framework */,
 				AAF82F991ADFE71E009DE13C /* SDL2_net.framework */,
 				AAF82F9A1ADFE71E009DE13C /* SDL2.framework */,
