@@ -11,7 +11,9 @@ struct kort
 {
     char farg[10];
     int kortnummer; /*varje korts "ID"*/
+
     int kortvarde;  /*kortetsvärde*/
+
     bool upptagen;
 };
 typedef struct kort Kort;
@@ -44,7 +46,9 @@ int meny()
         huvudord();
         char temp[] = "abc";
         printf("\n\n\n\n\n\n");
+
         printf("                            Hej och välkommen!\n\n");
+
         printf("                            1. Spela Black Jack\n");
         printf("                            2. Regler\n");
         printf("                            3. Avsluta\n");
@@ -58,7 +62,9 @@ int meny()
         }
         else
         {
+
             printf("Fel inmatat värde, försök igen\n\n");
+
             system("pause");
         }
         system("cls");
@@ -70,7 +76,9 @@ void regler()
 {
     system("cls");
     huvudord();
+
     printf("\n\n\nBlack Jack går ut på att man ska få 21 eller så nära 21 som möjligt.\nMan spelar mot banken (datorn).\nSpelet gör till så att man fort får 2 kort, summan av dessa kort läggs ihop och du har ett tal. Efter det får du välja genom att antingen ta ett till kort\neller stanna.\n\n");
+
     system("pause");
 }
 
@@ -169,7 +177,9 @@ void initiera_kortleken(Kort kortleken[])
 
         if(farg <= 13)
         {
+
             strcpy(kortleken[i].farg, "Hjärter");
+
             kortleken[i].farg[7] = '\0';
         }
         else if(farg > 13 && farg <= 26)
@@ -184,7 +194,9 @@ void initiera_kortleken(Kort kortleken[])
         }
         else if(farg > 39 && farg <= 51)
         {
+
             strcpy(kortleken[i].farg,"Klöver");
+
             kortleken[i].farg[6] = '\0';
         }
         kortleken[i].upptagen = false;
@@ -195,9 +207,11 @@ void initiera_kortleken(Kort kortleken[])
 
 void checka_kort(int kortleksplats, Kort kortlek[])
 {
+
     printf("Färg: \t\t%s (%d)\n", kortlek[kortleksplats].farg, kortleksplats);
     printf("Kortnummer: \t%d \n", kortlek[kortleksplats].kortnummer);
     printf("Kortvärde: \t%d \n", kortlek[kortleksplats].kortvarde);
+
     if(kortlek[kortleksplats].upptagen == true)
     {
         printf("Upptagen: \tTrue\n");
@@ -208,6 +222,7 @@ void checka_kort(int kortleksplats, Kort kortlek[])
 
 int dra_kort(Kort kortlek[])
 {
+
     int blackjackvarde = 0; /*alla klädda kort är värda 10 i blackjack*/
 
     for(int i = 0;0<ANTALKORT;i++)
@@ -215,6 +230,7 @@ int dra_kort(Kort kortlek[])
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
         {
             kortlek[i].upptagen = true; /*kortet är nu draget*/
+
             blackjackvarde = kortlek[i].kortvarde;
             if(blackjackvarde > 10)
             {
@@ -247,7 +263,9 @@ void blackjack()
     int temp = 0;
 
     bool spelare_forlorat = false;
+
     bool nyttkort = true; /*temporäre flagga för loopar*/
+
     bool spelare_dubbla = true;
 
     while(spela)
@@ -256,6 +274,7 @@ void blackjack()
         while(true)
         {
             printf("(Tryck \"0\" för att avsluta)\n");
+
             printf("Hur mycket vill du satsa: ");
             gets(tmp);
             temp = atoi(tmp);
@@ -263,6 +282,7 @@ void blackjack()
             if(temp > spelares_pengar)
             {
                 printf("Du kan inte satsa mer pengar än vad du har!\n\n");
+
                 system("pause");
                 ritaBord(bank,spelares_hand,spelarens_satsade,spelares_pengar);
             }
@@ -277,6 +297,7 @@ void blackjack()
             }
         }
         if(spela == false)/*avslutar eftersom spelarren gett över 21 i kortvärde*/
+
         {
             break;
         }
@@ -304,20 +325,26 @@ void blackjack()
 
 
         ritaBord(bank,spelares_hand,spelarens_satsade,spelares_pengar);
+
         /*se till så spelaren får så många kort denne vill ha*/
+
 
         while(nyttkort)
         {
 
             if(spelares_hand > 21)
             {
+
                 /*spelaren har förlorat!*/
+
                 spelare_forlorat = true;
                 break;
             }
             else if(spelares_hand >= 7 && spelares_hand <= 11)
             {
+
                 /*spelare får dubbla!*/
+
                 printf("Nytt kort = 1, Stanna = 2, Dubbla = 3 \n\n");
                 printf("Nu kan du dubbla!\n\n");
                 printf("Ange val: ");
@@ -358,6 +385,7 @@ void blackjack()
         else
         {
             /*sedan får huset ta kort
+
             //nyttkort = true;*/
             bank = bank + kort_varde_dator_2;
             while(true)
@@ -381,6 +409,7 @@ void blackjack()
             if(spelare_forlorat == true)
             {
                 printf("Spelaren har förlorat!");
+
                 spelarens_satsade = 0;
             }
             else if(bank > 22)
@@ -401,6 +430,7 @@ void blackjack()
             else if(spelares_hand < bank && bank < 22)
             {
                 printf("Spelaren har förlorat!");
+
                 spelarens_satsade = 0;
             }
             else if(spelares_hand == bank)
