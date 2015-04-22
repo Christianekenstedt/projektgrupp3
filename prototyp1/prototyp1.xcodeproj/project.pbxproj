@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */; };
 		AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */; };
-		AAF82F921ADFE6A1009DE13C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F911ADFE6A1009DE13C /* main.c */; };
+		AA3B17981AE6764800EEF9F6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F911ADFE6A1009DE13C /* main.c */; };
 		AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F981ADFE71E009DE13C /* SDL2_image.framework */; };
 		AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F991ADFE71E009DE13C /* SDL2_net.framework */; };
 		AAF82F9D1ADFE71E009DE13C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F9A1ADFE71E009DE13C /* SDL2.framework */; };
@@ -140,7 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAF82F921ADFE6A1009DE13C /* main.c in Sources */,
+				AA3B17981AE6764800EEF9F6 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

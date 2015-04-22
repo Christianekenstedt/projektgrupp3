@@ -16,8 +16,8 @@
 #include <string.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 800;
 
 //Starts up SDL and creates window
 bool init();
@@ -56,6 +56,41 @@ int main( int argc, char* args[] ){
                     //User requests quit
                     if( e.type == SDL_QUIT ){
                         quit = true;
+                    }//Handle key press
+                    else if( e.type == SDL_KEYDOWN )
+                    {
+                        switch( e.key.keysym.sym )
+                        {
+                            case SDLK_9:
+                                //If there is no music playing
+                                if( Mix_PlayingMusic() == 0 )
+                                {
+                                    //Play the music
+                                    Mix_PlayMusic( gMusic, -1 );
+                                }
+                                //If music is being played
+                                else
+                                {
+                                    //If the music is paused
+                                    if( Mix_PausedMusic() == 1 )
+                                    {
+                                        //Resume the music
+                                        Mix_ResumeMusic();
+                                    }
+                                    //If the music is playing
+                                    else
+                                    {
+                                        //Pause the music
+                                        Mix_PauseMusic();
+                                    }
+                                }
+                                break;
+                                
+                                case SDLK_0:
+                                //Stop the music
+                                Mix_HaltMusic();
+                                break;
+                        }
                     }
                 }
                 //Apply the image
@@ -104,7 +139,7 @@ bool loadMedia(){
     //Load splash image
     gXOut = IMG_Load( "bilder/bild.png" );
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/bild.png", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
         success = false;
     }
     //Load music
