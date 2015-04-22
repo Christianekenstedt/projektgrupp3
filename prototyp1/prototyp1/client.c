@@ -77,7 +77,7 @@ int main(int argc, char **argv)
             {
                 if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
                 {
-                    printf("server answer: %s\n", buffer);
+                    printf("Server answer: %s\n", buffer);
                     quit2 = 1;
                 }
             }
