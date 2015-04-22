@@ -6,11 +6,7 @@
 //  Copyright (c) 2015 Grupp 3. All rights reserved.
 //
 
-#include <SDL2/SDL.h>
-#include <SDL2_net/SDL_net.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_mixer/SDL_mixer.h>
-#include <SDL2_ttf/SDL_ttf.h>
+#include "multiOS.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -115,7 +111,7 @@ bool init(){
         success = false;
     }else{
         //Create window
-        gWindow = SDL_CreateWindow( "Hello, World!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+        gWindow = SDL_CreateWindow( "♦︎♥︎♣︎♠︎ Blackjack by RoyalKing Casino ♦︎♥︎♣︎♠︎", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
         if( gWindow == NULL ){
             printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
             success = false;
