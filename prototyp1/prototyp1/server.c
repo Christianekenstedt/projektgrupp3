@@ -11,17 +11,13 @@ gcc -Wall `sdl-config --cflags` tcps.c -o tcps `sdl-config --libs` -lSDL_net
 
 exit
 #endif
-
-//#include <SDL2/SDL.h>
-//#include <SDL2/SDL_net.h>
-//#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <SDL2/SDL_thread.h>
-#include <SDL2/SDL_timer.h>
-#include <SDL2_net/SDL_net.h>
+#include "multiOS.h"
+
+TCPsocket csd;
 
 struct thread{
     TCPsocket csd;
@@ -30,45 +26,50 @@ struct thread{
 static int threadFunction(void *ptr){
     
     struct thread *p = (struct thread *) ptr;
-    TCPsocket csd = p->csd;
+    //TCPsocket csd = p->csd;
     
-    int quit = 1, i=0;
+    int i=0, quit2=0;
     char buffer[512];
     for(i=0; i<512; i++){
         buffer[i]='\0';
     }
-    
-    if (SDLNet_TCP_Recv(csd, buffer, 512) > 0)
-    {
-        printf("Client say: %s\n", buffer);
-        
-        if(strcmp(buffer, "exit") == 0)	/* Terminate this connection */
+    printf("INNE I THREADFUNC\n");
+    while(!quit2){
+        if (SDLNet_TCP_Recv(csd, buffer, 512) > 0)
         {
-            quit = 1;
-            printf("Terminate connection\n");
+            printf("Client say: %s\n", buffer);
+            
+            if(strcmp(buffer, "exit") == 0)	/* Terminate this connection */
+            {
+                quit2 = 1;
+                printf("Terminate connection\n");
+            }
+            
+            if(strcmp(buffer, "quit") == 0)	/* Quit the program */
+            {
+                quit2 = 1;
+                //quit = 1;
+                printf("Quit program\n");
+            }
+            if (SDLNet_TCP_Send(csd, buffer, 512) < 0){
+                fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+            }
+        }else if (SDLNet_TCP_Recv(csd, buffer, 512) < 0){
+            fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+            quit2=1;
         }
-        
-        if(strcmp(buffer, "quit") == 0)	/* Quit the program */
-        {
-            quit = 1;
-            //quit = 1;
-            printf("Quit program\n");
-        }
-        if (SDLNet_TCP_Send(csd, buffer, 512) < 0){
-            fprintf(stderr, "SDLNet_TCP_Send");
-        }
-    }
-    return quit;
-}
+    }//wile
+    return quit2;
+}//funktion
 
 int main(int argc, char **argv)
 {
-    TCPsocket sd, csd; /* Socket descriptor, Client socket descriptor */
+    TCPsocket sd; //csd; /* Socket descriptor, Client socket descriptor */
     IPaddress ip, *remoteIP;
     SDL_Thread *thread;
     Thread parametrar;
     int quit, quit2, threadReturnValue;
-    char buffer[512];
+
     
     
     
@@ -115,12 +116,14 @@ int main(int argc, char **argv)
             while (!quit2)
             {
                 /* TRÅDFUNKTION BEHÖVS HÄR*/
+                printf("INNE I WHILE :)\n");
                 thread = SDL_CreateThread(threadFunction, "TestThread", &parametrar);
                 if (NULL == thread) {
                     printf("\nSDL_CreateThread failed: %s\n", SDL_GetError());
                 } else {
                     SDL_WaitThread(thread, &threadReturnValue);
                     quit2= threadReturnValue;
+                    quit = quit2;
                 }
             }
             

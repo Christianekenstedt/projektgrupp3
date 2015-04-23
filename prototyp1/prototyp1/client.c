@@ -1,11 +1,3 @@
-//
-//  client.c
-//  prototyp1
-//
-//  Created by Christian Ekenstedt on 2015-04-22.
-//  Copyright (c) 2015 Grupp 3. All rights reserved.
-//
-
 #if 0
 #!/bin/sh
 gcc -Wall `sdl-config --cflags` tcpc.c -o tcpc `sdl-config --libs` -lSDL_net
@@ -17,13 +9,13 @@ exit
 #include <stdlib.h>
 #include <string.h>
 
-#include <SDL2_net/SDL_net.h>
+#include "multiOS.h"
 
 int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
     TCPsocket sd;		/* Socket descriptor */
-    int quit, quit2, len;
+    int quit, len;
     char buffer[512];
     
     /* Simple parameter checking */
@@ -71,16 +63,6 @@ int main(int argc, char **argv)
             quit = 1;
         if(strcmp(buffer, "quit") == 0)
             quit = 1;
-        
-        quit2 = 0;
-	      	while (!quit2)
-            {
-                if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
-                {
-                    printf("Server answer: %s\n", buffer);
-                    quit2 = 1;
-                }
-            }
     }
     
     SDLNet_TCP_Close(sd);
