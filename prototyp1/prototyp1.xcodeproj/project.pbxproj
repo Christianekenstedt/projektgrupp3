@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */; };
 		AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */; };
-		AA436D901AE91AEA00E0F57A /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F9E1ADFF567009DE13C /* server.c */; };
+		AA436D931AE9280700E0F57A /* serverMulti.c in Sources */ = {isa = PBXBuildFile; fileRef = AA436D921AE9280700E0F57A /* serverMulti.c */; };
 		AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F981ADFE71E009DE13C /* SDL2_image.framework */; };
 		AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F991ADFE71E009DE13C /* SDL2_net.framework */; };
 		AAF82F9D1ADFE71E009DE13C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F9A1ADFE71E009DE13C /* SDL2.framework */; };
@@ -32,7 +32,7 @@
 		AA2069571AE7E1B400626976 /* multiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = multiOS.h; sourceTree = "<group>"; };
 		AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
 		AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
-		AA436D881AE9129200E0F57A /* tcputil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcputil.h; sourceTree = "<group>"; };
+		AA436D921AE9280700E0F57A /* serverMulti.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = serverMulti.c; sourceTree = "<group>"; };
 		AAF82F8E1ADFE6A1009DE13C /* prototyp1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prototyp1; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF82F911ADFE6A1009DE13C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		AAF82F981ADFE71E009DE13C /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
@@ -83,9 +83,9 @@
 			children = (
 				AA2069511AE7A04700626976 /* client.c */,
 				AAF82F911ADFE6A1009DE13C /* main.c */,
-				AA436D881AE9129200E0F57A /* tcputil.h */,
 				AA2069571AE7E1B400626976 /* multiOS.h */,
 				AAF82F9E1ADFF567009DE13C /* server.c */,
+				AA436D921AE9280700E0F57A /* serverMulti.c */,
 			);
 			path = prototyp1;
 			sourceTree = "<group>";
@@ -146,7 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA436D901AE91AEA00E0F57A /* server.c in Sources */,
+				AA436D931AE9280700E0F57A /* serverMulti.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

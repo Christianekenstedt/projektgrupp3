@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
     TCPsocket sd;		/* Socket descriptor */
-    int quit, len;
+    int quit, quit2, len;
     char buffer[512];
     
     /* Simple parameter checking */
@@ -63,6 +63,16 @@ int main(int argc, char **argv)
             quit = 1;
         if(strcmp(buffer, "quit") == 0)
             quit = 1;
+        
+        quit2 = 0;
+	      	while (!quit2)
+            {
+                if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
+                {
+                    printf("server answer: %s\n", buffer);
+                    quit2 = 1;
+                }
+            }
     }
     
     SDLNet_TCP_Close(sd);
