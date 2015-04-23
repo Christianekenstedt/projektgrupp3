@@ -11,10 +11,13 @@
 /* MAC OSX */
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_thread.h>
 #include <SDL2_net/SDL_net.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_mixer/SDL_mixer.h>
 #include <SDL2_ttf/SDL_ttf.h>
+
 #endif
 /* Windows*/
 #ifdef OS_WINDOWS
@@ -31,6 +34,8 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_mixer.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_timer.h"
+#include "SDL2/SDL_thread.h"
 #endif
 
 #endif
