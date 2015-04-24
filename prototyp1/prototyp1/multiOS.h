@@ -17,7 +17,6 @@
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_mixer/SDL_mixer.h>
 #include <SDL2_ttf/SDL_ttf.h>
-
 #endif
 /* Windows*/
 #ifdef OS_WINDOWS
