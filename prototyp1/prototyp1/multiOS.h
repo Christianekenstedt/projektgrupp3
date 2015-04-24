@@ -26,6 +26,8 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
+#include "SDL_timer.h"
+#include "SDL_thread.h"
 #endif
 /* LINUX */
 #ifdef __linux__
