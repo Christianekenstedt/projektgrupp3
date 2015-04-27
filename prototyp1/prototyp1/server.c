@@ -17,59 +17,48 @@ exit
 #include <string.h>
 #include "multiOS.h"
 
-TCPsocket csd;
+TCPsocket csd[6], sd;
+IPaddress ip, *remoteIP;
+SDL_Thread *thread;
 
 struct thread{
-    TCPsocket csd;
+    //TCPsocket csd;
+    int client;
 };typedef struct thread Thread;
 
 static int threadFunction(void *ptr){
-    
     struct thread *p = (struct thread *) ptr;
-    //TCPsocket csd = p->csd;
-    
-    int i=0, quit2=0;
-    char buffer[512];
-    for(i=0; i<512; i++){
-        buffer[i]='\0';
-    }
+    int i;
     printf("INNE I THREADFUNC\n");
-    while(!quit2){
-        if (SDLNet_TCP_Recv(csd, buffer, 512) > 0)
-        {
-            printf("Client say: %s\n", buffer);
-            
-            if(strcmp(buffer, "exit") == 0)	/* Terminate this connection */
+    
+    while(1){
+        for(i=0;i<p->client+1;i++){
+           // printf("ClientTråd --> for-loop\n");
+            /* This check the sd if there is a pending connection.
+             * If there is one, accept that, and open a new socket for communicating */
+            if ((csd[i] = SDLNet_TCP_Accept(sd)))
             {
-                quit2 = 1;
-                printf("Terminate connection\n");
+                //SDL_Delay(1000);
+                /* Get the remote address */
+                if ((remoteIP = SDLNet_TCP_GetPeerAddress(csd[i])))
+                /* Print the address, converting in the host format */
+                    printf("Host connected: %x %d\n", SDLNet_Read32(&remoteIP->host), SDLNet_Read16(&remoteIP->port));
+                else
+                    fprintf(stderr, "SDLNet_TCP_GetPeerAddress: %s\n", SDLNet_GetError());
+                p->client++;
             }
-            
-            if(strcmp(buffer, "quit") == 0)	/* Quit the program */
-            {
-                quit2 = 1;
-                //quit = 1;
-                printf("Quit program\n");
-            }
-            if (SDLNet_TCP_Send(csd, buffer, 512) < 0){
-                fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-            }
-        }else if (SDLNet_TCP_Recv(csd, buffer, 512) < 0){
-            fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
-            quit2=1;
         }
-    }//wile
-    return quit2;
-}//funktion
+    }
+    return 0;
+}
 
 int main(int argc, char **argv)
 {
-    TCPsocket sd; //csd; /* Socket descriptor, Client socket descriptor */
-    IPaddress ip, *remoteIP;
-    SDL_Thread *thread;
+    
     Thread parametrar;
-    int quit, quit2, threadReturnValue;
-
+    int i=0, quit=0;
+    char buffer[512];
+    parametrar.client = 0;
     
     
     
@@ -93,47 +82,55 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     
+    thread = SDL_CreateThread(threadFunction, "SearchNewClients", &parametrar);
+    
+    /*if (NULL == thread) {
+        printf("\nSDL_CreateThread failed: %s\n", SDL_GetError());
+    } else {
+        SDL_WaitThread(thread, &threadReturnValue);
+        quit2= threadReturnValue;
+    }*/
+
     /* Wait for a connection, send data and term */
-    quit = 0;
-    while (!quit)
+    //quit = 0;
+    while (1)
     {
-        /* This check the sd if there is a pending connection.
-         * If there is one, accept that, and open a new socket for communicating */
-        if ((csd = SDLNet_TCP_Accept(sd)))
-        {
-            
-            /* Now we can communicate with the client using csd socket
-             * sd will remain opened waiting other connections */
-            
-            /* Get the remote address */
-            if ((remoteIP = SDLNet_TCP_GetPeerAddress(csd)))
-            /* Print the address, converting in the host format */
-                printf("Host connected: %x %d\n", SDLNet_Read32(&remoteIP->host), SDLNet_Read16(&remoteIP->port));
-            else
-                fprintf(stderr, "SDLNet_TCP_GetPeerAddress: %s\n", SDLNet_GetError());
-            
-            quit2 = 0;
-            while (!quit2)
+        //printf("adlijwljdlij\n");
+        for(i=0; i<parametrar.client;i++){
+            //printf("Huvudtråd --> for-loop\n");
+            if (SDLNet_TCP_Recv(csd[i], buffer, 512) > 0)
             {
-                /* TRÅDFUNKTION BEHÖVS HÄR*/
-                printf("INNE I WHILE :)\n");
-                thread = SDL_CreateThread(threadFunction, "TestThread", &parametrar);
-                if (NULL == thread) {
-                    printf("\nSDL_CreateThread failed: %s\n", SDL_GetError());
-                } else {
-                    SDL_WaitThread(thread, &threadReturnValue);
-                    quit2= threadReturnValue;
-                    quit = quit2;
+                printf("Client say: %s\n",buffer);
+                
+                if(strcmp(buffer, "exit") == 0)	/* Terminate this connection */
+                {
+                    quit = 1;
+                    printf("Terminate connection\n");
+                    /* Close the client socket */
+                    SDLNet_TCP_Close(csd[i]);
+                    parametrar.client--;
                 }
+                
+                if(strcmp(buffer, "quit") == 0)	/* Quit the program */
+                {
+                    quit = 1;
+                    //quit = 1;
+                    printf("Quit program\n");
+                    /* Close the client socket */
+                    SDLNet_TCP_Close(csd[i]);
+                    parametrar.client--;
+                    SDLNet_TCP_Close(sd);
+                    SDLNet_Quit();
+                }
+                /*if (SDLNet_TCP_Send(csd[i], buffer, 512) < 0){
+                    fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+                 }*/ parametrar.client--;
+            }else if (SDLNet_TCP_Recv(csd[i], buffer, 512) < 0){
+                fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+                quit=1;
             }
-            
-            /* Close the client socket */
-            SDLNet_TCP_Close(csd);
+
         }
     }
-    
-    SDLNet_TCP_Close(sd);
-    SDLNet_Quit();
-    
     return EXIT_SUCCESS;
 }
