@@ -64,7 +64,7 @@ int main(int argc, char **argv)
         if(strcmp(buffer, "quit") == 0)
             quit = 1;
         
-        quit2 = 0;
+       /* quit2 = 0; // FÖR RESPONS ENDAST!
 	      	while (!quit2)
             {
                 if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
@@ -72,7 +72,7 @@ int main(int argc, char **argv)
                     printf("server answer: %s\n", buffer);
                     quit2 = 1;
                 }
-            }
+            }*/
     }
     
     SDLNet_TCP_Close(sd);
