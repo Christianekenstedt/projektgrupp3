@@ -20,7 +20,7 @@ const int SCREEN_HEIGHT = 800;
 bool init();
 //Loads media
 bool loadMedia();
-//Frees media and shuts down SDL
+	//Frees media and shuts down SDL
 void closeW();
 // The music woll be played
 Mix_Music *gMusic = NULL;
@@ -42,10 +42,10 @@ int main( int argc, char* args[] ){
         }else{
             //Main loop flag
             bool quit = false;
-            
+
             //Event handler
             SDL_Event e;
-            
+
             //While application is running
             while( !quit ){
                 //Handle events on queue
@@ -82,7 +82,7 @@ int main( int argc, char* args[] ){
                                     }
                                 }
                                 break;
-                                
+
                                 case SDLK_0:
                                 //Stop the music
                                 Mix_HaltMusic();
@@ -105,7 +105,7 @@ int main( int argc, char* args[] ){
 bool init(){
     //Initialization flag
     bool success = true;
-    
+
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
         printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
@@ -132,7 +132,7 @@ bool init(){
 bool loadMedia(){
     //Loading success flag
     bool success = true;
-    
+
     //Load splash image
     gXOut = IMG_Load( "bilder/bild.png" );
     if( gXOut == NULL ){
@@ -152,15 +152,15 @@ void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
-    
+
     //Free the music
     Mix_FreeMusic( gMusic );
     gMusic = NULL;
-    
+
     //Destroy window
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
-    
+
     //Quit SDL subsystems
     SDL_Quit();
 }
