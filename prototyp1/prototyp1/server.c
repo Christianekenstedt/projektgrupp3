@@ -16,7 +16,7 @@ int main (int argc, char *argv[])
 
     TCPsocket Listensock, Clientsock[10];
     IPaddress* ip;
-    sinfo motherfucker[10];
+    sinfo clientvalue[10];
     int quit = 0, ClientNumber;
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
     srand(time(NULL));
@@ -45,10 +45,10 @@ int main (int argc, char *argv[])
     {
         if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
         {
-            motherfucker[ClientNumber].quit = &quit;
-            motherfucker[ClientNumber].clientnumber = ClientNumber;
-            motherfucker[ClientNumber].socket = &Clientsock[ClientNumber];
-            SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&motherfucker[ClientNumber]));
+            clientvalue[ClientNumber].quit = &quit;
+            clientvalue[ClientNumber].clientnumber = ClientNumber;
+            clientvalue[ClientNumber].socket = &Clientsock[ClientNumber];
+            SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&clientvalue[ClientNumber]));
             ClientNumber++;
         }
     }
@@ -79,7 +79,7 @@ SDL_ThreadFunction* function(void* incsocket)
                 *(inc.quit) = 1;
                 printf("Client %d disconnected!\n", inc.clientnumber);
             }
-            
+
         }
         else SDL_Delay(200);
     }

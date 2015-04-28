@@ -40,18 +40,11 @@
 	<string.h>
 	<stdbool.h>
 
-1430217944 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\client.c
+1430218530 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\client.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"multiOS.h"
-	"SDL.h"
-	"SDL_net.h"
-	"SDL_image.h"
-	"SDL_mixer.h"
-	"SDL_ttf.h"
-	"SDL_timer.h"
-	"SDL_thread.h"
 
 1430216716 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
