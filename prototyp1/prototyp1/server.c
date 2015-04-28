@@ -18,9 +18,9 @@ int main (int argc, char *argv[])
     IPaddress* ip;
     sinfo motherfucker[10];
     int quit = 0, ClientNumber;
-/* */
+/* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
     srand(time(NULL));
-/* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ########################################*/
+/* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ######################################## */
     if(SDLNet_Init() < 0)
     {
         fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
             motherfucker[ClientNumber].quit = &quit;
             motherfucker[ClientNumber].clientnumber = ClientNumber;
             motherfucker[ClientNumber].socket = &Clientsock[ClientNumber];
-            SDL_DetachThread(SDL_CreateThread(function, "TheThreadOfDoom", (void*)&motherfucker[ClientNumber]));
+            SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&motherfucker[ClientNumber]));
             ClientNumber++;
         }
     }
