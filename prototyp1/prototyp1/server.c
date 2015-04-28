@@ -1,28 +1,14 @@
-//
-//  server.c
-//  prototyp1
-//
-//  Created by Christian Ekenstedt on 2015-04-16.
-//  Copyright (c) 2015 Grupp 3. All rights reserved.
-//
-#if 0
-#!/bin/sh
-gcc -Wall `sdl-config --cflags` tcps.c -o tcps `sdl-config --libs` -lSDL_net
-
-exit
-#endif
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
 #include "multiOS.h"
+#include "gamelogic.h"
 
-TCPsocket csd;
+#define Killitmotherfucker 0
 
-struct thread{
-    TCPsocket csd;
-};typedef struct thread Thread;
+typedef struct stringinfo{
+    TCPsocket* socket;
+    int* quit, clientnumber;
+}sinfo;
 
+<<<<<<< HEAD
 static int threadFunction(void *ptr){
 
     struct thread *p = (struct thread *) ptr;
@@ -61,9 +47,13 @@ static int threadFunction(void *ptr){
     }//wile
     return quit2;
 }//funktion
+=======
+SDL_ThreadFunction* function(void* incsocket);
+>>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
 
-int main(int argc, char **argv)
+int main ()
 {
+<<<<<<< HEAD
     TCPsocket sd; //csd; /* Socket descriptor, Client socket descriptor */
     IPaddress ip, *remoteIP;
     SDL_Thread *thread;
@@ -71,33 +61,60 @@ int main(int argc, char **argv)
     int quit, quit2, threadReturnValue;
 
     if (SDLNet_Init() < 0)
+=======
+    
+    TCPsocket Listensock, Clientsock[10];
+    IPaddress* ip;
+    sinfo motherfucker[10];
+    int quit = 0, ClientNumber;
+/* */
+    srand(time(NULL));
+/* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ########################################*/
+    if(SDLNet_Init() < 0)
+>>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
     {
         fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
+<<<<<<< HEAD
 
     /* Resolving the host using NULL make network interface to listen */
     if (SDLNet_ResolveHost(&ip, NULL, 2000) < 0)
+=======
+    
+    if(SDLNet_ResolveHost(&ip, NULL, 2000) < 0)
+>>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
+<<<<<<< HEAD
 
     /* Open a connection with the IP provided (listen on the host's port) */
     if (!(sd = SDLNet_TCP_Open(&ip)))
+=======
+    
+    if(((Listensock = SDLNet_TCP_Open(&ip)) == NULL))
+>>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
+<<<<<<< HEAD
 
     /* Wait for a connection, send data and term */
     quit = 0;
     while (!quit)
+=======
+    
+    ClientNumber = 0;
+    
+    while(ClientNumber < 10)
+>>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
     {
-        /* This check the sd if there is a pending connection.
-         * If there is one, accept that, and open a new socket for communicating */
-        if ((csd = SDLNet_TCP_Accept(sd)))
+        if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
         {
+<<<<<<< HEAD
 
             /* Now we can communicate with the client using csd socket
              * sd will remain opened waiting other connections */
@@ -133,4 +150,45 @@ int main(int argc, char **argv)
     SDLNet_Quit();
 
     return EXIT_SUCCESS;
+=======
+            motherfucker[ClientNumber].quit = &quit;
+            motherfucker[ClientNumber].clientnumber = ClientNumber;
+            motherfucker[ClientNumber].socket = &Clientsock[ClientNumber];
+            SDL_DetachThread(SDL_CreateThread(function, "TheThreadOfDoom", (void*)&motherfucker[ClientNumber]));
+            ClientNumber++;
+        }
+    }
+    while(!quit){
+        SDL_Delay(100);
+    }
+    
+    SDLNet_TCP_Close(Listensock);
+    SDLNet_Quit();
+    
+    return Killitmotherfucker;
+    
+}
+
+
+SDL_ThreadFunction* function(void* incsocket)
+{
+    sinfo inc = *((sinfo*)incsocket);
+    char buffer2[512];
+    
+    while((*(inc.quit)) != 1)
+    {
+        if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
+        {
+            if(strstr(buffer2, "quit"))
+            {
+                *(inc.quit) = 1;
+            }
+            printf("Client%d say: %s\n", inc.clientnumber, buffer2);
+        }
+        else SDL_Delay(200);
+    }
+    
+    SDLNet_TCP_Close(*(inc.socket));
+    return 0;
+>>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
 }
