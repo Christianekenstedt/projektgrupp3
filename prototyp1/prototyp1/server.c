@@ -3,8 +3,6 @@
 #define MAXCLIENTS 6
 
 
-#define Killitmotherfucker 0
-
 typedef struct stringinfo{
     TCPsocket* socket;
     int* quit, clientnumber;
@@ -60,7 +58,7 @@ int main (int argc, char *argv[])
     SDLNet_TCP_Close(Listensock);
     SDLNet_Quit();
 
-    return Killitmotherfucker;
+    return 0;
 
 }
 
