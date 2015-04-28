@@ -54,7 +54,7 @@ int main (int argc, char *argv[])
     while(ClientNumber < MAXCLIENTS+1)
     {
 
-        if(clientvalue[ClientNumber].clientsocket == 0){
+        if(clientvalue[ClientNumber].clientsocket == 0){ /*Kolllar vilken plats som är ledig, 0 = ledig, 1 = upptagen*/
 
             if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
             {
@@ -66,6 +66,15 @@ int main (int argc, char *argv[])
                 ClientNumber++;
             }
         }
+        else if(clientvalue[ClientNumber].clientsocket == 1)
+        {
+            ClientNumber++;
+        }
+        else if(ClientNumber == MAXCLIENTS)
+        {
+            ClientNumber = 0;
+        }
+
     }
 
     while(!quit){
