@@ -1,6 +1,7 @@
 #include "multiOS.h"
 #include "gamelogic.h"
 
+
 #define Killitmotherfucker 0
 
 typedef struct stringinfo{
@@ -10,9 +11,9 @@ typedef struct stringinfo{
 
 SDL_ThreadFunction* function(void* incsocket);
 
-int main ()
+int main (int argc, char *argv[])
 {
-    
+
     TCPsocket Listensock, Clientsock[10];
     IPaddress* ip;
     sinfo motherfucker[10];
@@ -25,21 +26,21 @@ int main ()
         fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
+
     if(SDLNet_ResolveHost(&ip, NULL, 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
+
     if(((Listensock = SDLNet_TCP_Open(&ip)) == NULL))
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
+
     ClientNumber = 0;
-    
+
     while(ClientNumber < 10)
     {
         if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
@@ -54,12 +55,12 @@ int main ()
     while(!quit){
         SDL_Delay(100);
     }
-    
+
     SDLNet_TCP_Close(Listensock);
     SDLNet_Quit();
-    
+
     return Killitmotherfucker;
-    
+
 }
 
 
@@ -67,7 +68,7 @@ SDL_ThreadFunction* function(void* incsocket)
 {
     sinfo inc = *((sinfo*)incsocket);
     char buffer2[512];
-    
+
     while((*(inc.quit)) != 1)
     {
         if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
@@ -80,7 +81,7 @@ SDL_ThreadFunction* function(void* incsocket)
         }
         else SDL_Delay(200);
     }
-    
+
     SDLNet_TCP_Close(*(inc.socket));
     return 0;
 }

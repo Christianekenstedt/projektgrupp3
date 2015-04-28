@@ -9,8 +9,16 @@
 #include "multiOS.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
+#include <string.h><svbn
 
+
+#include "SDL.h"
+#include "SDL_net.h"
+#include "SDL_image.h"
+#include "SDL_mixer.h"
+#include "SDL_ttf.h"
+#include "SDL_timer.h"
+#include "SDL_thread.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
@@ -42,10 +50,10 @@ int main( int argc, char* args[] ){
         }else{
             //Main loop flag
             bool quit = false;
-            
+
             //Event handler
             SDL_Event e;
-            
+
             //While application is running
             while( !quit ){
                 //Handle events on queue
@@ -82,7 +90,7 @@ int main( int argc, char* args[] ){
                                     }
                                 }
                                 break;
-                                
+
                                 case SDLK_0:
                                 //Stop the music
                                 Mix_HaltMusic();
@@ -105,7 +113,7 @@ int main( int argc, char* args[] ){
 bool init(){
     //Initialization flag
     bool success = true;
-    
+
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
         printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
@@ -132,7 +140,7 @@ bool init(){
 bool loadMedia(){
     //Loading success flag
     bool success = true;
-    
+
     //Load splash image
     gXOut = IMG_Load( "bilder/bild.png" );
     if( gXOut == NULL ){
@@ -152,15 +160,15 @@ void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
-    
+
     //Free the music
     Mix_FreeMusic( gMusic );
     gMusic = NULL;
-    
+
     //Destroy window
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
-    
+
     //Quit SDL subsystems
     SDL_Quit();
 }

@@ -1,0 +1,74 @@
+# depslib dependency file v1.0
+1430217928 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\main.c
+	"multiOS.h"
+	<stdio.h>
+	<stdbool.h>
+	<string.h>
+	"SDL.h"
+	"SDL_net.h"
+	"SDL_image.h"
+	"SDL_mixer.h"
+	"SDL_ttf.h"
+	"SDL_timer.h"
+	"SDL_thread.h"
+
+1430218451 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\multios.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_timer.h>
+	<SDL2/SDL_thread.h>
+	<SDL2_net/SDL_net.h>
+	<SDL2_image/SDL_image.h>
+	<SDL2_mixer/SDL_mixer.h>
+	<SDL2_ttf/SDL_ttf.h>
+	"SDL.h"
+	"SDL_net.h"
+	"SDL_image.h"
+	"SDL_mixer.h"
+	"SDL_ttf.h"
+	"SDL_timer.h"
+	"SDL_thread.h"
+	"SDL2/SDL.h"
+	"SDL2/SDL_net.h"
+	"SDL2/SDL_image.h"
+	"SDL2/SDL_mixer.h"
+	"SDL2/SDL_ttf.h"
+	"SDL2/SDL_timer.h"
+	"SDL2/SDL_thread.h"
+	<time.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+
+1430217944 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\client.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"multiOS.h"
+	"SDL.h"
+	"SDL_net.h"
+	"SDL_image.h"
+	"SDL_mixer.h"
+	"SDL_ttf.h"
+	"SDL_timer.h"
+	"SDL_thread.h"
+
+1430216716 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+	"gamelogic.h"
+	<stdio.h>
+	<time.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+
+1430216716 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+	<stdio.h>
+	<time.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+
+1430218468 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+	"multiOS.h"
+	"gamelogic.h"
+
