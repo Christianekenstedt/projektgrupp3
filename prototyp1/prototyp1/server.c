@@ -1,8 +1,7 @@
 #include "multiOS.h"
 #include "gamelogic.h"
+#define MAXCLIENTS 6
 
-
-#define Killitmotherfucker 0
 
 typedef struct stringinfo{
     TCPsocket* socket;
@@ -14,9 +13,10 @@ SDL_ThreadFunction* function(void* incsocket);
 int main (int argc, char *argv[])
 {
 
-    TCPsocket Listensock, Clientsock[10];
+    TCPsocket Listensock, Clientsock[MAXCLIENTS];
     IPaddress* ip;
     sinfo clientvalue[10];
+
     int quit = 0, ClientNumber;
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
     srand(time(NULL));
@@ -41,7 +41,7 @@ int main (int argc, char *argv[])
 
     ClientNumber = 0;
 
-    while(ClientNumber < 10)
+    while(ClientNumber < MAXCLIENTS)
     {
         if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
         {
@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
     SDLNet_TCP_Close(Listensock);
     SDLNet_Quit();
 
-    return Killitmotherfucker;
+    return 0;
 
 }
 
