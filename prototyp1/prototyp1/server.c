@@ -17,7 +17,7 @@ int main ()
     IPaddress* ip;
     sinfo motherfucker[10];
     int quit = 0, ClientNumber;
-    
+/* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ########################################*/
     if(SDLNet_Init() < 0)
     {
         fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
