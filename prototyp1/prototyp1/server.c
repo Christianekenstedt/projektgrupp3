@@ -73,11 +73,13 @@ SDL_ThreadFunction* function(void* incsocket)
     {
         if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
         {
+            printf("Client%d say: %s\n", inc.clientnumber, buffer2);
             if(strstr(buffer2, "quit"))
             {
                 *(inc.quit) = 1;
+                printf("Client %d disconnected!\n", inc.clientnumber);
             }
-            printf("Client%d say: %s\n", inc.clientnumber, buffer2);
+            
         }
         else SDL_Delay(200);
     }
