@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../prototyp1" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -31,6 +32,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../prototyp1/gamelogic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../prototyp1/gamelogic.h" />
+		<Unit filename="../prototyp1/multiOS.h" />
+		<Unit filename="../prototyp1/server.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
