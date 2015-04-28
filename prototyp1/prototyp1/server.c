@@ -1,7 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "multiOS.h"
+#include "gamelogic.h"
+
 #define Killitmotherfucker 0
 
 typedef struct stringinfo{
@@ -13,10 +12,13 @@ SDL_ThreadFunction* function(void* incsocket);
 
 int main ()
 {
+    
     TCPsocket Listensock, Clientsock[10];
     IPaddress* ip;
     sinfo motherfucker[10];
     int quit = 0, ClientNumber;
+/* */
+    srand(time(NULL));
 /* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ########################################*/
     if(SDLNet_Init() < 0)
     {

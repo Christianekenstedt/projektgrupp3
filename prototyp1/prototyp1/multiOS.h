@@ -39,4 +39,11 @@
 #include "SDL2/SDL_thread.h"
 #endif
 
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+
 #endif

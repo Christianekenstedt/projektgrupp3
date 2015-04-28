@@ -1,10 +1,3 @@
-#if 0
-#!/bin/sh
-gcc -Wall `sdl-config --cflags` tcpc.c -o tcpc `sdl-config --libs` -lSDL_net
-
-exit
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
