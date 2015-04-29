@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define ANTALKORTLEKAR 5
+#define ANTALKORTLEKAR 1
 #define ANTALKORT (ANTALKORTLEKAR*52)
 
 
@@ -43,12 +43,21 @@ void blanda_kortleken(Kort kortlek[])
     int tempnummer = 0, i;
     int temp_kortvarde = 0;
     bool tempupptagen = false;
+<<<<<<< HEAD
 
     for(i = 0;i<100000;i++)
     {
         int temp1 = randomfunktio(0,ANTALKORT);
         int temp2 = randomfunktio(0,ANTALKORT);
 
+=======
+    
+    for(i = 0;i<10;i++)
+    {
+        int temp1 = randomfunktio(0,ANTALKORT);
+        int temp2 = randomfunktio(0,ANTALKORT);
+        printf("%d\n", i);
+>>>>>>> origin/master
         strcpy(tempfarg, kortlek[temp1].farg);
         tempnummer = kortlek[temp1].kortnummer;
         tempupptagen = kortlek[temp1].upptagen;
@@ -89,9 +98,15 @@ void initiera_kortleken(Kort kortleken[])
 
         if(farg <= 13)
         {
+<<<<<<< HEAD
 
             strcpy(kortleken[i].farg, "Hjärter");
 
+=======
+            
+            strcpy(kortleken[i].farg, "Hjarter");
+            
+>>>>>>> origin/master
             kortleken[i].farg[7] = '\0';
         }
         else if(farg > 13 && farg <= 26)
@@ -106,9 +121,15 @@ void initiera_kortleken(Kort kortleken[])
         }
         else if(farg > 39 && farg <= 51)
         {
+<<<<<<< HEAD
 
             strcpy(kortleken[i].farg,"Klöver");
 
+=======
+            
+            strcpy(kortleken[i].farg,"Klover");
+            
+>>>>>>> origin/master
             kortleken[i].farg[6] = '\0';
         }
         kortleken[i].upptagen = false;

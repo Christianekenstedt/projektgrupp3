@@ -6,14 +6,14 @@
 typedef struct stringinfo{
     TCPsocket* socket;
     int* quit, clientnumber,* clientsocket;
-          // anger om Client-socketen är upptagen eller ej.
+    Kort kortlek;
 }sinfo;
 
 SDL_ThreadFunction* function(void* incsocket);
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    blanda_kortleken(kortlek);
+    //blanda_kortleken(kortlek);
 }
 
 int main (int argc, char *argv[])
@@ -105,6 +105,7 @@ SDL_ThreadFunction* function(void* incsocket)
 {
     sinfo inc = *((sinfo*)incsocket);
     char buffer2[512];
+    int value=0;
 
     *(inc.clientsocket) = 1;
     
@@ -122,7 +123,6 @@ SDL_ThreadFunction* function(void* incsocket)
                 printf("Client %d sent server shutdown!\n", inc.clientnumber);
             }
             if(strstr(buffer2, "exit")){
-                //clientinfo[inc.clientnumber].busy = false; printf("Sätter ");// Sätter busy-flagga till falsk
                 *(inc.clientsocket) = 0;
                 SDLNet_TCP_Close(*(inc.socket));
                 
@@ -135,9 +135,22 @@ SDL_ThreadFunction* function(void* incsocket)
                 printf("exit to safely disconnect\nquit to terminate the server\n");
                 printf("################## HELP 1 (1) ###########################\n\n");
             }
+            
+            if (strstr(buffer2, "card")) {
+                //Funktion
+                value=dra_kort(&inc.kortlek);
+                printf("kortvarde: %d\n",value);
+                //len=strlen(value);
+                if(SDLNet_TCP_Send(*(inc.socket), value, 512) < 0)
+                {
+                    fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+                    //exit(EXIT_FAILURE);
+                }
+                
+            }
+            
 
-        }
-        else SDL_Delay(200);
+        }else SDL_Delay(200);
     }
     return 0;
 }
