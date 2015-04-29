@@ -43,22 +43,22 @@ void blanda_kortleken(Kort kortlek[])
     int tempnummer = 0, i;
     int temp_kortvarde = 0;
     bool tempupptagen = false;
-    
-    for(i = 0;i<1000;i++)
+
+    for(i = 0;i<100000;i++)
     {
         int temp1 = randomfunktio(0,ANTALKORT);
         int temp2 = randomfunktio(0,ANTALKORT);
-        
+
         strcpy(tempfarg, kortlek[temp1].farg);
         tempnummer = kortlek[temp1].kortnummer;
         tempupptagen = kortlek[temp1].upptagen;
         temp_kortvarde = kortlek[temp1].kortvarde;
-        
+
         strcpy(kortlek[temp1].farg, kortlek[temp2].farg);
         kortlek[temp1].kortnummer = kortlek[temp2].kortnummer;
         kortlek[temp1].upptagen = kortlek[temp2].upptagen;
         kortlek[temp1].kortvarde = kortlek[temp2].kortvarde;
-        
+
         strcpy(kortlek[temp2].farg, tempfarg);
         kortlek[temp2].kortnummer = tempnummer;
         kortlek[temp2].upptagen = tempupptagen;
@@ -73,25 +73,25 @@ void initiera_kortleken(Kort kortleken[])
     for(i = 0;i<ANTALKORT;i++)
     {
         kortleken[i].kortnummer = i;
-        
-        
+
+
         if(temp_kortvarde == 14)
         {
             temp_kortvarde = 1;
         }
         kortleken[i].kortvarde = temp_kortvarde;
-        
-        
+
+
         if(farg == 52)
         {
             farg = 0;
         }
-        
+
         if(farg <= 13)
         {
-            
+
             strcpy(kortleken[i].farg, "Hjärter");
-            
+
             kortleken[i].farg[7] = '\0';
         }
         else if(farg > 13 && farg <= 26)
@@ -106,9 +106,9 @@ void initiera_kortleken(Kort kortleken[])
         }
         else if(farg > 39 && farg <= 51)
         {
-            
+
             strcpy(kortleken[i].farg,"Klöver");
-            
+
             kortleken[i].farg[6] = '\0';
         }
         kortleken[i].upptagen = false;
@@ -119,15 +119,15 @@ void initiera_kortleken(Kort kortleken[])
 
 int dra_kort(Kort kortlek[])
 {
-    
+
     int i, blackjackvarde = 0; /*alla kl√§dda kort √§r v√§rda 10 i blackjack*/
-    
+
     for(i = 0;0<ANTALKORT;i++)
     {
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
         {
             kortlek[i].upptagen = true; /*kortet √§r nu draget*/
-            
+
             blackjackvarde = kortlek[i].kortvarde;
             if(blackjackvarde > 10)
             {

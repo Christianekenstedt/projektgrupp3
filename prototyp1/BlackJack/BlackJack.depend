@@ -46,7 +46,7 @@
 	<string.h>
 	"multiOS.h"
 
-1430216716 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1430306136 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -54,14 +54,14 @@
 	<stdbool.h>
 	<string.h>
 
-1430216716 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+1430305665 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
 	<stdbool.h>
 	<string.h>
 
-1430235391 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1430305665 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
 

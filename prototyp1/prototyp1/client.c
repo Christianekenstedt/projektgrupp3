@@ -13,11 +13,11 @@ int main(int argc, char **argv)
     char buffer[512];
 
     /* Simple parameter checking */
-    if (argc < 3)
+    /*if (argc < 3)
     {
         fprintf(stderr, "Usage: %s host port\n", argv[0]);
         exit(EXIT_FAILURE);
-    }
+    }*/
 
     if (SDLNet_Init() < 0)
     {
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     }
 
     /* Resolve the host we are connecting to */
-    if (SDLNet_ResolveHost(&ip, argv[1], atoi(argv[2])) < 0)
+    if (SDLNet_ResolveHost(&ip, /*argv[1]*/"127.0.0.1", /*atoi(argv[2])*/2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
