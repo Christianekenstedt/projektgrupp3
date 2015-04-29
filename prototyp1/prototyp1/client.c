@@ -9,17 +9,27 @@ int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
     TCPsocket sd;		/* Socket descriptor */
+<<<<<<< HEAD
     int quit, quit2, len,intbuffer=0;
     char buffer[512],UserInputIP[12];
+=======
+    int quit, quit2, len;
+    char buffer[512], UserInputIP[20]="169.254.211.44";
+>>>>>>> origin/master
 
     /* Simple parameter checking */
-    /*if (argc < 3)
+    if (argc < 3)
     {
         fprintf(stderr, "Usage: %s host port\n", argv[0]);
         exit(EXIT_FAILURE);
+<<<<<<< HEAD
     }*/
     printf("Please enter IP: ");
     scanf("%s",&UserInputIP);
+=======
+    }
+
+>>>>>>> origin/master
     if (SDLNet_Init() < 0)
     {
         fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
@@ -27,7 +37,11 @@ int main(int argc, char **argv)
     }
 
     /* Resolve the host we are connecting to */
+<<<<<<< HEAD
     if (SDLNet_ResolveHost(&ip, /*argv[1]*/UserInputIP, /*atoi(argv[2])*/2000) < 0)
+=======
+    if (SDLNet_ResolveHost(&ip, "169.254.211.44", 2000) < 0)
+>>>>>>> origin/master
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -63,10 +77,14 @@ int main(int argc, char **argv)
         if (strstr(buffer,"card")) {
             while (!quit2)
             {
-                if (SDLNet_TCP_Recv(sd, intbuffer, 512) > 0)
+                printf("inne i quit2\n");
+                if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
                 {
-                    printf("Server answer: %d\n", intbuffer);
+                    printf("Server answer: %d\n", atoi(buffer));
                     quit2 = 1;
+                }else{
+                    fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+                    exit(EXIT_FAILURE);
                 }
             }
         }
