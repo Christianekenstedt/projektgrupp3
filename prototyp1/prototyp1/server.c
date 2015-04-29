@@ -27,7 +27,7 @@ int main (int argc, char *argv[])
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
 
     srand(time(NULL));
-    //gameInit(kortlek);
+    gameInit(kortlek);
 
 /* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ######################################## */
     if(SDLNet_Init() < 0)
