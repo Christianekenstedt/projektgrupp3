@@ -1,19 +1,25 @@
 #include "multiOS.h"
 #include "gamelogic.h"
-#define MAXCLIENTS 3
+#define MAXCLIENTS 5
 
 
 typedef struct stringinfo{
     TCPsocket* socket;
     int* quit, clientnumber,* clientsocket;
-    Kort kortlek;
+    //Kort kortlek;
 }sinfo;
+
+Kort kortlek[ANTALKORT];
 
 SDL_ThreadFunction* function(void* incsocket);
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    //blanda_kortleken(kortlek);
+    checka_kort(0,kortlek);
+    system("pause");
+    blanda_kortleken(kortlek);
+    checka_kort(0,kortlek);
+    system("pause");
 }
 
 int main (int argc, char *argv[])
@@ -22,7 +28,7 @@ int main (int argc, char *argv[])
     IPaddress* ip;
     sinfo clientvalue[MAXCLIENTS];
     int quit = 0, ClientNumber=0;
-    Kort kortlek[ANTALKORT];
+    //Kort kortlek[ANTALKORT];
     int freeslots[MAXCLIENTS]={0}, i;
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
 
@@ -62,7 +68,7 @@ int main (int argc, char *argv[])
         }
 
         if(freeslots[ClientNumber] == 0){ /*Kolllar vilken plats som är ledig, 0 = ledig, 1 = upptagen*/
-            
+
             //printf("Inne i clientvalue[ClientNumber == 0\n]");
             if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
             {
@@ -108,9 +114,9 @@ SDL_ThreadFunction* function(void* incsocket)
     int value=0;
 
     *(inc.clientsocket) = 1;
-    
+
     printf("%d: connected\n", inc.clientnumber);
-    
+
     while((*(inc.quit)) != 1)
     {
 
@@ -125,30 +131,30 @@ SDL_ThreadFunction* function(void* incsocket)
             if(strstr(buffer2, "exit")){
                 *(inc.clientsocket) = 0;
                 SDLNet_TCP_Close(*(inc.socket));
-                
+
 
                 printf("Client %d disconnected!\n", inc.clientnumber);
                 return 0;
             }
-            if (strstr(buffer2, "!help")) {
+            else if (strstr(buffer2, "!help")) {
                 printf("##################    HELP   ############################\n");
                 printf("exit to safely disconnect\nquit to terminate the server\n");
                 printf("################## HELP 1 (1) ###########################\n\n");
             }
-            
-            if (strstr(buffer2, "card")) {
+
+            else if (strstr(buffer2, "card")) {
                 //Funktion
-                value=dra_kort(&inc.kortlek);
+                value=dra_kort(kortlek);
                 printf("kortvarde: %d\n",value);
-                //len=strlen(value);
-                if(SDLNet_TCP_Send(*(inc.socket), value, 512) < 0)
+                char cvalue[512];
+                itoa(value,cvalue,10);
+                if(SDLNet_TCP_Send(*(inc.socket), cvalue, strlen(cvalue)+1) < 0)
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
                     //exit(EXIT_FAILURE);
                 }
-                
             }
-            
+
 
         }else SDL_Delay(200);
     }

@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     IPaddress ip;		/* Server address */
     TCPsocket sd;		/* Socket descriptor */
     int quit, quit2, len,intbuffer=0;
-    char buffer[512];
+    char buffer[512],UserInputIP[12];
 
     /* Simple parameter checking */
     /*if (argc < 3)
@@ -18,7 +18,8 @@ int main(int argc, char **argv)
         fprintf(stderr, "Usage: %s host port\n", argv[0]);
         exit(EXIT_FAILURE);
     }*/
-
+    printf("Please enter IP: ");
+    scanf("%s",&UserInputIP);
     if (SDLNet_Init() < 0)
     {
         fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
     }
 
     /* Resolve the host we are connecting to */
-    if (SDLNet_ResolveHost(&ip, /*argv[1]*/"127.0.0.1", /*atoi(argv[2])*/2000) < 0)
+    if (SDLNet_ResolveHost(&ip, /*argv[1]*/UserInputIP, /*atoi(argv[2])*/2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);

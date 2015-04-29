@@ -22,9 +22,9 @@ struct kort
 {
     char farg[20];
     int kortnummer; /*varje korts "ID"*/
-    
+
     int kortvarde;  /*kortetsv√§rde*/
-    
+
     bool upptagen;
 };typedef struct kort Kort;
 
@@ -33,5 +33,7 @@ void zeroz(int arr[]);
 void blanda_kortleken(Kort kortlek[]);
 void initiera_kortleken(Kort kortleken[]);
 int dra_kort(Kort kortlek[]);
+void checka_kort(int kortleksplats, Kort kortlek[]);
+
 
 #endif /* defined(__prototyp1__gamelogic__) */

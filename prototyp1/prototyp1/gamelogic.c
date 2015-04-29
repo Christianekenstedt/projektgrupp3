@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define ANTALKORTLEKAR 1
+#define ANTALKORTLEKAR 5
 #define ANTALKORT (ANTALKORTLEKAR*52)
 
 
@@ -43,21 +43,13 @@ void blanda_kortleken(Kort kortlek[])
     int tempnummer = 0, i;
     int temp_kortvarde = 0;
     bool tempupptagen = false;
-<<<<<<< HEAD
+
 
     for(i = 0;i<100000;i++)
     {
         int temp1 = randomfunktio(0,ANTALKORT);
         int temp2 = randomfunktio(0,ANTALKORT);
 
-=======
-    
-    for(i = 0;i<10;i++)
-    {
-        int temp1 = randomfunktio(0,ANTALKORT);
-        int temp2 = randomfunktio(0,ANTALKORT);
-        printf("%d\n", i);
->>>>>>> origin/master
         strcpy(tempfarg, kortlek[temp1].farg);
         tempnummer = kortlek[temp1].kortnummer;
         tempupptagen = kortlek[temp1].upptagen;
@@ -98,15 +90,7 @@ void initiera_kortleken(Kort kortleken[])
 
         if(farg <= 13)
         {
-<<<<<<< HEAD
-
-            strcpy(kortleken[i].farg, "Hjärter");
-
-=======
-            
             strcpy(kortleken[i].farg, "Hjarter");
-            
->>>>>>> origin/master
             kortleken[i].farg[7] = '\0';
         }
         else if(farg > 13 && farg <= 26)
@@ -121,15 +105,7 @@ void initiera_kortleken(Kort kortleken[])
         }
         else if(farg > 39 && farg <= 51)
         {
-<<<<<<< HEAD
-
-            strcpy(kortleken[i].farg,"Klöver");
-
-=======
-            
             strcpy(kortleken[i].farg,"Klover");
-            
->>>>>>> origin/master
             kortleken[i].farg[6] = '\0';
         }
         kortleken[i].upptagen = false;
@@ -137,6 +113,22 @@ void initiera_kortleken(Kort kortleken[])
         temp_kortvarde++;
     }
 }
+void checka_kort(int kortleksplats, Kort kortlek[])
+{
+
+    printf("Farg: \t\t%s (%d)\n", kortlek[kortleksplats].farg, kortleksplats);
+    printf("Kortnummer: \t%d \n", kortlek[kortleksplats].kortnummer);
+    printf("Kortvarde: \t%d \n", kortlek[kortleksplats].kortvarde);
+
+    if(kortlek[kortleksplats].upptagen == true)
+    {
+        printf("Upptagen: \tTrue\n");
+    }
+    else
+    printf("Upptagen: \tFalse\n");
+    printf("===================================\n");
+}
+
 
 int dra_kort(Kort kortlek[])
 {
@@ -147,9 +139,12 @@ int dra_kort(Kort kortlek[])
     {
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
         {
+            checka_kort(i,kortlek);
             kortlek[i].upptagen = true; /*kortet √§r nu draget*/
-
+            checka_kort(i,kortlek);
+            printf("0: %d\n", kortlek[i].kortvarde);
             blackjackvarde = kortlek[i].kortvarde;
+            printf("1: %d\n", blackjackvarde);
             if(blackjackvarde > 10)
             {
                 blackjackvarde = 10;
@@ -157,5 +152,6 @@ int dra_kort(Kort kortlek[])
             break;
         }
     }
+    printf("2: %d\n", blackjackvarde);
     return blackjackvarde;
 }
