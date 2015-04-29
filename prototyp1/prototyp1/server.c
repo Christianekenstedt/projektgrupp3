@@ -23,7 +23,7 @@ int main (int argc, char *argv[])
     sinfo clientvalue[MAXCLIENTS];
     int quit = 0, ClientNumber=0;
     Kort kortlek[ANTALKORT];
-    int freeslots[MAXCLIENTS]={0};
+    int freeslots[MAXCLIENTS]={0}, i;
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
 
     srand(time(NULL));
@@ -48,14 +48,22 @@ int main (int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-
+    for(i=0;i<MAXCLIENTS;i++){
+        clientvalue[i].clientsocket=0;
+    }
 
 
     while(ClientNumber < MAXCLIENTS+1)
     {
+        for (i=0; i<MAXCLIENTS; i++) {
+            if(freeslots[i] == 0){
+                ClientNumber = i;
+            }
+        }
 
-        if(clientvalue[ClientNumber].clientsocket == 0){ /*Kolllar vilken plats som är ledig, 0 = ledig, 1 = upptagen*/
-
+        if(freeslots[ClientNumber] == 0){ /*Kolllar vilken plats som är ledig, 0 = ledig, 1 = upptagen*/
+            
+            //printf("Inne i clientvalue[ClientNumber == 0\n]");
             if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
             {
                 clientvalue[ClientNumber].quit = &quit;
@@ -64,18 +72,22 @@ int main (int argc, char *argv[])
                 clientvalue[ClientNumber].clientsocket = &freeslots[ClientNumber];
                 SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&clientvalue[ClientNumber]));
                 ClientNumber++;
+                printf("ClienNumber increased to: %d from %d\n", ClientNumber,ClientNumber-1);
             }
         }
         else if(clientvalue[ClientNumber].clientsocket == 1)
         {
             ClientNumber++;
+            printf("ClienNumber increased to: %d from %d due to full\n", ClientNumber,ClientNumber-1);
         }
         else if(ClientNumber == MAXCLIENTS)
         {
             ClientNumber = 0;
+            printf("clientNumber set to: %d\n",ClientNumber);
         }
 
     }
+    printf("exit from while\n");
 
     while(!quit){
         SDL_Delay(100);
@@ -93,9 +105,11 @@ SDL_ThreadFunction* function(void* incsocket)
 {
     sinfo inc = *((sinfo*)incsocket);
     char buffer2[512];
-    struct stringinfo clientinfo[MAXCLIENTS];
 
     *(inc.clientsocket) = 1;
+    
+    printf("%d: connected\n", inc.clientnumber);
+    
     while((*(inc.quit)) != 1)
     {
 
@@ -111,8 +125,10 @@ SDL_ThreadFunction* function(void* incsocket)
                 //clientinfo[inc.clientnumber].busy = false; printf("Sätter ");// Sätter busy-flagga till falsk
                 *(inc.clientsocket) = 0;
                 SDLNet_TCP_Close(*(inc.socket));
+                
 
                 printf("Client %d disconnected!\n", inc.clientnumber);
+                return 0;
             }
             if (strstr(buffer2, "!help")) {
                 printf("##################    HELP   ############################\n");
