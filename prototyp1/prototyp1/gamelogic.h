@@ -20,14 +20,13 @@
 
 struct kort
 {
-    char farg[10];
+    char farg[20];
     int kortnummer; /*varje korts "ID"*/
     
     int kortvarde;  /*kortetsv√§rde*/
     
     bool upptagen;
-};
-typedef struct kort Kort;
+};typedef struct kort Kort;
 
 int randomfunktio(int minimum, int maximum);
 void zeroz(int arr[]);

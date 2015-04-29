@@ -39,12 +39,12 @@ void zeroz(int arr[])
 
 void blanda_kortleken(Kort kortlek[])
 {
-    char tempfarg[10];
-    int tempnummer = 0;
+    char tempfarg[20]={0};
+    int tempnummer = 0, i;
     int temp_kortvarde = 0;
     bool tempupptagen = false;
     
-    for(int i = 0;i<100000;i++)
+    for(i = 0;i<1000;i++)
     {
         int temp1 = randomfunktio(0,ANTALKORT);
         int temp2 = randomfunktio(0,ANTALKORT);
@@ -68,9 +68,9 @@ void blanda_kortleken(Kort kortlek[])
 
 void initiera_kortleken(Kort kortleken[])
 {
-    int farg = 0;
+    int farg = 0,i;
     int temp_kortvarde = 1;
-    for(int i = 0;i<ANTALKORT;i++)
+    for(i = 0;i<ANTALKORT;i++)
     {
         kortleken[i].kortnummer = i;
         
