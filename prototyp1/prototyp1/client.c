@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
     TCPsocket sd;		/* Socket descriptor */
-    int quit, quit2, len;
+    int quit, quit2, len,intbuffer=0;
     char buffer[512];
 
     /* Simple parameter checking */
@@ -58,15 +58,17 @@ int main(int argc, char **argv)
         if(strcmp(buffer, "quit") == 0)
             quit = 1;
 
-       /* quit2 = 0; // FÖR RESPONS ENDAST!
-	      	while (!quit2)
+        quit2 = 0; // FÖR RESPONS ENDAST!
+        if (strstr(buffer,"card")) {
+            while (!quit2)
             {
-                if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
+                if (SDLNet_TCP_Recv(sd, intbuffer, 512) > 0)
                 {
-                    printf("server answer: %s\n", buffer);
+                    printf("Server answer: %d\n", intbuffer);
                     quit2 = 1;
                 }
-            }*/
+            }
+        }
     }
 
     SDLNet_TCP_Close(sd);
