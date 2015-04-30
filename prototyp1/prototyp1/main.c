@@ -63,12 +63,7 @@ int main( int argc, char* args[] ){
     int times=0;
 
     Play button;
-<<<<<<< HEAD
-    Exit eButton;
-=======
-    Exit ebutton;
 
->>>>>>> origin/master
     SDL_Rect poss;
     poss.y = 546;
     poss.x = 493;
@@ -302,6 +297,14 @@ bool loadMedia(){
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
+
+    gExitButton = SDL_LoadBMP("bilder/EXIT.bmp");
+    SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
+    exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
+    if( gExitButton == NULL ){
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/EXIT.bmp", SDL_GetError() );
+        success = false;
+    }
 
     return success;
     #endif
