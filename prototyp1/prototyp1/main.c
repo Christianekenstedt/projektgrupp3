@@ -11,10 +11,25 @@
 #include <stdbool.h>
 #include <string.h>
 
+struct playButton{
+    int xPos;
+    int yPos;
+    int wPos;
+    int hPos;
+};
+typedef struct playButton Play;
+struct exitButton{
+    int xPos;
+    int yPos;
+    int wPos;
+    int hPos;
+};
+typedef struct exitButton Exit;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 800;
+
 
 
 void ClearScreen();
@@ -25,7 +40,6 @@ bool init();
 bool loadMedia();
 //Frees media and shuts down SDL
 void closeW();
-
 // The music woll be played
 Mix_Music *gMusic = NULL;
 //The window we'll be rendering to
@@ -35,8 +49,10 @@ SDL_Surface* gScreenSurface = NULL;
 //The image we will load and show on the screen
 SDL_Surface* gXOut = NULL;
 SDL_Surface* gPlayButton = NULL;
+SDL_Surface* gExitButton = NULL;
 SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
+SDL_Texture* exitTexture = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 SDL_Rect gSpriteClips[3];
@@ -45,12 +61,18 @@ SDL_Rect gSpriteClips[3];
 int main( int argc, char* args[] ){
     int times=0;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
+    Play button;
+    Exit ebutton;
     SDL_Rect poss;
     poss.y = 546;
     poss.x = 493;
     poss.w = 294;
     poss.h = 107;
     int frame = 0;
+    button.yPos = 546;
+    button.xPos = 493;
+    button.wPos = 252;
+    button.hPos = 107;
 
     //Event handler
     SDL_Event e;
@@ -78,15 +100,19 @@ int main( int argc, char* args[] ){
 
         }
     }
-
-
-
-        //While application is running
+    //While application is running
     bool quit = false;
+
+    int x=0, y=0;
+
     while( !quit ){
                 frame = 0;
             //Handle events on queue
             while( SDL_PollEvent( &e ) != 0 ){
+                ClearScreen();
+                SDL_GetMouseState(&x,&y);
+                printf("x: %d\ny: %d\n",x,y);
+
                 //User requests quit
                 if( e.type == SDL_QUIT ){
                     quit = true;
@@ -138,10 +164,13 @@ int main( int argc, char* args[] ){
                                 break;
                         }
                     }else if(e.type == SDL_MOUSEBUTTONDOWN){
-                        ClearScreen();
-                        times++;
-                        printf("Mouse pressed: %d\n", times);
-                        frame = 1;
+                        if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){
+                            frame=1;
+                        }
+                    }else if(e.type == SDL_MOUSEMOTION){
+                        if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){ //Innanför knappen?
+                            frame=2;
+                        }
                     }
 
 
@@ -230,6 +259,13 @@ bool loadMedia(){
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
+
+    gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
+    exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
+    if( gExitButton == NULL ){
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\EXIT.bmp", SDL_GetError() );
+        success = false;
+    }
     return success;
     #else
 
