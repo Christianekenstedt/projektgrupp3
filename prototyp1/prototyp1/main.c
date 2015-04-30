@@ -151,7 +151,7 @@ bool init(){
 bool loadMedia(){
     //Loading success flag
     bool success = true;
-
+    #ifdef _WIN32
     //Load splash image
     gXOut = IMG_Load( "bilder\\background.png" );
     if( gXOut == NULL ){
@@ -165,6 +165,21 @@ bool loadMedia(){
         success = false;
     }
     return success;
+    #else
+    //Load splash image
+    gXOut = IMG_Load( "bilder/background.png" );
+    if( gXOut == NULL ){
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
+        success = false;
+    }
+    //Load music
+    gMusic = Mix_LoadMUS( "musik/bg.wav" );
+    if( gMusic == NULL ){
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+    return success;
+    #endif
 }
 //==================================================CLOSE===============================================
 void closeW(){
