@@ -247,8 +247,9 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-    gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
-    SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
+
+    SDL_Surface* gPlayButton = IMG_Load("bilder/testplay.png");
+
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
     gSpriteClips[ 0 ].x = 0;
