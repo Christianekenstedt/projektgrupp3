@@ -11,10 +11,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 800;
@@ -28,6 +25,7 @@ bool init();
 bool loadMedia();
 //Frees media and shuts down SDL
 void closeW();
+
 // The music woll be played
 Mix_Music *gMusic = NULL;
 //The window we'll be rendering to
@@ -36,7 +34,8 @@ SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 //The image we will load and show on the screen
 SDL_Surface* gXOut = NULL;
-
+SDL_Surface* gPlayButton = NULL;
+SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
 SDL_Renderer* gRenderer = NULL;
 
@@ -51,8 +50,10 @@ int main( int argc, char* args[] ){
     poss.x = 493;
     poss.w = 294;
     poss.h = 107;
-    int frame = 3;
+    int frame = 0;
 
+    //Event handler
+    SDL_Event e;
     //Start up SDL and create window
     if( !init() ){
         printf( "Failed to initialize!\n" );
@@ -62,94 +63,98 @@ int main( int argc, char* args[] ){
             printf( "Failed to load media!\n" );
         }else{
             //Main loop flag
-            bool quit = false;
-
             //Play the music
             Mix_PlayMusic( gMusic, -1 );
 
-            //Event handler
-            SDL_Event e;
+            SDL_SetRenderDrawColor(gRenderer, 0xFF,0xFF,0xFF,0xFF);
 
-            //While application is running
-            while( !quit ){
-                    frame = 0;
-                //Handle events on queue
-                while( SDL_PollEvent( &e ) != 0 ){
-                    //User requests quit
-                    if( e.type == SDL_QUIT ){
-                        quit = true;
-                    }//Handle key press
-                    else if( e.type == SDL_KEYDOWN )
+            SDL_RenderClear(gRenderer);
+            /*//Apply the image
+            SDL_BlitSurface( gXOut, NULL, gScreenSurface, NULL );
+            //Update the surface
+            SDL_UpdateWindowSurface( gWindow );
+            */
+
+
+        }
+    }
+
+
+
+        //While application is running
+    bool quit = false;
+    while( !quit ){
+                frame = 0;
+            //Handle events on queue
+            while( SDL_PollEvent( &e ) != 0 ){
+                //User requests quit
+                if( e.type == SDL_QUIT ){
+                    quit = true;
+                }//Handle key press
+                else if( e.type == SDL_KEYDOWN )
+                {
+                    switch( e.key.keysym.sym )
                     {
-                        switch( e.key.keysym.sym )
-                        {
-                            case SDLK_9:
-                                //If there is no music playing
-                                if( Mix_PlayingMusic() == 0 )
+                        case SDLK_9:
+                            //If there is no music playing
+                            if( Mix_PlayingMusic() == 0 )
+                            {
+                                //Play the music
+                                Mix_PlayMusic( gMusic, -1 );
+                            }
+                            //If music is being played
+                            else
+                            {
+                                //If the music is paused
+                                if( Mix_PausedMusic() == 1 )
                                 {
-                                    //Play the music
-                                    Mix_PlayMusic( gMusic, -1 );
+                                    //Resume the music
+                                    Mix_ResumeMusic();
                                 }
-                                //If music is being played
+                                //If the music is playing
                                 else
                                 {
-                                    //If the music is paused
-                                    if( Mix_PausedMusic() == 1 )
-                                    {
-                                        //Resume the music
-                                        Mix_ResumeMusic();
-                                    }
-                                    //If the music is playing
-                                    else
-                                    {
-                                        //Pause the music
-                                        Mix_PauseMusic();
-                                    }
+                                    //Pause the music
+                                    Mix_PauseMusic();
                                 }
-                                break;
+                            }
+                            break;
 
-                                case SDLK_0:
-                                //Stop the music
-                                Mix_HaltMusic();
+                            case SDLK_0:
+                            //Stop the music
+                            Mix_HaltMusic();
+                            break;
+                            case SDLK_UP:
+                                printf("Key UP\n");
                                 break;
-                                case SDLK_UP:
-                                    printf("Key UP\n");
-                                    break;
-                                case SDLK_DOWN:
-                                    printf("Key DOWN\n");
-                                    break;
-                                case SDLK_RIGHT:
-                                    printf("Key RIGHT\n");
-                                    break;
-                                case SDLK_LEFT:
-                                    printf("Key LEFT\n");
-                                    break;
+                            case SDLK_DOWN:
+                                printf("Key DOWN\n");
+                                break;
+                            case SDLK_RIGHT:
+                                printf("Key RIGHT\n");
+                                break;
+                            case SDLK_LEFT:
+                                printf("Key LEFT\n");
+                                break;
                         }
                     }else if(e.type == SDL_MOUSEBUTTONDOWN){
                         ClearScreen();
                         times++;
                         printf("Mouse pressed: %d\n", times);
                         frame = 1;
-
-                    }else if(e.type == SDL_MOUSEMOTION ){
-
                     }
+
+
+                    SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
+                    SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&poss);
+                    SDL_RenderPresent(gRenderer);
+
                 }
 
 
-                //Apply the image
-                SDL_BlitSurface( gXOut, NULL, gScreenSurface, NULL );
 
-                SDL_SetRenderDrawColor(gRenderer, 0xFF,0xFF,0xFF,0xFF);
-                SDL_RenderClear(gRenderer);
-                SDL_RenderCopyEx(gRenderer,mPlayButton,&gSpriteClips[frame],&poss,0,NULL,flip);
-                SDL_RenderPresent(gRenderer);
-                //Update the surface
-                SDL_UpdateWindowSurface( gWindow );
-
-            }
         }
-    }
+
     //Free resources and close SDL
     closeW();
     return 0;
@@ -191,14 +196,13 @@ bool init(){
 bool loadMedia(){
     //Loading success flag
     bool success = true;
+
     #ifdef _WIN32
-
-
-
     //Load splash image
-    gXOut = IMG_Load( "bilder\\background.png" );
+    gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
+    bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
@@ -208,7 +212,8 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-    SDL_Surface* gPlayButton = IMG_Load("bilder\\testplay.png");
+    gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
+    SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
     gSpriteClips[ 0 ].x = 0;
@@ -227,8 +232,23 @@ bool loadMedia(){
     gSpriteClips[ 2 ].h = 107;
     return success;
     #else
+
+    //Load splash image
+    gXOut = SDL_LoadBMP( "bilder/background.bmp" );
+    bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
+    if( gXOut == NULL ){
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
+        success = false;
+    }
+    //Load music
+    gMusic = Mix_LoadMUS( "musik/bg.wav" );
+    if( gMusic == NULL ){
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
     //load sprite sheet
-    SDL_Surface* gPlayButton = IMG_Load("bilder\\testplay.png");
+    gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
+    SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
     gSpriteClips[ 0 ].x = 0;
@@ -246,21 +266,10 @@ bool loadMedia(){
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
 
-    //Load splash image
-    gXOut = IMG_Load( "bilder/background.png" );
-    if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
-        success = false;
-    }
-    //Load music
-    gMusic = Mix_LoadMUS( "musik/bg.wav" );
-    if( gMusic == NULL ){
-        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
-        success = false;
-    }
     return success;
     #endif
 }
+
 //==================================================CLOSE===============================================
 void closeW(){
     //Deallocate surface
