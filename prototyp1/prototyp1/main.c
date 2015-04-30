@@ -40,6 +40,7 @@ SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
+    int times=0;
     //Start up SDL and create window
     if( !init() ){
         printf( "Failed to initialize!\n" );
@@ -50,6 +51,9 @@ int main( int argc, char* args[] ){
         }else{
             //Main loop flag
             bool quit = false;
+
+            //Play the music
+            Mix_PlayMusic( gMusic, -1 );
 
             //Event handler
             SDL_Event e;
@@ -96,6 +100,15 @@ int main( int argc, char* args[] ){
                                 Mix_HaltMusic();
                                 break;
                         }
+                    }else if(e.type == SDL_MOUSEBUTTONDOWN){
+                        #ifdef _WIN32
+                        system("cls");
+                        #else // _WIN32
+                        system("clear");
+                        #endif // rest
+                        times++;
+                        printf("Mouse pressed: %d\n", times);
+
                     }
                 }
                 //Apply the image
@@ -142,13 +155,13 @@ bool loadMedia(){
     bool success = true;
 
     //Load splash image
-    gXOut = IMG_Load( "bilder/bild.png" );
+    gXOut = IMG_Load( "bilder\\background.png" );
     if( gXOut == NULL ){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
         success = false;
     }
     //Load music
-    gMusic = Mix_LoadMUS( "musik/bg.wav" );
+    gMusic = Mix_LoadMUS( "musik\\bg.wav" );
     if( gMusic == NULL ){
         printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
         success = false;
