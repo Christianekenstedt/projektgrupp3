@@ -60,9 +60,10 @@ SDL_Rect gSpriteClips[3];
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int times=0;
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
+
     Play button;
     Exit ebutton;
+
     SDL_Rect poss;
     poss.y = 546;
     poss.x = 493;
@@ -91,18 +92,11 @@ int main( int argc, char* args[] ){
             SDL_SetRenderDrawColor(gRenderer, 0xFF,0xFF,0xFF,0xFF);
 
             SDL_RenderClear(gRenderer);
-            /*//Apply the image
-            SDL_BlitSurface( gXOut, NULL, gScreenSurface, NULL );
-            //Update the surface
-            SDL_UpdateWindowSurface( gWindow );
-            */
-
-
         }
     }
     //While application is running
+    
     bool quit = false;
-
     int x=0, y=0;
 
     while( !quit ){
@@ -172,18 +166,11 @@ int main( int argc, char* args[] ){
                             frame=2;
                         }
                     }
-
-
                     SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
                     SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&poss);
                     SDL_RenderPresent(gRenderer);
-
                 }
-
-
-
         }
-
     //Free resources and close SDL
     closeW();
     return 0;
@@ -192,7 +179,6 @@ int main( int argc, char* args[] ){
 bool init(){
     //Initialization flag
     bool success = true;
-
 
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
@@ -206,7 +192,7 @@ bool init(){
             success = false;
         }else{
             //Get window surface
-            gScreenSurface = SDL_GetWindowSurface( gWindow );
+            //gScreenSurface = SDL_GetWindowSurface( gWindow );
         }
         //Initialize SDL_mixer
         if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ){
@@ -216,7 +202,7 @@ bool init(){
     }
     gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
     if(gRenderer == NULL){
-        printf("Funkar inte\n");
+        fprintf(stderr,"SDL_CreateRenderer: %s\n", SDL_GetError());
         success = false;
     }
     return success;
@@ -285,7 +271,7 @@ bool loadMedia(){
     //load sprite sheet
 
     SDL_Surface* gPlayButton = IMG_Load("bilder/testplay.png");
-
+    SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
     gSpriteClips[ 0 ].x = 0;
