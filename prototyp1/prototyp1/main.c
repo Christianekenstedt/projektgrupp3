@@ -24,6 +24,8 @@
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 800;
 
+void ClearScreen();
+
 //Starts up SDL and creates window
 bool init();
 //Loads media
@@ -101,11 +103,7 @@ int main( int argc, char* args[] ){
                                 break;
                         }
                     }else if(e.type == SDL_MOUSEBUTTONDOWN){
-                        #ifdef _WIN32
-                        system("cls");
-                        #else // _WIN32
-                        system("clear");
-                        #endif // rest
+                        ClearScreen();
                         times++;
                         printf("Mouse pressed: %d\n", times);
 
@@ -186,3 +184,10 @@ void closeW(){
     SDL_Quit();
 }
 //====================================================================================================
+void ClearScreen(){
+    #ifdef _WIN32
+    system("cls");
+    #else // _WIN32
+    system("clear");
+    #endif // rest
+}
