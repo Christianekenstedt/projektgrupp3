@@ -56,23 +56,30 @@ SDL_Texture* exitTexture = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 SDL_Rect gSpriteClips[3];
+SDL_Rect ExitRect;
 
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int times=0;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     Play button;
-    Exit ebutton;
+    Exit eButton;
     SDL_Rect poss;
     poss.y = 546;
     poss.x = 493;
     poss.w = 294;
     poss.h = 107;
     int frame = 0;
+    // Play Button
     button.yPos = 546;
     button.xPos = 493;
     button.wPos = 252;
     button.hPos = 107;
+    // Exit Button
+    ExitRect.y = 0;
+    ExitRect.x = 0;
+    ExitRect.w = 80;
+    ExitRect.h = 40;
 
     //Event handler
     SDL_Event e;
@@ -89,15 +96,7 @@ int main( int argc, char* args[] ){
             Mix_PlayMusic( gMusic, -1 );
 
             SDL_SetRenderDrawColor(gRenderer, 0xFF,0xFF,0xFF,0xFF);
-
             SDL_RenderClear(gRenderer);
-            /*//Apply the image
-            SDL_BlitSurface( gXOut, NULL, gScreenSurface, NULL );
-            //Update the surface
-            SDL_UpdateWindowSurface( gWindow );
-            */
-
-
         }
     }
     //While application is running
@@ -166,6 +165,8 @@ int main( int argc, char* args[] ){
                     }else if(e.type == SDL_MOUSEBUTTONDOWN){
                         if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){
                             frame=1;
+                        }else if((x>ExitRect.x) && ( x < ExitRect.y + ExitRect.w ) && ( y > ExitRect.y) && (y < ExitRect.y + ExitRect.h)){
+                            quit = true;
                         }
                     }else if(e.type == SDL_MOUSEMOTION){
                         if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){ //Innanför knappen?
@@ -176,6 +177,7 @@ int main( int argc, char* args[] ){
 
                     SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
                     SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&poss);
+                    SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
                     SDL_RenderPresent(gRenderer);
 
                 }
@@ -261,6 +263,7 @@ bool loadMedia(){
     gSpriteClips[ 2 ].h = 107;
 
     gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
+    SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
     if( gExitButton == NULL ){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\EXIT.bmp", SDL_GetError() );
