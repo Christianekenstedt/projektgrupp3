@@ -457,7 +457,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1430384491 source:c:\users\chrille\documents\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1430409012 source:c:\users\chrille\documents\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -465,7 +465,7 @@
 	<stdbool.h>
 	<string.h>
 
-1430384491 c:\users\chrille\documents\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+1430409012 c:\users\chrille\documents\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdio.h>
 	<time.h>
 	<stdlib.h>

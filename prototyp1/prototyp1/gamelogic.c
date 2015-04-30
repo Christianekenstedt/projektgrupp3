@@ -155,3 +155,26 @@ int dra_kort(Kort kortlek[])
     printf("2: %d\n", blackjackvarde);
     return blackjackvarde;
 }
+
+int dra_ID(Kort kortlek[])
+{
+
+    int i, ID = 0; /*alla kl√§dda kort √§r v√§rda 10 i blackjack*/
+
+    for(i = 0;0<ANTALKORT;i++)
+    {
+        if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
+        {
+            checka_kort(i,kortlek);
+            kortlek[i].upptagen = true; /*kortet √§r nu draget*/
+            checka_kort(i,kortlek);
+            printf("0: %d\n", kortlek[i].kortnummer);
+            ID = kortlek[i].kortnummer;
+            printf("1: %d\n", ID);
+
+            break;
+        }
+    }
+    printf("2: %d\n", ID);
+    return ID;
+}

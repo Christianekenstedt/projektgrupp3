@@ -145,10 +145,12 @@ SDL_ThreadFunction* function(void* incsocket)
             else if (strstr(buffer2, "card")) {
                 //Funktion
                 value=dra_kort(kortlek);
-                printf("kortvarde: %d\n",value);
-                char cvalue[512];
+                int ID = dra_ID(kortlek);
+                printf("kortvarde: %d\nkortID: %d\n",value, ID);
+                char cvalue[512],cID[512];
                 itoa(value,cvalue,10);
-                if(SDLNet_TCP_Send(*(inc.socket), cvalue, strlen(cvalue)+1) < 0)
+                itoa(ID,cID,10);
+                if(SDLNet_TCP_Send(*(inc.socket), cID, strlen(cID)+1) < 0)
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
                     //exit(EXIT_FAILURE);
