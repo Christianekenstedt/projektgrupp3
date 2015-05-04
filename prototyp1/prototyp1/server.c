@@ -156,7 +156,8 @@ SDL_ThreadFunction* function(void* incsocket)
                     //exit(EXIT_FAILURE);
                 }
 
-                IdToCard(ID,kortlek);
+                IdToCard(ID,kortlek); //visar på skärmen en spelares spelbord
+                char o = 'o';
 
                 inc.clientvalue = inc.clientvalue + IdToValue(ID,kortlek);
                 printf("Client [%d] has a card value of %d\n", inc.clientnumber, inc.clientvalue);
