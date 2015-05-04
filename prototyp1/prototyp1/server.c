@@ -6,6 +6,7 @@
 typedef struct stringinfo{
     TCPsocket* socket;
     int* quit, clientnumber,* clientsocket;
+    int clientvalue; //klientes sammalagda kortvärde
     //Kort kortlek;
 }sinfo;
 
@@ -15,11 +16,9 @@ SDL_ThreadFunction* function(void* incsocket);
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    checka_kort(0,kortlek);
-    system("pause");
+    //checka_kort(0,kortlek);
     blanda_kortleken(kortlek);
-    checka_kort(0,kortlek);
-    system("pause");
+    //checka_kort(0,kortlek);
 }
 
 int main (int argc, char *argv[])
@@ -112,6 +111,7 @@ SDL_ThreadFunction* function(void* incsocket)
     sinfo inc = *((sinfo*)incsocket);
     char buffer2[512];
     int value=0;
+    inc.clientvalue = 0;
 
     *(inc.clientsocket) = 1;
 
@@ -122,13 +122,12 @@ SDL_ThreadFunction* function(void* incsocket)
 
         if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
         {
-            printf("Client [%d] say: %s\n", inc.clientnumber, buffer2);
             if(strstr(buffer2, "quit"))
             {
                 *(inc.quit) = 1;
                 printf("Client %d sent server shutdown!\n", inc.clientnumber);
             }
-            if(strstr(buffer2, "exit")){
+            else if(strstr(buffer2, "exit")){
                 *(inc.clientsocket) = 0;
                 SDLNet_TCP_Close(*(inc.socket));
 
@@ -142,11 +141,12 @@ SDL_ThreadFunction* function(void* incsocket)
                 printf("################## HELP 1 (1) ###########################\n\n");
             }
 
-            else if (strstr(buffer2, "card")) {
+            else if (strstr(buffer2, "card") || strstr(buffer2, "hit")) {
                 //Funktion
-                value=dra_kort(kortlek);
+                //value=dra_kort(kortlek);
                 int ID = dra_ID(kortlek);
-                printf("kortvarde: %d\nkortID: %d\n",value, ID);
+                printf("ID: %d\n", ID);
+                //printf("kortvarde: %d\nkortID: %d\n",value, ID);
                 char cvalue[512],cID[512];
                 itoa(value,cvalue,10);
                 itoa(ID,cID,10);
@@ -155,6 +155,16 @@ SDL_ThreadFunction* function(void* incsocket)
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
                     //exit(EXIT_FAILURE);
                 }
+
+                inc.clientvalue = inc.clientvalue + IdToValue(ID,kortlek);
+                printf("Client [%d] has a card value of %d\n", inc.clientnumber, inc.clientvalue);
+            }
+            else if (strstr(buffer2, "stand")){
+                printf("Client [%d] stopped at %d", inc.clientnumber, inc.clientvalue);
+                inc.clientvalue = 0;
+            }
+            else{
+            printf("Client [%d] say: %s\n", inc.clientnumber, buffer2);
             }
 
 
