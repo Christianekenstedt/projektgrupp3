@@ -33,6 +33,7 @@ void zeroz(int arr[]);
 void blanda_kortleken(Kort kortlek[]);
 void initiera_kortleken(Kort kortleken[]);
 int dra_kort(Kort kortlek[]);
+int dra_ID(Kort kortlek[]);
 void checka_kort(int kortleksplats, Kort kortlek[]);
 
 
