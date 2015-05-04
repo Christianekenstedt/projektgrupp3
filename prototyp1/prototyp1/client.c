@@ -13,6 +13,7 @@ int main(int argc, char **argv)
     int quit, quit2, len, myValue=0;
     char buffer[512];
     Kort kortlek[ANTALKORT]; // Deklarerar kortlek
+    bool lose = false;
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
@@ -51,6 +52,7 @@ int main(int argc, char **argv)
         
         printf("You have a value of %d\nHit or Stand> ",myValue);
         scanf("%s", buffer);
+    
         
         len = strlen(buffer) + 1;
         if (SDLNet_TCP_Send(sd, (void *)buffer, len) < len)
@@ -81,12 +83,26 @@ int main(int argc, char **argv)
             }
             IdToCard(ID, kortlek);
             myValue += IdToValue(ID,kortlek);
+            if (myValue > 21) {
+                lose = true;
+            }
         }else if(strstr(buffer,"stand")){
             printf("You stand at %d\n", myValue);
             myValue = 0;
         }
         
+        if (lose) {
+            printf("You lose!\n");
+            if (myValue>21) {
+                printf("Bust\n");
+            }
+            myValue = 0;
+            lose = false;
+        }
+        
     }
+    
+    
 
     SDLNet_TCP_Close(sd);
     SDLNet_Quit();
