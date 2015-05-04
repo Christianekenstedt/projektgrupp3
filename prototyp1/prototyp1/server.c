@@ -156,6 +156,8 @@ SDL_ThreadFunction* function(void* incsocket)
                     //exit(EXIT_FAILURE);
                 }
 
+                IdToCard(ID,kortlek);
+
                 inc.clientvalue = inc.clientvalue + IdToValue(ID,kortlek);
                 printf("Client [%d] has a card value of %d\n", inc.clientnumber, inc.clientvalue);
             }

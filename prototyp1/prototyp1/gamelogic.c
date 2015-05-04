@@ -191,3 +191,19 @@ int IdToValue(int id, Kort kortlek[])
     }
     return value;
 }
+
+void IdToCard(int id,Kort kortlek[])
+{
+    int i = 0;
+    for(i = 0;i<ANTALKORT;i++)
+    {
+        if(id == kortlek[i].kortnummer)
+        {
+            printf("\n\n");
+            printf("You have card:\n");
+            printf("Suite: %s\n",kortlek[i].farg);
+            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            break;
+        }
+    }
+}
