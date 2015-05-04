@@ -279,7 +279,7 @@ bool loadMedia(){
     }
     //load sprite sheet
 
-    SDL_Surface* gPlayButton = IMG_Load("bilder/testplay.png");
+    SDL_Surface* gPlayButton = IMG_Load("bilder/testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
@@ -331,7 +331,7 @@ void closeW(){
 void ClearScreen(){
     #ifdef _WIN32
     system("cls");
-    #else // _WIN32
+    #else //
     system("clear");
     #endif // rest
 }

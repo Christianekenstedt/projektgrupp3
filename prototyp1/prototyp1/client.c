@@ -10,16 +10,16 @@ int main(int argc, char **argv)
     IPaddress ip;		/* Server address */
     TCPsocket sd;		/* Socket descriptor */
     int quit, quit2, len;
-    char buffer[512], UserInputIP[20];
-    printf("Input IP: ");
-    scanf("%s",&UserInputIP);
+    char buffer[512], UserInputIP[20]="196.154.211.44";
+    //printf("Input IP: ");
+    //scanf("%s",&UserInputIP);
 
     /* Simple parameter checking */
-    /*if (argc < 3)
+    if (argc < 3)
     {
         fprintf(stderr, "Usage: %s host port\n", argv[0]);
         exit(EXIT_FAILURE);
-    }*/
+    }
 
     if (SDLNet_Init() < 0)
     {
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     }
 
     /* Resolve the host we are connecting to */
-    if (SDLNet_ResolveHost(&ip, UserInputIP, 2000) < 0)
+    if (SDLNet_ResolveHost(&ip, argv[1], 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
             quit = 1;
 
         quit2 = 0; // FÖR RESPONS ENDAST!
-        if (strstr(buffer,"card")) {
+        if (strstr(buffer,"card") || strstr(buffer,"hit")) {
             while (!quit2)
             {
                 printf("inne i quit2\n");
