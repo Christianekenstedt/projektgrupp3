@@ -7,6 +7,7 @@ typedef struct stringinfo{
     TCPsocket* socket;
     int* quit, clientnumber,* clientsocket;
     int clientvalue; //klientes sammalagda kortvärde
+    //bool ready;
     //Kort kortlek;
 }sinfo;
 
@@ -63,21 +64,21 @@ int main (int argc, char *argv[])
         for (i=0; i<MAXCLIENTS; i++) {
             if(freeslots[i] == 0){
                 ClientNumber = i;
+                //printf("I = %d",i);
             }
         }
 
-        if(freeslots[ClientNumber] == 0){ /*Kolllar vilken plats som är ledig, 0 = ledig, 1 = upptagen*/
 
-            //printf("Inne i clientvalue[ClientNumber == 0\n]");
+        if(freeslots[ClientNumber] == 0){ /*Kolllar vilken plats som är ledig, 0 = ledig, 1 = upptagen*/
             if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
             {
+                //clientvalue[ClientNumber].ready = false; //får spelaren spela.
                 clientvalue[ClientNumber].quit = &quit;
                 clientvalue[ClientNumber].clientnumber = ClientNumber;
                 clientvalue[ClientNumber].socket = &Clientsock[ClientNumber];
                 clientvalue[ClientNumber].clientsocket = &freeslots[ClientNumber];
                 SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&clientvalue[ClientNumber]));
-                ClientNumber++;
-                printf("ClienNumber increased to: %d from %d\n", ClientNumber,ClientNumber-1);
+                //ClientNumber++;
             }
         }
         else if(clientvalue[ClientNumber].clientsocket == 1)
@@ -111,6 +112,7 @@ SDL_ThreadFunction* function(void* incsocket)
     sinfo inc = *((sinfo*)incsocket);
     char buffer2[512];
     int value=0;
+    bool lose = false;
     inc.clientvalue = 0;
 
     *(inc.clientsocket) = 1;
@@ -157,9 +159,12 @@ SDL_ThreadFunction* function(void* incsocket)
                 }
 
                 IdToCard(ID,kortlek); //visar på skärmen en spelares spelbord
-                char o = 'o';
 
                 inc.clientvalue = inc.clientvalue + IdToValue(ID,kortlek);
+                if(inc.clientvalue > 21)
+                {
+                    lose = true;
+                }
                 printf("Client [%d] has a card value of %d\n", inc.clientnumber, inc.clientvalue);
             }
             else if (strstr(buffer2, "stand")){
@@ -168,6 +173,17 @@ SDL_ThreadFunction* function(void* incsocket)
             }
             else{
             printf("Client [%d] say: %s\n", inc.clientnumber, buffer2);
+            }
+
+            if(lose)
+            {
+                printf("Client [%d] lose, ",inc.clientnumber);
+                if(inc.clientvalue > 21)
+                {
+                    printf("(Bust)\n");
+                }
+                inc.clientvalue = 0;
+                lose = false;
             }
 
 

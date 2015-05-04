@@ -199,7 +199,7 @@ void IdToCard(int id,Kort kortlek[])
     {
         if(id == kortlek[i].kortnummer)
         {
-            printf("\n\n");
+            printf("\n");
             printf("You have card:\n");
             printf("Suite: %s\n",kortlek[i].farg);
             printf("Value: %d\n\n",kortlek[i].kortvarde);
