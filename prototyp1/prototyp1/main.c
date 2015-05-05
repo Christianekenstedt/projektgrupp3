@@ -234,6 +234,8 @@ bool loadMedia(){
 
     #ifdef _WIN32
     //Load splash image
+    gYouWon = IMG_Load("bilder/ny_bord.png");
+    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){

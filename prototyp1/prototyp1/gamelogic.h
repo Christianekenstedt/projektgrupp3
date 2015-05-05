@@ -37,6 +37,7 @@ int dra_ID(Kort kortlek[]);
 void checka_kort(int kortleksplats, Kort kortlek[]);
 int IdToValue(int id, Kort kortlek[]);
 void IdToCard(int id,Kort kortlek[]);
+void ClearScreen();
 
 
 #endif /* defined(__prototyp1__gamelogic__) */
