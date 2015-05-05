@@ -7,7 +7,7 @@ typedef struct stringinfo{
     TCPsocket* socket;
     int* quit, clientnumber,* clientsocket;
     int clientvalue; //klientes sammalagda kortvärde
-    //bool ready;
+    int *ready;
     //Kort kortlek;
 }sinfo;
 
@@ -29,7 +29,7 @@ int main (int argc, char *argv[])
     sinfo clientvalue[MAXCLIENTS];
     int quit = 0, ClientNumber=0;
     //Kort kortlek[ANTALKORT];
-    int freeslots[MAXCLIENTS]={0}, i;
+    int freeslots[MAXCLIENTS]={0}, i, ready[MAXCLIENTS]={0};
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
 
     srand(time(NULL));
@@ -58,7 +58,6 @@ int main (int argc, char *argv[])
         clientvalue[i].clientsocket=0;
     }
 
-
     while(ClientNumber < MAXCLIENTS+1)
     {
         for (i=0; i<MAXCLIENTS; i++) {
@@ -77,6 +76,7 @@ int main (int argc, char *argv[])
                 clientvalue[ClientNumber].clientnumber = ClientNumber;
                 clientvalue[ClientNumber].socket = &Clientsock[ClientNumber];
                 clientvalue[ClientNumber].clientsocket = &freeslots[ClientNumber];
+                clientvalue[ClientNumber].ready = &ready[ClientNumber];
                 SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&clientvalue[ClientNumber]));
                 //ClientNumber++;
             }
@@ -91,7 +91,6 @@ int main (int argc, char *argv[])
             ClientNumber = 0;
             printf("clientNumber set to: %d\n",ClientNumber);
         }
-
     }
     printf("exit from while\n");
 
@@ -111,83 +110,95 @@ SDL_ThreadFunction* function(void* incsocket)
 {
     sinfo inc = *((sinfo*)incsocket);
     char buffer2[512];
-    int value=0;
+    int value=0,var=1;
     bool lose = false;
     inc.clientvalue = 0;
 
     *(inc.clientsocket) = 1;
 
+    if(SDLNet_TCP_Send(*(inc.socket), "1", 1) < 0)
+    {
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
     printf("%d: connected\n", inc.clientnumber);
-
     while((*(inc.quit)) != 1)
     {
-
-        if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
+        while(inc.ready)
         {
-            if(strstr(buffer2, "quit"))
+            if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
             {
-                *(inc.quit) = 1;
-                printf("Client %d sent server shutdown!\n", inc.clientnumber);
-            }
-            else if(strstr(buffer2, "exit")){
-                *(inc.clientsocket) = 0;
-                SDLNet_TCP_Close(*(inc.socket));
-
-
-                printf("Client %d disconnected!\n", inc.clientnumber);
-                return 0;
-            }
-            else if (strstr(buffer2, "!help")) {
-                printf("##################    HELP   ############################\n");
-                printf("exit to safely disconnect\nquit to terminate the server\n");
-                printf("################## HELP 1 (1) ###########################\n\n");
-            }
-
-            else if (strstr(buffer2, "card") || strstr(buffer2, "hit")) {
-                //Funktion
-                //value=dra_kort(kortlek);
-                int ID = dra_ID(kortlek);
-                printf("ID: %d\n", ID);
-                //printf("kortvarde: %d\nkortID: %d\n",value, ID);
-                char cvalue[512],cID[512];
-                itoa(value,cvalue,10);
-                itoa(ID,cID,10);
-                if(SDLNet_TCP_Send(*(inc.socket), cID, strlen(cID)+1) < 0)
+                if(strstr(buffer2,"stand"))
                 {
-                    fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-                    //exit(EXIT_FAILURE);
+
+                }
+                if(strstr(buffer2, "quit"))
+                {
+                    *(inc.quit) = 1;
+                    printf("Client %d sent server shutdown!\n", inc.clientnumber);
+                }
+                else if(strstr(buffer2, "exit")){
+                    *(inc.clientsocket) = 0;
+                    SDLNet_TCP_Close(*(inc.socket));
+
+
+                    printf("Client %d disconnected!\n", inc.clientnumber);
+                    return 0;
+                }
+                else if (strstr(buffer2, "!help")) {
+                    printf("##################    HELP   ############################\n");
+                    printf("exit to safely disconnect\nquit to terminate the server\n");
+                    printf("################## HELP 1 (1) ###########################\n\n");
                 }
 
-                IdToCard(ID,kortlek); //visar på skärmen en spelares spelbord
+                else if (strstr(buffer2, "card") || strstr(buffer2, "hit")) {
+                    //Funktion
+                    //value=dra_kort(kortlek);
+                    int ID = dra_ID(kortlek);
+                    printf("ID: %d\n", ID);
+                    //printf("kortvarde: %d\nkortID: %d\n",value, ID);
+                    char cvalue[512],cID[512];
+                    itoa(value,cvalue,10);
+                    itoa(ID,cID,10);
+                    if(SDLNet_TCP_Send(*(inc.socket), cID, strlen(cID)+1) < 0)
+                    {
+                        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+                        //exit(EXIT_FAILURE);
+                    }
 
-                inc.clientvalue = inc.clientvalue + IdToValue(ID,kortlek);
-                if(inc.clientvalue > 21)
-                {
-                    lose = true;
+
+                    IdToCard(ID,kortlek); //visar på skärmen en spelares spelbord
+
+                    inc.clientvalue = inc.clientvalue + IdToValue(ID,kortlek);
+                    if(inc.clientvalue > 21)
+                    {
+                        lose = true;
+                    }
+                    printf("Client [%d] has a card value of %d\n", inc.clientnumber, inc.clientvalue);
                 }
-                printf("Client [%d] has a card value of %d\n", inc.clientnumber, inc.clientvalue);
-            }
-            else if (strstr(buffer2, "stand")){
-                printf("Client [%d] stopped at %d", inc.clientnumber, inc.clientvalue);
-                inc.clientvalue = 0;
-            }
-            else{
-            printf("Client [%d] say: %s\n", inc.clientnumber, buffer2);
-            }
-
-            if(lose)
-            {
-                printf("Client [%d] lose, ",inc.clientnumber);
-                if(inc.clientvalue > 21)
-                {
-                    printf("(Bust)\n");
+                else if (strstr(buffer2, "stand")){
+                    printf("=============================================\nClient [%d] stopped at %d\n=============================================\n", inc.clientnumber, inc.clientvalue);
+                    inc.ready = 0; //när spelaren vill stanna sätts denna till 0 (false)
+                    inc.clientvalue = 0;
                 }
-                inc.clientvalue = 0;
-                lose = false;
-            }
+                else{
+                printf("Client [%d] say: %s\n", inc.clientnumber, buffer2);
+                }
+
+                if(lose)
+                {
+                    printf("Client [%d] lose, ",inc.clientnumber);
+                    if(inc.clientvalue > 21)
+                    {
+                        printf("(Bust)\n");
+                    }
+                    inc.clientvalue = 0;
+                    lose = false;
+                }
 
 
-        }else SDL_Delay(200);
+            }else SDL_Delay(200);
+        }
     }
     return 0;
 }
