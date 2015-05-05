@@ -50,12 +50,12 @@ SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* gPlayButton = NULL;
 SDL_Surface* gExitButton = NULL;
-SDL_Surface* gYouWon = NULL;
+SDL_Surface* table = NULL;
 SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
 SDL_Texture* exitTexture = NULL;
 SDL_Renderer* gRenderer = NULL;
-SDL_Texture* bYouWon = NULL;
+SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
 SDL_Rect ExitRect;
@@ -183,7 +183,7 @@ int main( int argc, char* args[] ){
                         SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
-                        SDL_RenderCopy(gRenderer, bYouWon, NULL, NULL);
+                        SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                         SDL_RenderPresent(gRenderer);
                         SDL_Delay(5000);
                         window = 0;
@@ -234,8 +234,8 @@ bool loadMedia(){
 
     #ifdef _WIN32
     //Load splash image
-    gYouWon = IMG_Load("bilder\\ny_bord.png");
-    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
+    table = IMG_Load("bilder\\ny_bord.png");
+    btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
@@ -279,8 +279,8 @@ bool loadMedia(){
     #else
 
     //Load splash image
-    gYouWon = IMG_Load("bilder/ny_bord.png");
-    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
+    table = IMG_Load("bilder/ny_bord.png");
+    btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( (gXOut == NULL) || (gPlayButton == NULL)){
