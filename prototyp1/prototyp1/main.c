@@ -50,12 +50,18 @@ SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* gPlayButton = NULL;
 SDL_Surface* gExitButton = NULL;
-SDL_Surface* gYouWon = NULL;
+SDL_Surface* table = NULL;
 SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
 SDL_Texture* exitTexture = NULL;
+SDL_Texture* betTexture = NULL;
+SDL_Texture* clearTexture = NULL;
+SDL_Texture* hitTexture = NULL;
+SDL_Texture* standTexture = NULL;
+SDL_Texture* doubleTexture = NULL;
+SDL_Texture* splitTexture = NULL;
 SDL_Renderer* gRenderer = NULL;
-SDL_Texture* bYouWon = NULL;
+SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
 SDL_Rect ExitRect;
@@ -65,7 +71,7 @@ int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
 
-    Play button;
+    Play button, BetButton, ClearButton, HitButton, StandButton, DoubleButton, SplitButton;
 
     SDL_Rect poss;
     poss.y = 546;
@@ -83,6 +89,36 @@ int main( int argc, char* args[] ){
     ExitRect.x = 0;
     ExitRect.w = 80;
     ExitRect.h = 40;
+    // Bet Button
+    BetButton.yPos = 584;
+    BetButton.xPos = 54;
+    BetButton.wPos = 81;
+    BetButton.hPos = 56;
+    // Clear Button
+    ClearButton.yPos = 584;
+    ClearButton.xPos = 640;
+    ClearButton.wPos = 86;
+    ClearButton.hPos = 56;
+    // Hit Button
+    HitButton.yPos = 685;
+    HitButton.xPos = 968;
+    HitButton.wPos = 68;
+    HitButton.hPos = 53;
+    // Stand Button
+    StandButton.yPos = 685;
+    StandButton.xPos = 1077;
+    StandButton.wPos = 74;
+    StandButton.hPos = 53;
+    // Double Button
+    DoubleButton.yPos = 485;
+    DoubleButton.xPos = 1180;
+    DoubleButton.wPos = 80;
+    DoubleButton.hPos = 40;
+    // Split Button
+    SplitButton.yPos = 580;
+    SplitButton.xPos = 1180;
+    SplitButton.wPos = 80;
+    SplitButton.hPos = 45;
 
     //Event handler
     SDL_Event e;
@@ -171,6 +207,23 @@ int main( int argc, char* args[] ){
                             window=1;
                         }else if((x>ExitRect.x) && ( x < ExitRect.y + ExitRect.w ) && ( y > ExitRect.y) && (y < ExitRect.y + ExitRect.h)){
                             quit = true;
+                        }else if((x>BetButton.xPos) && ( x < BetButton.yPos + BetButton.wPos ) && ( y > BetButton.yPos) && (y < BetButton.yPos + BetButton.hPos)){
+                            quit = true;
+                        }
+                        else if((x>ClearButton.xPos) && ( x < ClearButton.yPos + ClearButton.wPos) && ( y > ClearButton.yPos) && (y < ClearButton.yPos + ClearButton.hPos)){
+                            quit = true;
+                        }
+                        else if((x>HitButton.xPos) && ( x < HitButton.yPos + HitButton.wPos) && ( y > HitButton.yPos) && (y < HitButton.yPos + HitButton.hPos)){
+                            quit = true;
+                        }
+                        else if((x>StandButton.xPos) && ( x < StandButton.yPos + StandButton.wPos) && ( y > StandButton.yPos) && (y < StandButton.yPos + StandButton.hPos)){
+                            quit = true;
+                        }
+                        else if((x>DoubleButton.xPos) && ( x < DoubleButton.yPos + DoubleButton.wPos) && ( y > DoubleButton.yPos) && (y < DoubleButton.yPos + DoubleButton.hPos)){
+                            quit = true;
+                        }
+                        else if((x>SplitButton.xPos) && ( x < SplitButton.yPos + SplitButton.wPos) && ( y > SplitButton.yPos) && (y < SplitButton.yPos + SplitButton.hPos)){
+                            quit = true;
                         }
                     }else if(e.type == SDL_MOUSEMOTION){
                         if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){ //Innanför knappen?
@@ -183,10 +236,17 @@ int main( int argc, char* args[] ){
                         SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
-                        SDL_RenderCopy(gRenderer, bYouWon, NULL, NULL);
+                        SDL_RenderCopy(gRenderer, btable, NULL, NULL);
+                        SDL_RenderCopy(gRenderer, betTexture, NULL, &BetButton);
+                        SDL_RenderCopy(gRenderer, clearTexture, NULL, &ClearButton);
+                        SDL_RenderCopy(gRenderer, hitTexture, NULL, &HitButton);
+                        SDL_RenderCopy(gRenderer, standTexture, NULL, &StandButton);
+                        SDL_RenderCopy(gRenderer, doubleTexture, NULL, &DoubleButton);
+                        SDL_RenderCopy(gRenderer, splitTexture, NULL, &SplitButton);
+                        SDL_RenderCopy(gRenderer, exitTexture, NULL, &ExitRect);
                         SDL_RenderPresent(gRenderer);
-                        SDL_Delay(5000);
-                        window = 0;
+                        /*SDL_Delay(5000);
+                        window = 0;*/
                     }
 
                 }
@@ -234,12 +294,12 @@ bool loadMedia(){
 
     #ifdef _WIN32
     //Load splash image
-    gYouWon = IMG_Load("bilder\\ny_bord.png");
-    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
+    table = IMG_Load("bilder\\TABLE.png");
+    btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
@@ -279,8 +339,8 @@ bool loadMedia(){
     #else
 
     //Load splash image
-    gYouWon = IMG_Load("bilder/ny_bord.png");
-    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
+    table = IMG_Load("bilder/TABLE.png");
+    btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( (gXOut == NULL) || (gPlayButton == NULL)){
