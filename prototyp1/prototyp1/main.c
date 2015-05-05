@@ -72,7 +72,7 @@ int main( int argc, char* args[] ){
     poss.x = 493;
     poss.w = 294;
     poss.h = 107;
-    
+
     // Play Button
     button.yPos = 546;
     button.xPos = 493;
@@ -103,7 +103,7 @@ int main( int argc, char* args[] ){
         }
     }
     //While application is running
-    
+
     bool quit = false;
     int x=0, y=0;
 
@@ -188,7 +188,7 @@ int main( int argc, char* args[] ){
                         SDL_Delay(5000);
                         window = 0;
                     }
-                
+
                 }
         }
     //Free resources and close SDL
@@ -234,12 +234,12 @@ bool loadMedia(){
 
     #ifdef _WIN32
     //Load splash image
-    gYouWon = IMG_Load("bilder/ny_bord.png");
+    gYouWon = IMG_Load("bilder\\ny_bord.png");
     bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
