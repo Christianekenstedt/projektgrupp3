@@ -234,7 +234,7 @@ bool loadMedia(){
 
     #ifdef _WIN32
     //Load splash image
-    table = IMG_Load("bilder\\ny_bord.png");
+    table = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
@@ -279,7 +279,7 @@ bool loadMedia(){
     #else
 
     //Load splash image
-    table = IMG_Load("bilder/ny_bord.png");
+    table = IMG_Load("bilder/TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
