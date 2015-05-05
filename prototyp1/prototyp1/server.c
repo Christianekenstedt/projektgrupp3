@@ -8,8 +8,11 @@ typedef struct stringinfo{
     int* quit, clientnumber,* clientsocket;
     int clientvalue; //klientes sammalagda kortvärde
     int *ready;
+    int *playerturn;
     //Kort kortlek;
 }sinfo;
+
+void fyllTradar(int value, sinfo clientvalue[]);
 
 Kort kortlek[ANTALKORT];
 
@@ -29,7 +32,8 @@ int main (int argc, char *argv[])
     sinfo clientvalue[MAXCLIENTS];
     int quit = 0, ClientNumber=0;
     //Kort kortlek[ANTALKORT];
-    int freeslots[MAXCLIENTS]={0}, i, ready[MAXCLIENTS]={0};
+    int freeslots[MAXCLIENTS]={0}, i, readyturn[MAXCLIENTS]={0};
+    //int *playerturn = 0; //upp till MAXCLIENTS (0-4)
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
 
     srand(time(NULL));
@@ -56,16 +60,23 @@ int main (int argc, char *argv[])
 
     for(i=0;i<MAXCLIENTS;i++){
         clientvalue[i].clientsocket=0;
+        clientvalue[i].playerturn = 0;
+        clientvalue[i].ready = 0;
     }
 
     while(ClientNumber < MAXCLIENTS+1)
     {
+
         for (i=0; i<MAXCLIENTS; i++) {
             if(freeslots[i] == 0){
                 ClientNumber = i;
                 //printf("I = %d",i);
             }
         }
+
+        for(i=0;i<MAXCLIENTS;i++){
+            //printf("%d.\n", clientvalue[i].playerturn);
+       } //printf("\n");
 
 
         if(freeslots[ClientNumber] == 0){ /*Kolllar vilken plats som är ledig, 0 = ledig, 1 = upptagen*/
@@ -76,10 +87,29 @@ int main (int argc, char *argv[])
                 clientvalue[ClientNumber].clientnumber = ClientNumber;
                 clientvalue[ClientNumber].socket = &Clientsock[ClientNumber];
                 clientvalue[ClientNumber].clientsocket = &freeslots[ClientNumber];
-                clientvalue[ClientNumber].ready = &ready[ClientNumber];
+                //clientvalue[ClientNumber].ready = &readyturn[ClientNumber];
+                //clientvalue[ClientNumber].playerturn = ClientNumber; //temp
+
                 SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&clientvalue[ClientNumber]));
                 //ClientNumber++;
             }
+            i = 0;
+            /*for(int u = 0;u<MAXCLIENTS;u++){//kollar igenom alla klienter, är det bara en ansluten får den clientnumber
+                if(freeslots[u] == 1)
+                {
+                    i++;
+                }
+            }
+            if(i == 1)
+            {
+                clientvalue[ClientNumber].playerturn = ClientNumber;
+            }*/
+
+
+            //printf("\nReady = %d\n",clientvalue[ClientNumber].ready);
+            //system("pause");
+
+
         }
         else if(clientvalue[ClientNumber].clientsocket == 1)
         {
@@ -91,6 +121,33 @@ int main (int argc, char *argv[])
             ClientNumber = 0;
             printf("clientNumber set to: %d\n",ClientNumber);
         }
+
+        for (i=0; i<MAXCLIENTS; i++) {
+            if(freeslots[i] == 1){//if free, någon spelar på denna platss
+                printf("1.\n");
+                if(clientvalue[i].ready == 0){//if ready == 0, dvs den inte nyss spelade. när klienten vet att det är dennes tur
+                    printf("2.\n");
+                    if(clientvalue[i].playerturn == 0){ //oom det är dennes turn
+                            printf("3.\n");
+
+                        for(int e=0;e<MAXCLIENTS;e++){
+                            printf("%d.", clientvalue[e].playerturn);
+                       } printf("\n");
+                       //system("pause");
+
+                        clientvalue[i].ready = 1;
+                        readyturn[i] = 1;
+                        //clientvalue[ClientNumber].playerturn = ClientNumber;
+                       fyllTradar(ClientNumber,clientvalue);
+                       for(int e=0;e<MAXCLIENTS;e++){
+                            printf("%d.", clientvalue[e].playerturn);
+                       } printf("\n");
+
+                    }
+                }
+            }
+        }
+        //clientvalue[ClientNumber].playerturn++;
     }
     printf("exit from while\n");
 
@@ -115,22 +172,41 @@ SDL_ThreadFunction* function(void* incsocket)
     inc.clientvalue = 0;
 
     *(inc.clientsocket) = 1;
+    *(inc.ready) = 0;
 
-    if(SDLNet_TCP_Send(*(inc.socket), "1", 1) < 0)
-    {
-        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-        exit(EXIT_FAILURE);
-    }
     printf("%d: connected\n", inc.clientnumber);
     while((*(inc.quit)) != 1)
     {
+        printf("inc.playerturn = %d, inc.clientnumber %d\n",inc.playerturn,inc.clientnumber);
+        if(inc.playerturn == inc.clientnumber) //om det är din tur
+        {
+            //printf("inc.playerturn == inc.clientnumber\n");
+            if(SDLNet_TCP_Send(*(inc.socket), "1", 1) < 0) //skicka en 1:a till klienten som signal att det är dennes tur.
+            {
+                fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+                exit(EXIT_FAILURE);
+            }
+        }
         while(inc.ready)
         {
             if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
             {
                 if(strstr(buffer2,"stand"))
                 {
+                    printf("1. Trad: playersturn = %d\n",inc.playerturn);
+                    //system("pause");
+                    //*inc.playerturn++;
 
+                    printf("2. Trad: playersturn = %d\n",inc.playerturn);
+                    //if(inc.playerturn == 5)
+                    //{
+                        printf("i ifsatsen");
+                        *inc.playerturn = 0;
+                        //fyllTradar(0,sinfo);
+                    //}
+                    printf("3. Trad: playersturn = %d\n",inc.playerturn);
+                    *inc.ready = 0;
+                    break;
                 }
                 if(strstr(buffer2, "quit"))
                 {
@@ -201,4 +277,11 @@ SDL_ThreadFunction* function(void* incsocket)
         }
     }
     return 0;
+}
+
+void fyllTradar(int value, sinfo clientvalue[]){
+    int i = 0;
+    for(i=0;i<MAXCLIENTS;i++){
+        clientvalue[i].playerturn = value;
+    }
 }
