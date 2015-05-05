@@ -44,15 +44,13 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    /* Send messages */
     quit = 0;
     int ID=0;
     while (!quit)
     {
         
-        printf("You have a value of %d\nHit or Stand> ",myValue);
+        printf("Hit or Stand> ");
         scanf("%s", buffer);
-    
         
         len = strlen(buffer) + 1;
         if (SDLNet_TCP_Send(sd, (void *)buffer, len) < len)
@@ -70,11 +68,9 @@ int main(int argc, char **argv)
         if (strstr(buffer,"card") || strstr(buffer,"hit")) {
             while (!quit2)
             {
-                //printf("inne i quit2\n");
                 if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
                 {
-                    //printf("Server answer: %d\n", atoi(buffer));
-                    ID=atoi(buffer);
+                    ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
                     quit2 = 1;
                 }else{
                     fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
@@ -83,12 +79,19 @@ int main(int argc, char **argv)
             }
             IdToCard(ID, kortlek);
             myValue += IdToValue(ID,kortlek);
+            printf("You have a total of %d\n",myValue);
             if (myValue > 21) {
                 lose = true;
             }
         }else if(strstr(buffer,"stand")){
             printf("You stand at %d\n", myValue);
             myValue = 0;
+        }else if (strstr(buffer, "!help")){
+            
+            printf("##################    HELP   ############################\n\n");
+            printf("PLAY COMMANDS\nhit/card to ask for a new card.\nstand to stop your round.\n\nSERVER COMMANDS\n");
+            printf("exit to safely disconnect.\nquit to terminate the server.\n\n");
+            printf("################## HELP 1 (1) ###########################\n\n");
         }
         
         if (lose) {
@@ -99,11 +102,7 @@ int main(int argc, char **argv)
             myValue = 0;
             lose = false;
         }
-        
     }
-    
-    
-
     SDLNet_TCP_Close(sd);
     SDLNet_Quit();
 

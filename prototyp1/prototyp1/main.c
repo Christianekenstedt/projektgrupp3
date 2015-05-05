@@ -50,17 +50,20 @@ SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* gPlayButton = NULL;
 SDL_Surface* gExitButton = NULL;
+SDL_Surface* gYouWon = NULL;
 SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
 SDL_Texture* exitTexture = NULL;
 SDL_Renderer* gRenderer = NULL;
+SDL_Texture* bYouWon = NULL;
 
 SDL_Rect gSpriteClips[3];
 SDL_Rect ExitRect;
 
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
-    int times=0;
+    int window = 0; // Vilken Window som skall visas, main är 0.
+    int frame = 0;
 
     Play button;
 
@@ -69,7 +72,7 @@ int main( int argc, char* args[] ){
     poss.x = 493;
     poss.w = 294;
     poss.h = 107;
-    int frame = 0;
+    
     // Play Button
     button.yPos = 546;
     button.xPos = 493;
@@ -165,6 +168,7 @@ int main( int argc, char* args[] ){
                     }else if(e.type == SDL_MOUSEBUTTONDOWN){
                         if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){
                             frame=1;
+                            window=1;
                         }else if((x>ExitRect.x) && ( x < ExitRect.y + ExitRect.w ) && ( y > ExitRect.y) && (y < ExitRect.y + ExitRect.h)){
                             quit = true;
                         }
@@ -173,10 +177,18 @@ int main( int argc, char* args[] ){
                             frame=2;
                         }
                     }
-                    SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
-                    SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&poss);
-                    SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
-                    SDL_RenderPresent(gRenderer);
+                    if(window == 0 ){
+                        SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
+                        SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&poss);
+                        SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
+                        SDL_RenderPresent(gRenderer);
+                    }else if (window==1){
+                        SDL_RenderCopy(gRenderer, bYouWon, NULL, NULL);
+                        SDL_RenderPresent(gRenderer);
+                        SDL_Delay(5000);
+                        window = 0;
+                    }
+                
                 }
         }
     //Free resources and close SDL
@@ -265,9 +277,11 @@ bool loadMedia(){
     #else
 
     //Load splash image
+    gYouWon = IMG_Load("bilder/ny_bord.png");
+    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
-    if( gXOut == NULL ){
+    if( (gXOut == NULL) || (gPlayButton == NULL)){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
         success = false;
     }
