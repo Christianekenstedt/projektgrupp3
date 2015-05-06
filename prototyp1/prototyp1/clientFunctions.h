@@ -10,6 +10,8 @@
 #define __prototyp1__clientFunctions__
 
 #include <stdio.h>
+#include <stdbool.h>
+#include "multiOS.h"
 
 /* DEFINES */
 
@@ -21,4 +23,11 @@
 #define STANDBUTTON (x>StandButton.x) && ( x < StandButton.y + StandButton.w) && ( y > StandButton.y) && (y < StandButton.y + StandButton.h)
 #define DOUBLEBUTTON (x>DoubleButton.x) && ( x < DoubleButton.y + DoubleButton.w) && ( y > DoubleButton.y) && (y < DoubleButton.y + DoubleButton.h)
 #define SPLITBUTTON (x>SplitButton.x) && ( x < SplitButton.y + SplitButton.w) && ( y > SplitButton.y) && (y < SplitButton.y + SplitButton.h)
+/* VARIABLER */
+
+
+
+/* FUNKTIONSDEKLARATIONER */
+
+
 #endif /* defined(__prototyp1__clientFunctions__) */

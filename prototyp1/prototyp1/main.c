@@ -12,21 +12,18 @@
 #include <stdbool.h>
 #include <string.h>
 
-
 //Screen dimension constants
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 680;
 
-
-
 void ClearScreen();
-
 //Starts up SDL and creates window
 bool init();
 //Loads media
 bool loadMedia();
 	//Frees media and shuts down SDL
 void closeW();
+
 // The music woll be played
 Mix_Music *gMusic = NULL;
 //The window we'll be rendering to
@@ -54,6 +51,7 @@ SDL_Rect gSpriteClips[3];
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
 
 
+
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
@@ -64,13 +62,11 @@ int main( int argc, char* args[] ){
     PlayButton.x = 493;
     PlayButton.w = 294;
     PlayButton.h = 107;
-
     // Exit Button
     ExitRect.y = 0;
     ExitRect.x = 0;
     ExitRect.w = 80;
     ExitRect.h = 40;
-    
     // Bet Button
     BetButton.y = 584;
     BetButton.x = 54;
@@ -237,11 +233,12 @@ int main( int argc, char* args[] ){
     closeW();
     return 0;
 }
+
 //==============================================INIT=================================================
 bool init(){
     //Initialization flag
     bool success = true;
-
+    
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
         printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
@@ -273,10 +270,10 @@ bool init(){
 bool loadMedia(){
     //Loading success flag
     bool success = true;
-
-    #ifdef _WIN32
+    
+#ifdef _WIN32
     //Load splash image
-
+    
     table = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
@@ -295,22 +292,22 @@ bool loadMedia(){
     gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
-
+    
     gSpriteClips[ 0 ].x = 0;
     gSpriteClips[ 0 ].y = 0;
     gSpriteClips[ 0 ].w = 294;
     gSpriteClips[ 0 ].h = 107;
-
+    
     gSpriteClips[ 1 ].x = 0;
     gSpriteClips[ 1 ].y = 107;
     gSpriteClips[ 1 ].w = 294;
     gSpriteClips[ 1 ].h = 107;
-
+    
     gSpriteClips[ 2 ].x = 0;
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
-
+    
     gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
@@ -319,8 +316,8 @@ bool loadMedia(){
         success = false;
     }
     return success;
-    #else
-
+#else
+    
     //Load splash image
     table = IMG_Load("bilder/TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
@@ -337,26 +334,26 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-
+    
     SDL_Surface* gPlayButton = IMG_Load("bilder/testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
-
+    
     gSpriteClips[ 0 ].x = 0;
     gSpriteClips[ 0 ].y = 0;
     gSpriteClips[ 0 ].w = 294;
     gSpriteClips[ 0 ].h = 107;
-
+    
     gSpriteClips[ 1 ].x = 0;
     gSpriteClips[ 1 ].y = 107;
     gSpriteClips[ 1 ].w = 294;
     gSpriteClips[ 1 ].h = 107;
-
+    
     gSpriteClips[ 2 ].x = 0;
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
-
+    
     gExitButton = SDL_LoadBMP("bilder/EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
@@ -364,9 +361,9 @@ bool loadMedia(){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/EXIT.bmp", SDL_GetError() );
         success = false;
     }
-
+    
     return success;
-    #endif
+#endif
 }
 
 //==================================================CLOSE===============================================
@@ -374,23 +371,18 @@ void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
-
+    
     //Free the music
     Mix_FreeMusic( gMusic );
     gMusic = NULL;
-
+    
     //Destroy window
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
-
+    
     //Quit SDL subsystems
     SDL_Quit();
 }
 //====================================================================================================
-void ClearScreen(){
-    #ifdef _WIN32
-    system("cls");
-    #else //
-    system("clear");
-    #endif // rest
-}
+
+

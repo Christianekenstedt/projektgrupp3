@@ -7,3 +7,13 @@
 //
 
 #include "clientFunctions.h"
+#include "multiOS.h"
+
+void ClearScreen(){
+#ifdef _WIN32
+    system("cls");
+#else //
+    system("clear");
+#endif // rest
+}
+
