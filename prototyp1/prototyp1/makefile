@@ -1,16 +1,11 @@
 CC = gcc
 
-FILES = client.c
-FILE = server.c
-OUTFILES = Client
-OUTFILE = Server
+FILES = main.c clientFunctions.c
+OUTFILE = main
 FLAGG = -lSDL2_net -lSDL2 -lSDL2_image -lSDL2_mixer
 
-Build: $(FILES)
-	$(CC) $(FILES) $(FLAGG) -o $(OUTFILES)
-Build: $(FILE)
-	$(CC) $(FILE) $(FLAGG) -o $(OUTFILE)
-
+Build: $(FILES) 
+	$(CC) $(FILES) $(FLAGG) -o $(OUTFILE)
 clean:
 	rm -f *.o core
 

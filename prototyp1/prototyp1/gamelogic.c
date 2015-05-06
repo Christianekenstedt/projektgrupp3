@@ -139,9 +139,8 @@ int dra_kort(Kort kortlek[])
     {
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
         {
-            checka_kort(i,kortlek);
+            //checka_kort(i,kortlek);
             kortlek[i].upptagen = true; /*kortet √§r nu draget*/
-            checka_kort(i,kortlek);
             printf("0: %d\n", kortlek[i].kortvarde);
             blackjackvarde = kortlek[i].kortvarde;
             printf("1: %d\n", blackjackvarde);
@@ -165,16 +164,55 @@ int dra_ID(Kort kortlek[])
     {
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
         {
-            checka_kort(i,kortlek);
+            //checka_kort(i,kortlek);
             kortlek[i].upptagen = true; /*kortet √§r nu draget*/
-            checka_kort(i,kortlek);
-            printf("0: %d\n", kortlek[i].kortnummer);
             ID = kortlek[i].kortnummer;
-            printf("1: %d\n", ID);
-
             break;
         }
     }
-    printf("2: %d\n", ID);
     return ID;
 }
+
+int IdToValue(int id, Kort kortlek[])
+{
+    int value = 0;//kortvärdet som ska retuneras
+    int i = 0;
+    for(i = 0;i<ANTALKORT;i++)
+    {
+        if(id == kortlek[i].kortnummer)
+        {
+            break;
+        }
+    }
+    value = kortlek[i].kortvarde;
+    if(value > 10)
+    {
+        value = 10;
+    }
+    return value;
+}
+
+void IdToCard(int id,Kort kortlek[])
+{
+    int i = 0;
+    for(i = 0;i<ANTALKORT;i++)
+    {
+        if(id == kortlek[i].kortnummer)
+        {
+            printf("\n");
+            printf("You have card:\n");
+            printf("Suite: %s\n",kortlek[i].farg);
+            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            break;
+        }
+    }
+}
+
+void ClearScreen(){
+#ifdef _WIN32
+    system("cls");
+#else //
+    system("clear");
+#endif // rest
+}
+
