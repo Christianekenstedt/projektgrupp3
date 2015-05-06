@@ -22,9 +22,7 @@ struct kort
 {
     char farg[20];
     int kortnummer; /*varje korts "ID"*/
-
     int kortvarde;  /*kortetsv√§rde*/
-
     bool upptagen;
 };typedef struct kort Kort;
 

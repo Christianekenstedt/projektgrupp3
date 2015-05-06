@@ -11,7 +11,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#define M1 (x>Chip1.x) && ( x < Chip1.y + Chip1.w ) && ( y > Chip1.y) && (y < Chip1.y + Chip1.h)
+
+
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
@@ -50,7 +51,7 @@ SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
-SDL_Rect Chip1;
+SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100;
 
 
 //=============================================MAIN==================================================
@@ -58,10 +59,30 @@ int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
     //Mark 1 
-    Chip1.y = 622;
+    Chip1.y = 732;
     Chip1.x = 3;
-    Chip1.w = 66;
-    Chip1.h = 680;
+    Chip1.w = 85;
+    Chip1.h = 68;
+    //Mark 5
+    Chip5.y = 732;
+    Chip5.x = 90;
+    Chip5.w = 85;
+    Chip5.h = 68;
+    //Mark 25
+    Chip25.y = 732;
+    Chip25.x = 180;
+    Chip25.w = 85;
+    Chip25.h = 68;
+    //Mark 50
+    Chip50.y = 732;
+    Chip50.x = 260;
+    Chip50.w = 85;
+    Chip50.h = 68;
+    //Mark 100
+    Chip100.y = 732;
+    Chip100.x = 350;
+    Chip100.w = 85;
+    Chip100.h = 68;
 
     //PlayButton
     PlayButton.y = 546;
@@ -74,35 +95,35 @@ int main( int argc, char* args[] ){
     ExitRect.w = 80;
     ExitRect.h = 40;
     // Bet Button
-    BetButton.y = 584;
-    BetButton.x = 54;
-    BetButton.w = 81;
-    BetButton.h = 56;
+    BetButton.y = 610;
+    BetButton.x = 38;
+    BetButton.w = 113;
+    BetButton.h = 90;
     // Clear Button
-    ClearButton.y = 584;
-    ClearButton.x = 640;
-    ClearButton.w = 86;
-    ClearButton.h = 56;
+    ClearButton.y = 610;
+    ClearButton.x = 155;
+    ClearButton.w = 113;
+    ClearButton.h = 90;
     // Hit Button
-    HitButton.y = 685;
-    HitButton.x = 968;
-    HitButton.w = 68;
-    HitButton.h = 53;
+    HitButton.y = 955;
+    HitButton.x = 721;
+    HitButton.w = 95;
+    HitButton.h = 79;
     // Stand Button
-    StandButton.y = 685;
-    StandButton.x = 1077;
-    StandButton.w = 74;
-    StandButton.h = 53;
+    StandButton.y = 1072;
+    StandButton.x = 721;
+    StandButton.w = 95;
+    StandButton.h = 79;
     // Double Button
-    DoubleButton.y = 485;
-    DoubleButton.x = 1180;
-    DoubleButton.w = 80;
-    DoubleButton.h = 40;
+    DoubleButton.y = 1178;
+    DoubleButton.x = 502;
+    DoubleButton.w = 95;
+    DoubleButton.h = 79;
     // Split Button
-    SplitButton.y = 580;
-    SplitButton.x = 1180;
-    SplitButton.w = 80;
-    SplitButton.h = 45;
+    SplitButton.y = 1178;
+    SplitButton.x = 607;
+    SplitButton.w = 95;
+    SplitButton.h = 79;
 
     //Event handler
     SDL_Event e;
@@ -134,7 +155,7 @@ int main( int argc, char* args[] ){
                 ClearScreen();
                 SDL_GetMouseState(&x,&y);
                 printf("x: %d\ny: %d\n",x,y);
-		//printf("Pott: %d\n",pott);
+                //printf("Pott: %d\n",pott);
                 //User requests quit
                 if( e.type == SDL_QUIT ){
                     quit = true;
@@ -187,17 +208,17 @@ int main( int argc, char* args[] ){
                         }
                 }else if(e.type == SDL_MOUSEBUTTONDOWN){
                         if(PLAYBUTTON){
-			    pott+=10;
+                            
                             frame=1;
                             window=1;
                         }else if(EXITBUTTON){
                             quit = true;
                         }else if(BETBUTTON){
-                            	pott += 10;
-				quit = true;
+                            
+                                quit = true;
                         }
                         else if(CLEARBUTTON){
-                            quit = true;
+                            pott = 0;
                         }
                         else if(HITBUTTON){
                             quit = true;
@@ -211,8 +232,20 @@ int main( int argc, char* args[] ){
                         else if(SPLITBUTTON){
                             quit = true;
                         }else if(M1){
-				printf("FUNKAR!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-			}
+                            pott += 1;
+                        }else if(M5){
+                            pott +=5;
+                            //printf("5!!!!!!!!!!!!!!!!!!!");
+                        }else if(M25){
+                            pott +=25;
+                            //printf("25!!!!!!!!");
+                        }else if(M50){
+                            pott +=50;
+                            //printf("50!!!!!!!!!");
+                        }else if(M100){
+                            pott +=100;
+                            // printf("100!!!!!!!!");
+                        }
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
                             frame=2;
@@ -225,12 +258,12 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
-                        SDL_RenderCopy(gRenderer, betTexture, NULL, &BetButton);
+                        /*SDL_RenderCopy(gRenderer, betTexture, NULL, &BetButton);
                         SDL_RenderCopy(gRenderer, clearTexture, NULL, &ClearButton);
                         SDL_RenderCopy(gRenderer, hitTexture, NULL, &HitButton);
                         SDL_RenderCopy(gRenderer, standTexture, NULL, &StandButton);
                         SDL_RenderCopy(gRenderer, doubleTexture, NULL, &DoubleButton);
-                        SDL_RenderCopy(gRenderer, splitTexture, NULL, &SplitButton);
+                        SDL_RenderCopy(gRenderer, splitTexture, NULL, &SplitButton);*/
                         SDL_RenderCopy(gRenderer, exitTexture, NULL, &ExitRect);
                         SDL_RenderPresent(gRenderer);
                         /*SDL_Delay(5000);
