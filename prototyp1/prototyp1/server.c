@@ -267,6 +267,7 @@ SDL_ThreadFunction* function(void* incsocket)
                 }
                 else if(strstr(buffer2, "exit")){
                     *(inc.clientsocket) = 0;
+                    inc.ready = 0;
                     SDLNet_TCP_Close(*(inc.socket));
 
 
@@ -318,6 +319,8 @@ SDL_ThreadFunction* function(void* incsocket)
                     }
                     inc.clientvalue = 0;
                     lose = false;
+                    playerturn--;
+                    inc.ready = 0;
                 }
 
 
