@@ -61,8 +61,8 @@ int main(int argc, char **argv)
         }
         printf("ready= %s\n",red);
         ready = atoi(red);
-        
-        while (ready)
+        //ready = 1;
+        while (ready==1)
         {
             printf("Hit or Stand> ");
             scanf("%s", buffer);
@@ -74,8 +74,10 @@ int main(int argc, char **argv)
                 exit(EXIT_FAILURE);
             }
             
-            if(strcmp(buffer, "exit") == 0)
+            if(strcmp(buffer, "exit") == 0){
                 quit = 1;
+                ready = 0;
+            }
             if(strcmp(buffer, "quit") == 0)
                 quit = 1;
             
@@ -85,7 +87,9 @@ int main(int argc, char **argv)
                 {
                     if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
                     {
+                        
                         ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
+                        printf("ID = %d", ID);
                         quit2 = 1;
                     }else{
                         fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
@@ -102,6 +106,7 @@ int main(int argc, char **argv)
                 printf("You stand at %d\n", myValue);
                 myValue = 0;
                 ready=0;
+                engang = true;
             }else if (strstr(buffer, "!help")){
                 
                 printf("##################    HELP   ############################\n\n");
@@ -117,6 +122,14 @@ int main(int argc, char **argv)
                 }
                 myValue = 0;
                 lose = false;
+                
+                myValue = 0;
+                ready=0;
+                engang = true;
+            }else if (myValue==21){
+                printf("You got blackjack!\n");
+                ready = 0;
+                myValue = 0;
             }
 
         }
@@ -127,6 +140,9 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-void klar(){
-    
-}
+/*void klar(){
+    if (SDLNet_TCP_Send(sd , "0", 1)<0) {
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+}*/
