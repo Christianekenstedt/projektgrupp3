@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "prototyp1/main.c"
-            timestampString = "452503249.603978"
+            timestampString = "452594920.620891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "main()"
             landmarkType = "7">
          </BreakpointContent>

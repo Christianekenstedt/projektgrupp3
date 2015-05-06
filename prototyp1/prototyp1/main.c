@@ -7,24 +7,11 @@
 //
 
 #include "multiOS.h"
+#include "clientFunctions.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
-struct playButton{
-    int xPos;
-    int yPos;
-    int wPos;
-    int hPos;
-};
-typedef struct playButton Play;
-struct exitButton{
-    int xPos;
-    int yPos;
-    int wPos;
-    int hPos;
-};
-typedef struct exitButton Exit;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
@@ -64,61 +51,56 @@ SDL_Renderer* gRenderer = NULL;
 SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
-SDL_Rect ExitRect;
+SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
+
 
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
 
-    Play button, BetButton, ClearButton, HitButton, StandButton, DoubleButton, SplitButton;
+    //PlayButton
+    PlayButton.y = 546;
+    PlayButton.x = 493;
+    PlayButton.w = 294;
+    PlayButton.h = 107;
 
-    SDL_Rect poss;
-    poss.y = 546;
-    poss.x = 493;
-    poss.w = 294;
-    poss.h = 107;
-
-    // Play Button
-    button.yPos = 546;
-    button.xPos = 493;
-    button.wPos = 252;
-    button.hPos = 107;
     // Exit Button
     ExitRect.y = 0;
     ExitRect.x = 0;
     ExitRect.w = 80;
     ExitRect.h = 40;
+    
     // Bet Button
-    BetButton.yPos = 584;
-    BetButton.xPos = 54;
-    BetButton.wPos = 81;
-    BetButton.hPos = 56;
+    BetButton.y = 584;
+    BetButton.x = 54;
+    BetButton.w = 81;
+    BetButton.h = 56;
     // Clear Button
-    ClearButton.yPos = 584;
-    ClearButton.xPos = 640;
-    ClearButton.wPos = 86;
-    ClearButton.hPos = 56;
+    ClearButton.y = 584;
+    ClearButton.x = 640;
+    ClearButton.w = 86;
+    ClearButton.h = 56;
     // Hit Button
-    HitButton.yPos = 685;
-    HitButton.xPos = 968;
-    HitButton.wPos = 68;
-    HitButton.hPos = 53;
+    HitButton.y = 685;
+    HitButton.x = 968;
+    HitButton.w = 68;
+    HitButton.h = 53;
     // Stand Button
-    StandButton.yPos = 685;
-    StandButton.xPos = 1077;
-    StandButton.wPos = 74;
-    StandButton.hPos = 53;
+    StandButton.y = 685;
+    StandButton.x = 1077;
+    StandButton.w = 74;
+    StandButton.h = 53;
     // Double Button
-    DoubleButton.yPos = 485;
-    DoubleButton.xPos = 1180;
-    DoubleButton.wPos = 80;
-    DoubleButton.hPos = 40;
+    DoubleButton.y = 485;
+    DoubleButton.x = 1180;
+    DoubleButton.w = 80;
+    DoubleButton.h = 40;
     // Split Button
-    SplitButton.yPos = 580;
-    SplitButton.xPos = 1180;
-    SplitButton.wPos = 80;
-    SplitButton.hPos = 45;
+    SplitButton.y = 580;
+    SplitButton.x = 1180;
+    SplitButton.w = 80;
+    SplitButton.h = 45;
 
     //Event handler
     SDL_Event e;
@@ -201,38 +183,38 @@ int main( int argc, char* args[] ){
                                 printf("Key LEFT\n");
                                 break;
                         }
-                    }else if(e.type == SDL_MOUSEBUTTONDOWN){
-                        if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){
+                }else if(e.type == SDL_MOUSEBUTTONDOWN){
+                        if(PLAYBUTTON){
                             frame=1;
                             window=1;
-                        }else if((x>ExitRect.x) && ( x < ExitRect.y + ExitRect.w ) && ( y > ExitRect.y) && (y < ExitRect.y + ExitRect.h)){
+                        }else if(EXITBUTTON){
                             quit = true;
-                        }else if((x>BetButton.xPos) && ( x < BetButton.yPos + BetButton.wPos ) && ( y > BetButton.yPos) && (y < BetButton.yPos + BetButton.hPos)){
-                            quit = true;
-                        }
-                        else if((x>ClearButton.xPos) && ( x < ClearButton.yPos + ClearButton.wPos) && ( y > ClearButton.yPos) && (y < ClearButton.yPos + ClearButton.hPos)){
+                        }else if(BETBUTTON){
                             quit = true;
                         }
-                        else if((x>HitButton.xPos) && ( x < HitButton.yPos + HitButton.wPos) && ( y > HitButton.yPos) && (y < HitButton.yPos + HitButton.hPos)){
+                        else if(CLEARBUTTON){
                             quit = true;
                         }
-                        else if((x>StandButton.xPos) && ( x < StandButton.yPos + StandButton.wPos) && ( y > StandButton.yPos) && (y < StandButton.yPos + StandButton.hPos)){
+                        else if(HITBUTTON){
                             quit = true;
                         }
-                        else if((x>DoubleButton.xPos) && ( x < DoubleButton.yPos + DoubleButton.wPos) && ( y > DoubleButton.yPos) && (y < DoubleButton.yPos + DoubleButton.hPos)){
+                        else if(STANDBUTTON){
                             quit = true;
                         }
-                        else if((x>SplitButton.xPos) && ( x < SplitButton.yPos + SplitButton.wPos) && ( y > SplitButton.yPos) && (y < SplitButton.yPos + SplitButton.hPos)){
+                        else if(DOUBLEBUTTON){
+                            quit = true;
+                        }
+                        else if(SPLITBUTTON){
                             quit = true;
                         }
                     }else if(e.type == SDL_MOUSEMOTION){
-                        if((x>button.xPos) && ( x < button.yPos + button.wPos ) && ( y > button.yPos) && (y < button.yPos + button.hPos)){ //Innanför knappen?
+                        if(PLAYBUTTON){ //Innanför knappen?
                             frame=2;
                         }
                     }
                     if(window == 0 ){
                         SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
-                        SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&poss);
+                        SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&PlayButton);
                         SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
@@ -294,13 +276,9 @@ bool loadMedia(){
 
     #ifdef _WIN32
     //Load splash image
-<<<<<<< Updated upstream
+
     table = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
-=======
-    gYouWon = IMG_Load("bilder\\ny_bord.png");
-    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
->>>>>>> Stashed changes
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
