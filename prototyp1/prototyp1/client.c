@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "gamelogic.h"
 #include "multiOS.h"
 
 
@@ -9,9 +10,13 @@ int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
     TCPsocket sd;		/* Socket descriptor */
-    int quit, quit2, len;
-    char buffer[512];
-
+    int quit, quit2, len, myValue=0, ready=0;
+    char buffer[512], red[1];
+    Kort kortlek[ANTALKORT]; // Deklarerar kortlek
+    bool lose = false;
+    
+    initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
+    
     /* Simple parameter checking */
     if (argc < 3)
     {
@@ -26,7 +31,7 @@ int main(int argc, char **argv)
     }
 
     /* Resolve the host we are connecting to */
-    if (SDLNet_ResolveHost(&ip, argv[1], atoi(argv[2])) < 0)
+    if (SDLNet_ResolveHost(&ip, argv[1], 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -39,38 +44,96 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    /* Send messages */
     quit = 0;
+    int ID=0;
+    bool engang = true;
     while (!quit)
     {
-        printf("Write something:\n>");
-        scanf("%s", buffer);
-
-        len = strlen(buffer) + 1;
-        if (SDLNet_TCP_Send(sd, (void *)buffer, len) < len)
-        {
-            fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        if (engang==true) {
+            ClearScreen();
+            printf("Waiting for your turn...\n");
+            engang = false;
+        }
+        
+        if ((SDLNet_TCP_Recv(sd , red, 1) < 0)) {
+            fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
             exit(EXIT_FAILURE);
         }
-
-        if(strcmp(buffer, "exit") == 0)
-            quit = 1;
-        if(strcmp(buffer, "quit") == 0)
-            quit = 1;
-
-       /* quit2 = 0; // FÖR RESPONS ENDAST!
-	      	while (!quit2)
+        printf("ready= %s\n",red);
+        ready = atoi(red);
+        //ready = 1;
+        while (ready)
+        {
+            printf("Hit or Stand> ");
+            scanf("%s", buffer);
+            
+            len = strlen(buffer) + 1;
+            if (SDLNet_TCP_Send(sd, (void *)buffer, len) < len)
             {
-                if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
+                fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+                exit(EXIT_FAILURE);
+            }
+            
+            if(strcmp(buffer, "exit") == 0)
+                quit = 1;
+            if(strcmp(buffer, "quit") == 0)
+                quit = 1;
+            
+            quit2 = 0; // FÖR RESPONS ENDAST!
+            if (strstr(buffer,"card") || strstr(buffer,"hit")) {
+                while (!quit2)
                 {
-                    printf("server answer: %s\n", buffer);
-                    quit2 = 1;
+                    if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
+                    {
+                        
+                        ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
+                        printf("ID = %d", ID);
+                        quit2 = 1;
+                    }else{
+                        fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+                        exit(EXIT_FAILURE);
+                    }
                 }
-            }*/
-    }
+                IdToCard(ID, kortlek);
+                myValue += IdToValue(ID,kortlek);
+                printf("You have a total of %d\n",myValue);
+                if (myValue > 21) {
+                    lose = true;
+                }
+            }else if(strstr(buffer,"stand")){
+                printf("You stand at %d\n", myValue);
+                myValue = 0;
+                ready=0;
+                engang = true;
+            }else if (strstr(buffer, "!help")){
+                
+                printf("##################    HELP   ############################\n\n");
+                printf("PLAY COMMANDS\nhit/card to ask for a new card.\nstand to stop your round.\n\nSERVER COMMANDS\n");
+                printf("exit to safely disconnect.\nquit to terminate the server.\n\n");
+                printf("################## HELP 1 (1) ###########################\n\n");
+            }
+            
+            if (lose) {
+                printf("You lose!\n");
+                if (myValue>21) {
+                    printf("Bust\n");
+                }
+                myValue = 0;
+                lose = false;
+            }
 
+        }
+        printf("UTE Ready = 0\n");
+    }
     SDLNet_TCP_Close(sd);
     SDLNet_Quit();
 
     return EXIT_SUCCESS;
 }
+
+/*void klar(){
+    if (SDLNet_TCP_Send(sd , "0", 1)<0) {
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+}*/

@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../prototyp1" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -30,7 +31,28 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="../../../SDL2/SDL2_image-2.0.0/i686-w64-mingw32/include/SDL2" />
+			<Add directory="../../../SDL2/SDL2_mixer-2.0.0/i686-w64-mingw32/include/SDL2" />
+			<Add directory="../../../SDL2/SDL2_net-2.0.0/i686-w64-mingw32/include/SDL2" />
+			<Add directory="../../../SDL2/SDL2_ttf-2.0.12/i686-w64-mingw32/include/SDL2" />
+			<Add directory="../../../SDL2/SDL2-2.0.3/i686-w64-mingw32/include/SDL2" />
 		</Compiler>
+		<Linker>
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_net -lSDL2_mixer -lSDL2_ttf" />
+			<Add directory="../../../SDL2/SDL2_image-2.0.0/i686-w64-mingw32/lib" />
+			<Add directory="../../../SDL2/SDL2_mixer-2.0.0/i686-w64-mingw32/lib" />
+			<Add directory="../../../SDL2/SDL2_net-2.0.0/i686-w64-mingw32/lib" />
+			<Add directory="../../../SDL2/SDL2_ttf-2.0.12/i686-w64-mingw32/lib" />
+			<Add directory="../../../SDL2/SDL2-2.0.3/i686-w64-mingw32/lib" />
+		</Linker>
+		<Unit filename="../prototyp1/gamelogic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../prototyp1/gamelogic.h" />
+		<Unit filename="../prototyp1/multiOS.h" />
+		<Unit filename="../prototyp1/server.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
