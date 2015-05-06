@@ -61,7 +61,7 @@ int main(int argc, char **argv)
         }
         printf("ready= %s\n",red);
         ready = atoi(red);
-        
+        //ready = 1;
         while (ready)
         {
             printf("Hit or Stand> ");
@@ -85,7 +85,9 @@ int main(int argc, char **argv)
                 {
                     if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
                     {
+                        
                         ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
+                        printf("ID = %d", ID);
                         quit2 = 1;
                     }else{
                         fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
@@ -102,6 +104,7 @@ int main(int argc, char **argv)
                 printf("You stand at %d\n", myValue);
                 myValue = 0;
                 ready=0;
+                engang = true;
             }else if (strstr(buffer, "!help")){
                 
                 printf("##################    HELP   ############################\n\n");
@@ -120,6 +123,7 @@ int main(int argc, char **argv)
             }
 
         }
+        printf("UTE Ready = 0\n");
     }
     SDLNet_TCP_Close(sd);
     SDLNet_Quit();
@@ -127,6 +131,9 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-void klar(){
-    
-}
+/*void klar(){
+    if (SDLNet_TCP_Send(sd , "0", 1)<0) {
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+}*/

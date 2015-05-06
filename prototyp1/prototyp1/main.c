@@ -294,8 +294,13 @@ bool loadMedia(){
 
     #ifdef _WIN32
     //Load splash image
+<<<<<<< Updated upstream
     table = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
+=======
+    gYouWon = IMG_Load("bilder\\ny_bord.png");
+    bYouWon = SDL_CreateTextureFromSurface(gRenderer, gYouWon);
+>>>>>>> Stashed changes
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
