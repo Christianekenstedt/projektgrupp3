@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#define M1 (x>Chip1.x) && ( x < Chip1.y + Chip1.w ) && ( y > Chip1.y) && (y < Chip1.y + Chip1.h)
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1024;
@@ -49,13 +50,18 @@ SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
-
+SDL_Rect Chip1;
 
 
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
+    //Mark 1 
+    Chip1.y = 622;
+    Chip1.x = 3;
+    Chip1.w = 66;
+    Chip1.h = 680;
 
     //PlayButton
     PlayButton.y = 546;
@@ -120,7 +126,7 @@ int main( int argc, char* args[] ){
 
     bool quit = false;
     int x=0, y=0;
-
+    int pott =0;
     while( !quit ){
                 frame = 0;
             //Handle events on queue
@@ -128,7 +134,7 @@ int main( int argc, char* args[] ){
                 ClearScreen();
                 SDL_GetMouseState(&x,&y);
                 printf("x: %d\ny: %d\n",x,y);
-
+		//printf("Pott: %d\n",pott);
                 //User requests quit
                 if( e.type == SDL_QUIT ){
                     quit = true;
@@ -181,12 +187,14 @@ int main( int argc, char* args[] ){
                         }
                 }else if(e.type == SDL_MOUSEBUTTONDOWN){
                         if(PLAYBUTTON){
+			    pott+=10;
                             frame=1;
                             window=1;
                         }else if(EXITBUTTON){
                             quit = true;
                         }else if(BETBUTTON){
-                            quit = true;
+                            	pott += 10;
+				quit = true;
                         }
                         else if(CLEARBUTTON){
                             quit = true;
@@ -202,7 +210,9 @@ int main( int argc, char* args[] ){
                         }
                         else if(SPLITBUTTON){
                             quit = true;
-                        }
+                        }else if(M1){
+				printf("FUNKAR!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+			}
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
                             frame=2;
