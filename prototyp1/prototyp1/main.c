@@ -14,8 +14,8 @@
 #define M1 (x>Chip1.x) && ( x < Chip1.y + Chip1.w ) && ( y > Chip1.y) && (y < Chip1.y + Chip1.h)
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 680;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 800;
 
 void ClearScreen();
 //Starts up SDL and creates window
