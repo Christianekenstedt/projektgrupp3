@@ -19,7 +19,7 @@
 #include <SDL2_ttf/SDL_ttf.h>
 #endif
 /* Windows*/
-#ifdef OS_WINDOWS
+#ifdef _WIN32
 #include "SDL.h"
 #include "SDL_net.h"
 #include "SDL_image.h"

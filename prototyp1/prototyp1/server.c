@@ -1,7 +1,7 @@
 #include "multiOS.h"
 #include "gamelogic.h"
+#define MAXCLIENTS 6
 
-#define Killitmotherfucker 0
 
 typedef struct stringinfo{
     TCPsocket* socket;
@@ -51,8 +51,9 @@ static int threadFunction(void *ptr){
 SDL_ThreadFunction* function(void* incsocket);
 >>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
 
-int main ()
+int main (int argc, char *argv[])
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
     TCPsocket sd; //csd; /* Socket descriptor, Client socket descriptor */
     IPaddress ip, *remoteIP;
@@ -64,12 +65,17 @@ int main ()
 =======
     
     TCPsocket Listensock, Clientsock[10];
+=======
+
+    TCPsocket Listensock, Clientsock[MAXCLIENTS];
+>>>>>>> 3fda9495a90b586452bf3b8d54a44b86ef229d42
     IPaddress* ip;
-    sinfo motherfucker[10];
+    sinfo clientvalue[10];
+
     int quit = 0, ClientNumber;
-/* */
+/* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
     srand(time(NULL));
-/* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ########################################*/
+/* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ######################################## */
     if(SDLNet_Init() < 0)
 >>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
     {
@@ -77,11 +83,15 @@ int main ()
         exit(EXIT_FAILURE);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     /* Resolving the host using NULL make network interface to listen */
     if (SDLNet_ResolveHost(&ip, NULL, 2000) < 0)
 =======
     
+=======
+
+>>>>>>> 3fda9495a90b586452bf3b8d54a44b86ef229d42
     if(SDLNet_ResolveHost(&ip, NULL, 2000) < 0)
 >>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
     {
@@ -89,17 +99,22 @@ int main ()
         exit(EXIT_FAILURE);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     /* Open a connection with the IP provided (listen on the host's port) */
     if (!(sd = SDLNet_TCP_Open(&ip)))
 =======
     
+=======
+
+>>>>>>> 3fda9495a90b586452bf3b8d54a44b86ef229d42
     if(((Listensock = SDLNet_TCP_Open(&ip)) == NULL))
 >>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     /* Wait for a connection, send data and term */
@@ -155,18 +170,31 @@ int main ()
             motherfucker[ClientNumber].clientnumber = ClientNumber;
             motherfucker[ClientNumber].socket = &Clientsock[ClientNumber];
             SDL_DetachThread(SDL_CreateThread(function, "TheThreadOfDoom", (void*)&motherfucker[ClientNumber]));
+=======
+
+    ClientNumber = 0;
+
+    while(ClientNumber < MAXCLIENTS)
+    {
+        if((Clientsock[ClientNumber] = SDLNet_TCP_Accept(Listensock)))
+        {
+            clientvalue[ClientNumber].quit = &quit;
+            clientvalue[ClientNumber].clientnumber = ClientNumber;
+            clientvalue[ClientNumber].socket = &Clientsock[ClientNumber];
+            SDL_DetachThread(SDL_CreateThread(function, "Client", (void*)&clientvalue[ClientNumber]));
+>>>>>>> 3fda9495a90b586452bf3b8d54a44b86ef229d42
             ClientNumber++;
         }
     }
     while(!quit){
         SDL_Delay(100);
     }
-    
+
     SDLNet_TCP_Close(Listensock);
     SDLNet_Quit();
-    
-    return Killitmotherfucker;
-    
+
+    return 0;
+
 }
 
 
@@ -174,20 +202,22 @@ SDL_ThreadFunction* function(void* incsocket)
 {
     sinfo inc = *((sinfo*)incsocket);
     char buffer2[512];
-    
+
     while((*(inc.quit)) != 1)
     {
         if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
         {
+            printf("Client%d say: %s\n", inc.clientnumber, buffer2);
             if(strstr(buffer2, "quit"))
             {
                 *(inc.quit) = 1;
+                printf("Client %d disconnected!\n", inc.clientnumber);
             }
-            printf("Client%d say: %s\n", inc.clientnumber, buffer2);
+
         }
         else SDL_Delay(200);
     }
-    
+
     SDLNet_TCP_Close(*(inc.socket));
     return 0;
 >>>>>>> 7ce2e83f1d585956ce3bec9a01b25172ed5f26ee
