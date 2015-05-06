@@ -62,7 +62,7 @@ int main(int argc, char **argv)
         printf("ready= %s\n",red);
         ready = atoi(red);
         //ready = 1;
-        while (ready)
+        while (ready==1)
         {
             printf("Hit or Stand> ");
             scanf("%s", buffer);
@@ -74,8 +74,10 @@ int main(int argc, char **argv)
                 exit(EXIT_FAILURE);
             }
             
-            if(strcmp(buffer, "exit") == 0)
+            if(strcmp(buffer, "exit") == 0){
                 quit = 1;
+                ready = 0;
+            }
             if(strcmp(buffer, "quit") == 0)
                 quit = 1;
             
@@ -120,10 +122,13 @@ int main(int argc, char **argv)
                 }
                 myValue = 0;
                 lose = false;
+                
+                myValue = 0;
+                ready=0;
+                engang = true;
             }
 
         }
-        printf("UTE Ready = 0\n");
     }
     SDLNet_TCP_Close(sd);
     SDLNet_Quit();
