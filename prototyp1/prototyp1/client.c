@@ -126,6 +126,10 @@ int main(int argc, char **argv)
                 myValue = 0;
                 ready=0;
                 engang = true;
+            }else if (myValue==21){
+                printf("You got blackjack!\n");
+                ready = 0;
+                myValue = 0;
             }
 
         }
