@@ -245,20 +245,8 @@ SDL_ThreadFunction* function(void* incsocket)
             {
                 if(strstr(buffer2,"stand"))
                 {
-                    //printf("1. Trad: playersturn = %d\n",playerturn);
-                    //system("pause");
-                    //*inc.playerturn++;
-                    playerturn--; //sätts till ledig
-                    //printf("2. Trad: playersturn = %d\n",playerturn);
-                    //if(inc.playerturn == 5)
-                    //{
-                        //*inc.playerturn = 0;
-                        //fyllTradar(0,sinfo);
-                    //}
+                    playerturn--;
                     inc.ready = 0;
-                    //SDL_Delay(100);
-                    //system("pause");
-                    //break;
                 }
                 if(strstr(buffer2, "quit"))
                 {
@@ -294,9 +282,6 @@ SDL_ThreadFunction* function(void* incsocket)
                         fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
                         //exit(EXIT_FAILURE);
                     }
-
-
-
                     IdToCard(ID,kortlek); //visar på skärmen en spelares spelbord
 
                     inc.clientvalue = inc.clientvalue + IdToValue(ID,kortlek);
@@ -322,6 +307,12 @@ SDL_ThreadFunction* function(void* incsocket)
                     playerturn--;
                     inc.ready = 0;
                 }
+                else if(inc.clientvalue == 21)
+                {
+                    printf("Client [%d] got Blackjack\n");
+                    inc.ready = 0;
+                    playerturn--;
+                }
 
 
             }else SDL_Delay(200);
@@ -330,10 +321,3 @@ SDL_ThreadFunction* function(void* incsocket)
     }
     return 0;
 }
-
-/*void fyllTradar(int value, sinfo clientvalue[]){
-    int i = 0;
-    for(i=0;i<MAXCLIENTS;i++){
-        clientvalue[i].playerturn = value;
-    }
-}*/
