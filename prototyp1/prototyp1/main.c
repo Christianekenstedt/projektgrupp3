@@ -51,10 +51,14 @@ SDL_Renderer* gRenderer = NULL;
 SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
+<<<<<<< HEAD
+SDL_Rect ExitRect;
+=======
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100;
 
 
+>>>>>>> origin/master
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
@@ -308,7 +312,6 @@ bool init(){
         fprintf(stderr,"SDL_CreateRenderer: %s\n", SDL_GetError());
         success = false;
     }
-    return success;
 }
 //============================================LOAD MEDIA================================================
 bool loadMedia(){
@@ -367,10 +370,6 @@ bool loadMedia(){
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
-    if( (gXOut == NULL) || (gPlayButton == NULL)){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.png", SDL_GetError() );
-        success = false;
-    }
     //Load music
     gMusic = Mix_LoadMUS( "musik/bg.wav" );
     if( gMusic == NULL ){
