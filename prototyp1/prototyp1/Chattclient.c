@@ -10,11 +10,18 @@ typedef struct Reciveinfo
   SDLNet_SocketSet sset;
 }Rinfo;
 
-SDL_ThreadFunction* function(void* incinfo);
+int function(void* incinfo);
 
 int main(int argc, char **argv)
 {
+<<<<<<< HEAD
   IPaddress ip;		// Server address
+=======
+<<<<<<< HEAD
+  IPaddress ip;		// Server address
+=======
+>>>>>>> origin/master
+>>>>>>> origin/master
   TCPsocket sd;		// Socket descriptor
   int quit, len;
   char buffer[512];
@@ -104,7 +111,7 @@ int main(int argc, char **argv)
   return EXIT_SUCCESS;
 }
 
-SDL_ThreadFunction* function(void* incinfo)
+int function(void* incinfo)
 {
   Rinfo* inc = (Rinfo*)incinfo;
   char buffer2[512];
