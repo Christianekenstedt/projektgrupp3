@@ -422,7 +422,6 @@ void closeW(){
     //Destroy window
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
-    
 
     //Quit SDL subsystems
     SDL_Quit();
