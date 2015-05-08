@@ -14,10 +14,7 @@ int function(void* incinfo);
 
 int main(int argc, char **argv)
 {
-<<<<<<< HEAD
   IPaddress ip;		// Server address
-=======
->>>>>>> origin/master
   TCPsocket sd;		// Socket descriptor
   int quit, len;
   char buffer[512];
