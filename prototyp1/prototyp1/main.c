@@ -15,11 +15,11 @@
 
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 680;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 800;
 
 
-//void ClearScreen();
+void ClearScreen();
 //Starts up SDL and creates window
 bool init();
 //Loads media
@@ -37,6 +37,7 @@ SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* gPlayButton = NULL;
 SDL_Surface* gExitButton = NULL;
+SDL_Surface* table = NULL;
 SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
 SDL_Texture* exitTexture = NULL;
@@ -50,23 +51,21 @@ SDL_Renderer* gRenderer = NULL;
 SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
-//<<<<<<< HEAD
-SDL_Rect ExitRect;
-//=======
+
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100;
 
 
-//>>>>>>> origin/master
+
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
     //Mark 1
-    Chip1.y = 732;
-    Chip1.x = 3;
-    Chip1.w = 85;
-    Chip1.h = 68;
+    Chip1.y = 694;
+    Chip1.x = 14;
+    Chip1.w = 61;
+    Chip1.h = 47;
     //Mark 5
     Chip5.y = 732;
     Chip5.x = 90;
@@ -262,6 +261,12 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
+                        /*SDL_RenderCopy(gRenderer, betTexture, NULL, &BetButton);
+                        SDL_RenderCopy(gRenderer, clearTexture, NULL, &ClearButton);
+                        SDL_RenderCopy(gRenderer, hitTexture, NULL, &HitButton);
+                        SDL_RenderCopy(gRenderer, standTexture, NULL, &StandButton);
+                        SDL_RenderCopy(gRenderer, doubleTexture, NULL, &DoubleButton);
+                        SDL_RenderCopy(gRenderer, splitTexture, NULL, &SplitButton);*/
                         SDL_RenderCopy(gRenderer, exitTexture, NULL, &ExitRect);
                         SDL_RenderPresent(gRenderer);
                         /*SDL_Delay(5000);
@@ -314,7 +319,7 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
-SDL_Surface* table = IMG_Load("bilder\\TABLE.png");
+    table = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
