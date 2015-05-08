@@ -158,7 +158,7 @@ int main( int argc, char* args[] ){
                 //ClearScreen();
                 SDL_GetMouseState(&x,&y);
                 printf("x: %d\ny: %d\n",x,y);
-                //printf("Pott: %d\n",pott);
+                printf("Pott: %d\n",pott);
                 //User requests quit
                 if( e.type == SDL_QUIT ){
                     quit = true;
