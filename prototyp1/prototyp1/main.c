@@ -37,7 +37,6 @@ SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* gPlayButton = NULL;
 SDL_Surface* gExitButton = NULL;
-SDL_Surface* table = NULL;
 SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
 SDL_Texture* exitTexture = NULL;
@@ -263,12 +262,6 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
-                        /*SDL_RenderCopy(gRenderer, betTexture, NULL, &BetButton);
-                        SDL_RenderCopy(gRenderer, clearTexture, NULL, &ClearButton);
-                        SDL_RenderCopy(gRenderer, hitTexture, NULL, &HitButton);
-                        SDL_RenderCopy(gRenderer, standTexture, NULL, &StandButton);
-                        SDL_RenderCopy(gRenderer, doubleTexture, NULL, &DoubleButton);
-                        SDL_RenderCopy(gRenderer, splitTexture, NULL, &SplitButton);*/
                         SDL_RenderCopy(gRenderer, exitTexture, NULL, &ExitRect);
                         SDL_RenderPresent(gRenderer);
                         /*SDL_Delay(5000);
@@ -321,7 +314,7 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
-    table = IMG_Load("bilder\\TABLE.png");
+SDL_Surface* table = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
