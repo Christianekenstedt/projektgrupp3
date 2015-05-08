@@ -61,7 +61,13 @@
 	<stdbool.h>
 	<string.h>
 
-1431089712 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1430921881 D
+
+1431104560 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+	"multiOS.h"
+	"gamelogic.h"
+
+1430922627 ent of cfef331... Server
 	"multiOS.h"
 	"gamelogic.h"
 
