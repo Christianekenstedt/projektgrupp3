@@ -51,19 +51,19 @@ SDL_Renderer* gRenderer = NULL;
 SDL_Texture* btable = NULL;
 
 SDL_Rect gSpriteClips[3];
-<<<<<<< HEAD
+//<<<<<<< HEAD
 SDL_Rect ExitRect;
-=======
+//=======
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100;
 
 
->>>>>>> origin/master
+//>>>>>>> origin/master
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
-    //Mark 1 
+    //Mark 1
     Chip1.y = 732;
     Chip1.x = 3;
     Chip1.w = 85;
@@ -157,7 +157,7 @@ int main( int argc, char* args[] ){
                 frame = 0;
             //Handle events on queue
             while( SDL_PollEvent( &e ) != 0 ){
-                ClearScreen();
+                //ClearScreen();
                 SDL_GetMouseState(&x,&y);
                 printf("x: %d\ny: %d\n",x,y);
                 //printf("Pott: %d\n",pott);
@@ -213,13 +213,13 @@ int main( int argc, char* args[] ){
                         }
                 }else if(e.type == SDL_MOUSEBUTTONDOWN){
                         if(PLAYBUTTON){
-                            
+
                             frame=1;
                             window=1;
                         }else if(EXITBUTTON){
                             quit = true;
                         }else if(BETBUTTON){
-                            
+
                                 quit = true;
                         }
                         else if(CLEARBUTTON){
@@ -286,7 +286,7 @@ int main( int argc, char* args[] ){
 bool init(){
     //Initialization flag
     bool success = true;
-    
+
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 ){
         printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
@@ -317,10 +317,10 @@ bool init(){
 bool loadMedia(){
     //Loading success flag
     bool success = true;
-    
+
 #ifdef _WIN32
     //Load splash image
-    
+
     table = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
@@ -339,22 +339,22 @@ bool loadMedia(){
     gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
-    
+
     gSpriteClips[ 0 ].x = 0;
     gSpriteClips[ 0 ].y = 0;
     gSpriteClips[ 0 ].w = 294;
     gSpriteClips[ 0 ].h = 107;
-    
+
     gSpriteClips[ 1 ].x = 0;
     gSpriteClips[ 1 ].y = 107;
     gSpriteClips[ 1 ].w = 294;
     gSpriteClips[ 1 ].h = 107;
-    
+
     gSpriteClips[ 2 ].x = 0;
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
-    
+
     gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
@@ -364,7 +364,7 @@ bool loadMedia(){
     }
     return success;
 #else
-    
+
     //Load splash image
     table = IMG_Load("bilder/TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
@@ -377,26 +377,26 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-    
+
     SDL_Surface* gPlayButton = IMG_Load("bilder/testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
-    
+
     gSpriteClips[ 0 ].x = 0;
     gSpriteClips[ 0 ].y = 0;
     gSpriteClips[ 0 ].w = 294;
     gSpriteClips[ 0 ].h = 107;
-    
+
     gSpriteClips[ 1 ].x = 0;
     gSpriteClips[ 1 ].y = 107;
     gSpriteClips[ 1 ].w = 294;
     gSpriteClips[ 1 ].h = 107;
-    
+
     gSpriteClips[ 2 ].x = 0;
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
-    
+
     gExitButton = SDL_LoadBMP("bilder/EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
@@ -404,7 +404,7 @@ bool loadMedia(){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/EXIT.bmp", SDL_GetError() );
         success = false;
     }
-    
+
     return success;
 #endif
 }
@@ -414,15 +414,16 @@ void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
-    
+
     //Free the music
     Mix_FreeMusic( gMusic );
     gMusic = NULL;
-    
+
     //Destroy window
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
     
+
     //Quit SDL subsystems
     SDL_Quit();
 }
