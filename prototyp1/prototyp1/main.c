@@ -62,10 +62,10 @@ int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
     //Mark 1
-    Chip1.y = 732;
-    Chip1.x = 3;
-    Chip1.w = 85;
-    Chip1.h = 68;
+    Chip1.y = 694;
+    Chip1.x = 14;
+    Chip1.w = 61;
+    Chip1.h = 47;
     //Mark 5
     Chip5.y = 732;
     Chip5.x = 90;
@@ -155,7 +155,7 @@ int main( int argc, char* args[] ){
                 frame = 0;
             //Handle events on queue
             while( SDL_PollEvent( &e ) != 0 ){
-                ClearScreen();
+                //ClearScreen();
                 SDL_GetMouseState(&x,&y);
                 printf("x: %d\ny: %d\n",x,y);
                 //printf("Pott: %d\n",pott);
