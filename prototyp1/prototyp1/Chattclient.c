@@ -14,6 +14,7 @@ SDL_ThreadFunction* function(void* incinfo);
 
 int main(int argc, char **argv)
 {
+  IPaddress ip;		// Server address
   TCPsocket sd;		// Socket descriptor
   int quit, len;
   char buffer[512];
