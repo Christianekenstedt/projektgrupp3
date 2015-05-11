@@ -61,7 +61,13 @@
 	<stdbool.h>
 	<string.h>
 
-1431009015 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1430921881 D
+
+1431104560 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+	"multiOS.h"
+	"gamelogic.h"
+
+1430922627 ent of cfef331... Server
 	"multiOS.h"
 	"gamelogic.h"
 
@@ -84,7 +90,7 @@
 	"multiOS.h"
 	"gamelogic.h"
 
-1430246975 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\multios.h
+1430833909 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\multios.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_timer.h>
 	<SDL2/SDL_thread.h>
@@ -503,4 +509,20 @@
 	<stdlib.h>
 	<string.h>
 	<stdbool.h>
+
+1430954379 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+	"clientFunctions.h"
+	"multiOS.h"
+
+1430954379 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+	<stdio.h>
+	<stdbool.h>
+	"multiOS.h"
+
+1431074156 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\main.c
+	"multiOS.h"
+	"clientFunctions.h"
+	<stdio.h>
+	<stdbool.h>
+	<string.h>
 
