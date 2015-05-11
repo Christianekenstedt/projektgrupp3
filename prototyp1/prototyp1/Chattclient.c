@@ -120,4 +120,5 @@ SDL_ThreadFunction* function(void* incinfo)
 	}
     }
   SDLNet_TCP_Close(inc->SD);
+    return 0;
 }

@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */; };
 		AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */; };
-		AA9D95961AFA31E0003873AF /* client.c in Sources */ = {isa = PBXBuildFile; fileRef = AA2069511AE7A04700626976 /* client.c */; };
-		AA9D95971AFA31E0003873AF /* gamelogic.c in Sources */ = {isa = PBXBuildFile; fileRef = AA8020081AEF7F6E00328A30 /* gamelogic.c */; };
+		AA8F3D351AFCB9E100A0635D /* Chattclient.c in Sources */ = {isa = PBXBuildFile; fileRef = AA8F3D341AFCB9E100A0635D /* Chattclient.c */; };
 		AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F981ADFE71E009DE13C /* SDL2_image.framework */; };
 		AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F991ADFE71E009DE13C /* SDL2_net.framework */; };
 		AAF82F9D1ADFE71E009DE13C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F9A1ADFE71E009DE13C /* SDL2.framework */; };
@@ -35,6 +34,8 @@
 		AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
 		AA8020081AEF7F6E00328A30 /* gamelogic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gamelogic.c; sourceTree = "<group>"; };
 		AA8020091AEF7F6E00328A30 /* gamelogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamelogic.h; sourceTree = "<group>"; };
+		AA8F3D321AFCB9B400A0635D /* Chattclient.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = Chattclient.c; path = prototyp1/Chattclient.c; sourceTree = "<group>"; };
+		AA8F3D341AFCB9E100A0635D /* Chattclient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Chattclient.c; sourceTree = "<group>"; };
 		AA9D95931AFA0CA4003873AF /* clientFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clientFunctions.c; sourceTree = "<group>"; };
 		AA9D95941AFA0CA4003873AF /* clientFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clientFunctions.h; sourceTree = "<group>"; };
 		AAF82F8E1ADFE6A1009DE13C /* prototyp1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prototyp1; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +65,7 @@
 		AAF82F851ADFE6A0009DE13C = {
 			isa = PBXGroup;
 			children = (
+				AA8F3D321AFCB9B400A0635D /* Chattclient.c */,
 				AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */,
 				AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */,
 				AAF82F981ADFE71E009DE13C /* SDL2_image.framework */,
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				AA9D95931AFA0CA4003873AF /* clientFunctions.c */,
+				AA8F3D341AFCB9E100A0635D /* Chattclient.c */,
 				AA9D95941AFA0CA4003873AF /* clientFunctions.h */,
 				AA2069511AE7A04700626976 /* client.c */,
 				AAF82F911ADFE6A1009DE13C /* main.c */,
@@ -153,8 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA9D95961AFA31E0003873AF /* client.c in Sources */,
-				AA9D95971AFA31E0003873AF /* gamelogic.c in Sources */,
+				AA8F3D351AFCB9E100A0635D /* Chattclient.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
