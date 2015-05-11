@@ -1,19 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define MAXCLIENTS 5
 #include "gamelogic.h"
 #include "multiOS.h"
 
+typedef struct Reciveinfo
+{
+    TCPsocket SD;
+    int* quit;
+    SDLNet_SocketSet set;
+}Rinfo;
 
+TCPsocket sd;		/* Socket descriptor */
+
+int tableInfo[MAXCLIENTS][15];
+int reciveInfo(void* info);
 int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
-    TCPsocket sd;		/* Socket descriptor */
+
     int quit, quit2, len, myValue=0, ready=0;
     char buffer[512], red[1];
     Kort kortlek[ANTALKORT]; // Deklarerar kortlek
     bool lose = false;
+    Rinfo recive;
+    
+    recive.set = SDLNet_AllocSocketSet(1);
+    SDLNet_AddSocket(recive.set, sd);
+    recive.quit = &quit;
+    //SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
@@ -139,10 +155,22 @@ int main(int argc, char **argv)
 
     return EXIT_SUCCESS;
 }
-
-/*void klar(){
-    if (SDLNet_TCP_Send(sd , "0", 1)<0) {
-        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-        exit(EXIT_FAILURE);
+int reciveInfo(void* info){
+    Rinfo* recive = (Rinfo*) info;
+    char buffer[512]={0};
+    int temp=0;
+    while(!*(recive->quit))
+    {
+        if((temp = SDLNet_CheckSockets(recive->set, 0))>0) {
+            printf("Oj nu finns det info!\n");
+        }else if(temp == -1){
+            fprintf(stderr, "SDLNet_CheckSockets: %s\n",SDLNet_GetError());
+        }
+        else{
+            //printf("Inget att hämta!\n");
+        }
+        
     }
-}*/
+    SDLNet_TCP_Close(sd);
+    return 0;
+}
