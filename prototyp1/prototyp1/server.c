@@ -8,12 +8,12 @@ typedef struct stringinfo{
     int* quit, clientnumber,* clientsocket;
     int clientvalue; //klientes sammalagda kortvärde
     int *ready;
-
+    int *recive;
 }sinfo;
 
 Kort kortlek[ANTALKORT];
 int playerturn = MAXCLIENTS-1;
-int player_card[MAXCLIENTS+1][15];
+int player_card[MAXCLIENTS+1][MAXCARDS];
 
 SDL_ThreadFunction* function(void* incsocket);
 void gameInit(Kort kortlek[]);
@@ -25,7 +25,7 @@ int main (int argc, char *argv[])
     IPaddress* ip;
     sinfo clientvalue[MAXCLIENTS];
     int quit = 0, ClientNumber=0;
-    int freeslots[MAXCLIENTS]={0}, i;
+    int freeslots[MAXCLIENTS]={0}, i, j;
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
 
     srand(time(NULL));
@@ -50,12 +50,14 @@ int main (int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    for(i=0;i<MAXCLIENTS;i++){
+    for(i=0;i<MAXCLIENTS;i++){ //initierar allt
         clientvalue[i].clientsocket=0;
         clientvalue[i].ready = 0;
+        clientvalue[i].recive = 1;
     }
     while(ClientNumber < MAXCLIENTS+1)
     {
+
         for (i=0; i<MAXCLIENTS; i++) {
             if(freeslots[i] == 0){
                 ClientNumber = i;
@@ -92,7 +94,33 @@ int main (int argc, char *argv[])
         {
             playerturn = MAXCLIENTS-1;
         }
+        for(i = 0;i<MAXCLIENTS;i++)
+        {
+            //printf("recive =%d, i = %d\n",clientvalue[i].recive,i);
+            //system("pause");
+            if(clientvalue[i].recive == 1)
+            {
+                printf("1.\n");
+
+                for(j = 0;j<MAXCLIENTS;j++)
+                {
+                    if(clientvalue[j].clientsocket == 1)
+                    {
+                        printf("2.\n");
+                        system("pause");
+                        if(SDLNet_TCP_Send(clientvalue[j].socket, player_card ,sizeof(player_card)) < 0)
+                        {
+                            fprintf(stderr, "SDLNet_TCP_send: %s\n", SDLNet_GetError());
+                            exit(EXIT_FAILURE);
+                        }
+                    }
+                }
+                //clientvalue[i].recive = 0;
+            }
+        }
+
     }
+
     printf("exit from while\n");
 
     SDLNet_TCP_Close(Listensock);
@@ -131,6 +159,8 @@ SDL_ThreadFunction* function(void* incsocket)
             }
             if(SDLNet_TCP_Recv((*(inc.socket)), buffer2, 512) > 0)
             {
+                inc.recive = 1;
+                printf("inc.reciv i tråden: %d\n",inc.recive);
                 if(strstr(buffer2,"stand"))
                 {
                     PlayerCardInfo(1);
@@ -227,7 +257,7 @@ void PlayerCardInfo(int option)
         {
             if(option == 0)
             {
-                player_card[i][j] = NULL;
+                player_card[i][j] = -1;
             }
             else if(option == 1)
             {
