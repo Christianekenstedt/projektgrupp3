@@ -14,7 +14,7 @@ typedef struct Reciveinfo
 
 TCPsocket sd;		/* Socket descriptor */
 
-int tableInfo[MAXCLIENTS][15];
+int tableInfo[MAXCLIENTS+1][15];
 int reciveInfo(void* info);
 int main(int argc, char **argv)
 {
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     recive.set = SDLNet_AllocSocketSet(1);
     SDLNet_AddSocket(recive.set, sd);
     recive.quit = &quit;
-    //SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
+    SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
@@ -157,18 +157,38 @@ int main(int argc, char **argv)
 }
 int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
-    char buffer[512]={0};
     int temp=0;
     while(!*(recive->quit))
     {
         if((temp = SDLNet_CheckSockets(recive->set, 0))>0) {
+            if(SDLNet_TCP_Recv(recive->SD, &tableInfo, sizeof(tableInfo))<0){
+                fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+            }
             printf("Oj nu finns det info!\n");
         }else if(temp == -1){
             fprintf(stderr, "SDLNet_CheckSockets: %s\n",SDLNet_GetError());
         }
         else{
-            //printf("Inget att hämta!\n");
+            printf("Inget att hämta!\n");
         }
+        
+        int i = 0,j = 0; //i = varje spelare, j = varje kortid i ordning
+        for(i = 0;i<MAXCLIENTS;i++)
+        {
+            for(j = 0;j<15;j++)
+                {
+                    printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
+                }
+
+        }
+        printf("\n");
+
+        
+        
+        
+        
+        
+        
         
     }
     SDLNet_TCP_Close(sd);
