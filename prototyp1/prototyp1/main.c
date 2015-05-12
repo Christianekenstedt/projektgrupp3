@@ -17,20 +17,9 @@
 
 
 //Screen dimension constants
-<<<<<<< HEAD
-//<<<<<<< HEAD
+
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
-/*=======
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 680;
->>>>>>> origin/master*/
-=======
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 576;
-
->>>>>>> origin/master
-
 
 void ClearScreen();
 //Starts up SDL and creates window
@@ -257,7 +246,7 @@ int main( int argc, char* args[] ){
                             frame=1;
                             window=TABLE;
                             /* Open a connection with the IP provided (listen on the host's port) */
-                            /*if (!(sd = SDLNet_TCP_Open(&ip)))
+                            /*if ((sd = SDLNet_TCP_Open(&ip))< 1)
                             {
                                 window = START;
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
