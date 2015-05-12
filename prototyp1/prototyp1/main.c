@@ -17,6 +17,7 @@
 
 
 //Screen dimension constants
+<<<<<<< HEAD
 //<<<<<<< HEAD
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
@@ -24,6 +25,11 @@ const int SCREEN_HEIGHT = 576;
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 680;
 >>>>>>> origin/master*/
+=======
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 576;
+
+>>>>>>> origin/master
 
 
 void ClearScreen();
@@ -82,37 +88,40 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination 
 }
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
+    TCPsocket sd;
+    IPaddress ip;
+    char hostIP[] = "169.254.211.44";
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
     //Mark 1
-    Chip1.y = 694;
-    Chip1.x = 14;
-    Chip1.w = 61;
-    Chip1.h = 47;
+    Chip1.y = 517;
+    Chip1.x = 8;
+    Chip1.w = 68;
+    Chip1.h = 59;
     //Mark 5
-    Chip5.y = 732;
-    Chip5.x = 90;
-    Chip5.w = 85;
-    Chip5.h = 68;
+    Chip5.y = 517;
+    Chip5.x = 94;
+    Chip5.w = 68;
+    Chip5.h = 59;
     //Mark 25
-    Chip25.y = 732;
+    Chip25.y = 517;
     Chip25.x = 180;
-    Chip25.w = 85;
-    Chip25.h = 68;
+    Chip25.w = 68;
+    Chip25.h = 59;
     //Mark 50
-    Chip50.y = 732;
-    Chip50.x = 260;
-    Chip50.w = 85;
-    Chip50.h = 68;
+    Chip50.y = 517;
+    Chip50.x = 266;
+    Chip50.w = 68;
+    Chip50.h = 59;
     //Mark 100
-    Chip100.y = 732;
-    Chip100.x = 350;
-    Chip100.w = 85;
-    Chip100.h = 68;
+    Chip100.y = 517;
+    Chip100.x = 352;
+    Chip100.w = 68;
+    Chip100.h = 59;
 
     //PlayButton
-    PlayButton.y = 546;
-    PlayButton.x = 493;
+    PlayButton.y = SCREEN_HEIGHT/2+40;
+    PlayButton.x = SCREEN_WIDTH/2-147;
     PlayButton.w = 294;
     PlayButton.h = 107;
     // Exit Button
@@ -121,35 +130,47 @@ int main( int argc, char* args[] ){
     ExitRect.w = 80;
     ExitRect.h = 40;
     // Bet Button
-    BetButton.y = 610;
-    BetButton.x = 38;
-    BetButton.w = 113;
+    BetButton.y = 418;
+    BetButton.x = 15;
+    BetButton.w = 93;
     BetButton.h = 90;
     // Clear Button
-    ClearButton.y = 610;
-    ClearButton.x = 155;
-    ClearButton.w = 113;
+    ClearButton.y = 418;
+    ClearButton.x = 123;
+    ClearButton.w = 93;
     ClearButton.h = 90;
     // Hit Button
-    HitButton.y = 955;
-    HitButton.x = 721;
-    HitButton.w = 95;
-    HitButton.h = 79;
+    HitButton.y = 474;
+    HitButton.x = 689;
+    HitButton.w = 93;
+    HitButton.h = 90;
     // Stand Button
-    StandButton.y = 1072;
-    StandButton.x = 721;
-    StandButton.w = 95;
-    StandButton.h = 79;
+    StandButton.y = 474;
+    StandButton.x = 793;
+    StandButton.w = 93;
+    StandButton.h = 90;
     // Double Button
-    DoubleButton.y = 1178;
-    DoubleButton.x = 502;
-    DoubleButton.w = 95;
-    DoubleButton.h = 79;
+    DoubleButton.y = 372;
+    DoubleButton.x = 918;
+    DoubleButton.w = 93;
+    DoubleButton.h = 90;
     // Split Button
-    SplitButton.y = 1178;
-    SplitButton.x = 607;
-    SplitButton.w = 95;
-    SplitButton.h = 79;
+    SplitButton.y = 474;
+    SplitButton.x = 918;
+    SplitButton.w = 93;
+    SplitButton.h = 90;
+    // NETWORK INIT
+    
+    /* Resolve the host we are connecting to */
+    if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
+    {
+        fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+    
+
+    
+    //
 
     //Event handler
     SDL_Event e;
@@ -233,39 +254,47 @@ int main( int argc, char* args[] ){
                                 break;
                         }
                 }else if(e.type == SDL_MOUSEBUTTONDOWN){
-                        if(PLAYBUTTON && window == 0){
+                        if(PLAYBUTTON && window == START){
 
                             frame=1;
-                            window=1;
-                        }else if(EXITBUTTON && window == 1){
+                            window=TABLE;
+                            /* Open a connection with the IP provided (listen on the host's port) */
+                            if (!(sd = SDLNet_TCP_Open(&ip)))
+                            {
+                                window = START;
+                                fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
+                                //exit(EXIT_FAILURE);
+                            }
+                            
+                        }else if(EXITBUTTON && window == START){
                             quit = true;
-                        }else if(BETBUTTON && window == 1){
+                        }else if(BETBUTTON && window == TABLE){
 
                                 quit = true;
                         }
-                        else if(CLEARBUTTON && window == 1){
+                        else if(CLEARBUTTON && window == TABLE){
                             pott = 0;
                         }
-                        else if(HITBUTTON && window == 1){
+                        else if(HITBUTTON && window == TABLE){
                             quit = true;
                         }
-                        else if(STANDBUTTON && window == 1){
+                        else if(STANDBUTTON && window == TABLE){
                             quit = true;
                         }
-                        else if(DOUBLEBUTTON && window == 1){
+                        else if(DOUBLEBUTTON && window == TABLE){
                             quit = true;
                         }
-                        else if(SPLITBUTTON && window == 1){
+                        else if(SPLITBUTTON && window == TABLE){
                             quit = true;
-                        }else if(M1 && window == 1){
+                        }else if(M1 && window == TABLE){
                             pott += 1;
-                        }else if(M5 && window == 1){
+                        }else if(M5 && window == TABLE){
                             pott +=5;
-                        }else if(M25 && window == 1){
+                        }else if(M25 && window == TABLE){
                             pott +=25;
-                        }else if(M50 && window == 1){
+                        }else if(M50 && window == TABLE){
                             pott +=50;
-                        }else if(M100 && window == 1){
+                        }else if(M100 && window == TABLE){
                             pott +=100;
                         }
                     }else if(e.type == SDL_MOUSEMOTION){
@@ -280,7 +309,6 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
-                        SDL_RenderCopy(gRenderer, exitTexture, NULL, &ExitRect);
                         SDL_RenderPresent(gRenderer);
                     }
 
@@ -361,9 +389,15 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
+<<<<<<< HEAD
 //<<<<<<< HEAD
     SDL_Surface* table = IMG_Load("bilder\\TABLE.png");
 //=======
+=======
+<<<<<<< HEAD
+    SDL_Surface* table = NULL; = IMG_Load("bilder\\bord9999.0.png");
+=======
+>>>>>>> origin/master
     table = IMG_Load("bilder/TABLE.png");
 //>>>>>>> origin/master
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
@@ -410,7 +444,7 @@ bool loadMedia(){
 #else
 
     //Load splash image
-    SDL_Surface* table = IMG_Load("bilder/TABLE.png");
+    SDL_Surface* table = IMG_Load("bilder/bord9999.0.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
