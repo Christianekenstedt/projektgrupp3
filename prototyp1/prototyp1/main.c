@@ -159,7 +159,7 @@ int main( int argc, char* args[] ){
     SplitButton.x = 918;
     SplitButton.w = 93;
     SplitButton.h = 90;
-    // NETWORK INIT
+    // NETWORK INIT ####################################################
     
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
@@ -168,9 +168,7 @@ int main( int argc, char* args[] ){
         exit(EXIT_FAILURE);
     }
     
-
-    
-    //
+    // #################################################################
 
     //Event handler
     SDL_Event e;
@@ -259,15 +257,20 @@ int main( int argc, char* args[] ){
                             frame=1;
                             window=TABLE;
                             /* Open a connection with the IP provided (listen on the host's port) */
-                            if (!(sd = SDLNet_TCP_Open(&ip)))
+                            /*if (!(sd = SDLNet_TCP_Open(&ip)))
                             {
                                 window = START;
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
-                            }
+                            }*/
                             
-                        }else if(EXITBUTTON && window == START){
-                            quit = true;
+                        }else if(EXITBUTTON){
+                            if(window == START){
+                                quit = true;
+                            }else if (window == TABLE){
+                                /* */
+                                window = START;
+                            }
                         }else if(BETBUTTON && window == TABLE){
 
                                 quit = true;
@@ -311,7 +314,6 @@ int main( int argc, char* args[] ){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                         SDL_RenderPresent(gRenderer);
                     }
-
                 }
         }
     //Render the text
