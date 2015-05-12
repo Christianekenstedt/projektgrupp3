@@ -16,7 +16,7 @@
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_HEIGHT = 680;
 
 
 void ClearScreen();
@@ -319,12 +319,12 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
-    table = IMG_Load("bilder\\TABLE.png");
+    table = IMG_Load("bilder/TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
-    gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
+    gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\background.bmp", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
@@ -334,7 +334,7 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-    gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
+    gPlayButton = SDL_LoadBMP("bilder/testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
