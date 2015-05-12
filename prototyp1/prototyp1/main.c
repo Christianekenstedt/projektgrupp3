@@ -323,8 +323,6 @@ int main( int argc, char* args[] ){
     }
 
     //Apply the imaged to the screen
-    apply_surface(527, 539, table, gWindow);
-    apply_surface(527, 539, message, gWindow);
 
     /*Update the screen
     if(SDL_Flip(gWindow)== -1)
@@ -474,7 +472,6 @@ bool loadMedia(){
     return success;
 #endif
     //Open the font
-    font = TTF_OpenFont("KeepCalm-Medium", 20);
 
     //If there was a problem in loading the font
     if(font == NULL)
