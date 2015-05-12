@@ -8,6 +8,8 @@
 
 #include "multiOS.h"
 #include "clientFunctions.h"
+#include "gamelogic.h"
+#include "knappar.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -15,8 +17,8 @@
 
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 576;
 
 
 void ClearScreen();
@@ -34,10 +36,7 @@ SDL_Window* gWindow = NULL;
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
 //The image we will load and show on the screen
-SDL_Surface* gXOut = NULL;
-SDL_Surface* gPlayButton = NULL;
-SDL_Surface* gExitButton = NULL;
-SDL_Surface* table = NULL;
+// Textures
 SDL_Texture* bTexture=NULL;
 SDL_Texture* mPlayButton = NULL;
 SDL_Texture* exitTexture = NULL;
@@ -47,14 +46,15 @@ SDL_Texture* hitTexture = NULL;
 SDL_Texture* standTexture = NULL;
 SDL_Texture* doubleTexture = NULL;
 SDL_Texture* splitTexture = NULL;
-SDL_Renderer* gRenderer = NULL;
 SDL_Texture* btable = NULL;
-
-SDL_Rect gSpriteClips[3];
-
-SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton;
-SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100;
-
+// Surface
+SDL_Surface* gXOut = NULL;
+// Renderer
+SDL_Renderer* gRenderer = NULL;
+// Rects
+SDL_Rect gSpriteClips[3]; // Sprite
+SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
+SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
 
 
 //=============================================MAIN==================================================
@@ -210,44 +210,40 @@ int main( int argc, char* args[] ){
                                 break;
                         }
                 }else if(e.type == SDL_MOUSEBUTTONDOWN){
-                        if(PLAYBUTTON){
+                        if(PLAYBUTTON && window == 0){
 
                             frame=1;
                             window=1;
-                        }else if(EXITBUTTON){
+                        }else if(EXITBUTTON && window == 1){
                             quit = true;
-                        }else if(BETBUTTON){
+                        }else if(BETBUTTON && window == 1){
 
                                 quit = true;
                         }
-                        else if(CLEARBUTTON){
+                        else if(CLEARBUTTON && window == 1){
                             pott = 0;
                         }
-                        else if(HITBUTTON){
+                        else if(HITBUTTON && window == 1){
                             quit = true;
                         }
-                        else if(STANDBUTTON){
+                        else if(STANDBUTTON && window == 1){
                             quit = true;
                         }
-                        else if(DOUBLEBUTTON){
+                        else if(DOUBLEBUTTON && window == 1){
                             quit = true;
                         }
-                        else if(SPLITBUTTON){
+                        else if(SPLITBUTTON && window == 1){
                             quit = true;
-                        }else if(M1){
+                        }else if(M1 && window == 1){
                             pott += 1;
-                        }else if(M5){
+                        }else if(M5 && window == 1){
                             pott +=5;
-                            //printf("5!!!!!!!!!!!!!!!!!!!");
-                        }else if(M25){
+                        }else if(M25 && window == 1){
                             pott +=25;
-                            //printf("25!!!!!!!!");
-                        }else if(M50){
+                        }else if(M50 && window == 1){
                             pott +=50;
-                            //printf("50!!!!!!!!!");
-                        }else if(M100){
+                        }else if(M100 && window == 1){
                             pott +=100;
-                            // printf("100!!!!!!!!");
                         }
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
@@ -261,16 +257,8 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
-                        /*SDL_RenderCopy(gRenderer, betTexture, NULL, &BetButton);
-                        SDL_RenderCopy(gRenderer, clearTexture, NULL, &ClearButton);
-                        SDL_RenderCopy(gRenderer, hitTexture, NULL, &HitButton);
-                        SDL_RenderCopy(gRenderer, standTexture, NULL, &StandButton);
-                        SDL_RenderCopy(gRenderer, doubleTexture, NULL, &DoubleButton);
-                        SDL_RenderCopy(gRenderer, splitTexture, NULL, &SplitButton);*/
                         SDL_RenderCopy(gRenderer, exitTexture, NULL, &ExitRect);
                         SDL_RenderPresent(gRenderer);
-                        /*SDL_Delay(5000);
-                        window = 0;*/
                     }
 
                 }
@@ -310,6 +298,7 @@ bool init(){
         fprintf(stderr,"SDL_CreateRenderer: %s\n", SDL_GetError());
         success = false;
     }
+    return success;
 }
 //============================================LOAD MEDIA================================================
 bool loadMedia(){
@@ -319,7 +308,7 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
-    table = IMG_Load("bilder\\TABLE.png");
+    SDL_Surface* table = NULL; = IMG_Load("bilder\\TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
@@ -353,7 +342,7 @@ bool loadMedia(){
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
 
-    gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
+    SDL_Surface* gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
     if( gExitButton == NULL ){
@@ -364,7 +353,7 @@ bool loadMedia(){
 #else
 
     //Load splash image
-    table = IMG_Load("bilder/TABLE.png");
+    SDL_Surface* table = IMG_Load("bilder/TABLE.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
@@ -395,7 +384,7 @@ bool loadMedia(){
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
 
-    gExitButton = SDL_LoadBMP("bilder/EXIT.bmp");
+    SDL_Surface* gExitButton = SDL_LoadBMP("bilder/EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
     if( gExitButton == NULL ){

@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     recive.set = SDLNet_AllocSocketSet(1);
     SDLNet_AddSocket(recive.set, sd);
     recive.quit = &quit;
-    SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
+    //SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
@@ -158,37 +158,39 @@ int main(int argc, char **argv)
 int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
     int temp=0;
-    while(!*(recive->quit))
+    int i = 0,j = 0; //i = varje spelare, j = varje kortid i ordning
+    bool go = true;
+    while(go)
     {
         if((temp = SDLNet_CheckSockets(recive->set, 0))>0) {
-            if(SDLNet_TCP_Recv(recive->SD, &tableInfo, sizeof(tableInfo))<0){
+            if(SDLNet_TCP_Recv(sd, &tableInfo, sizeof(tableInfo))<0){
                 fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
             }
             printf("Oj nu finns det info!\n");
-        }else if(temp == -1){
-            fprintf(stderr, "SDLNet_CheckSockets: %s\n",SDLNet_GetError());
-        }
-        else{
-            printf("Inget att hämta!\n");
-        }
-        
-        int i = 0,j = 0; //i = varje spelare, j = varje kortid i ordning
-        for(i = 0;i<MAXCLIENTS;i++)
-        {
-            for(j = 0;j<15;j++)
+            
+
+            for(i = 0;i<MAXCLIENTS;i++)
+            {
+                for(j = 0;j<15;j++)
                 {
                     printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
                 }
-
+            }
+            printf("\n");
+            
+            
+            
+            
+        }else if(temp == -1){
+            fprintf(stderr, "SDLNet_CheckSockets: %s\n",SDLNet_GetError());
+            go = false;
         }
-        printf("\n");
+        else{
+            //printf("Inget att hämta!\n");
+        }
+        
+        
 
-        
-        
-        
-        
-        
-        
         
     }
     SDLNet_TCP_Close(sd);

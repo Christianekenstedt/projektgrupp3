@@ -13,6 +13,7 @@
 #include <stdbool.h>
 #include "multiOS.h"
 
+
 /* DEFINES */
 
 #define PLAYBUTTON (x>PlayButton.x) && ( x < PlayButton.x + PlayButton.w ) && ( y > PlayButton.y) && (y < PlayButton.y + PlayButton.h)
@@ -32,7 +33,8 @@
 
 
 
-/* FUNKTIONSDEKLARATIONER */
+//Screen dimension constants
 
+/* FUNKTIONSDEKLARATIONER */
 
 #endif /* defined(__prototyp1__clientFunctions__) */

@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */; };
 		AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */; };
-		AA973E6A1B00E78B00FB06A5 /* client.c in Sources */ = {isa = PBXBuildFile; fileRef = AA2069511AE7A04700626976 /* client.c */; };
-		AA973E6B1B00E78B00FB06A5 /* gamelogic.c in Sources */ = {isa = PBXBuildFile; fileRef = AA8020081AEF7F6E00328A30 /* gamelogic.c */; };
+		AAA3F2201B021AB6000E07A6 /* clientFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = AA9D95931AFA0CA4003873AF /* clientFunctions.c */; };
+		AAA3F2211B021AB6000E07A6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F911ADFE6A1009DE13C /* main.c */; };
+		AAA3F2241B021F3D000E07A6 /* knappar.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA3F2221B021F3D000E07A6 /* knappar.c */; };
 		AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F981ADFE71E009DE13C /* SDL2_image.framework */; };
 		AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F991ADFE71E009DE13C /* SDL2_net.framework */; };
 		AAF82F9D1ADFE71E009DE13C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F9A1ADFE71E009DE13C /* SDL2.framework */; };
@@ -35,10 +36,11 @@
 		AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
 		AA8020081AEF7F6E00328A30 /* gamelogic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gamelogic.c; sourceTree = "<group>"; };
 		AA8020091AEF7F6E00328A30 /* gamelogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamelogic.h; sourceTree = "<group>"; };
-		AA8F3D321AFCB9B400A0635D /* Chattclient.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = Chattclient.c; path = prototyp1/Chattclient.c; sourceTree = "<group>"; };
 		AA8F3D341AFCB9E100A0635D /* Chattclient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Chattclient.c; sourceTree = "<group>"; };
 		AA9D95931AFA0CA4003873AF /* clientFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clientFunctions.c; sourceTree = "<group>"; };
 		AA9D95941AFA0CA4003873AF /* clientFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clientFunctions.h; sourceTree = "<group>"; };
+		AAA3F2221B021F3D000E07A6 /* knappar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = knappar.c; sourceTree = "<group>"; };
+		AAA3F2231B021F3D000E07A6 /* knappar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = knappar.h; sourceTree = "<group>"; };
 		AAF82F8E1ADFE6A1009DE13C /* prototyp1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = prototyp1; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAF82F911ADFE6A1009DE13C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		AAF82F981ADFE71E009DE13C /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
@@ -66,7 +68,6 @@
 		AAF82F851ADFE6A0009DE13C = {
 			isa = PBXGroup;
 			children = (
-				AA8F3D321AFCB9B400A0635D /* Chattclient.c */,
 				AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */,
 				AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */,
 				AAF82F981ADFE71E009DE13C /* SDL2_image.framework */,
@@ -88,11 +89,13 @@
 		AAF82F901ADFE6A1009DE13C /* prototyp1 */ = {
 			isa = PBXGroup;
 			children = (
-				AA9D95931AFA0CA4003873AF /* clientFunctions.c */,
 				AA8F3D341AFCB9E100A0635D /* Chattclient.c */,
+				AA9D95931AFA0CA4003873AF /* clientFunctions.c */,
 				AA9D95941AFA0CA4003873AF /* clientFunctions.h */,
 				AA2069511AE7A04700626976 /* client.c */,
 				AAF82F911ADFE6A1009DE13C /* main.c */,
+				AAA3F2221B021F3D000E07A6 /* knappar.c */,
+				AAA3F2231B021F3D000E07A6 /* knappar.h */,
 				AA2069571AE7E1B400626976 /* multiOS.h */,
 				AAF82F9E1ADFF567009DE13C /* server.c */,
 				AA8020081AEF7F6E00328A30 /* gamelogic.c */,
@@ -157,8 +160,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA973E6A1B00E78B00FB06A5 /* client.c in Sources */,
-				AA973E6B1B00E78B00FB06A5 /* gamelogic.c in Sources */,
+				AAA3F2201B021AB6000E07A6 /* clientFunctions.c in Sources */,
+				AAA3F2241B021F3D000E07A6 /* knappar.c in Sources */,
+				AAA3F2211B021AB6000E07A6 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
