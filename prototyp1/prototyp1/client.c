@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     recive.set = SDLNet_AllocSocketSet(1);
     SDLNet_AddSocket(recive.set, sd);
     recive.quit = &quit;
-    //SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
+    SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     

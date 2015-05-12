@@ -272,10 +272,11 @@ int main( int argc, char* args[] ){
                             pott = 0;
                         }
                         else if(HITBUTTON && window == TABLE){
-                            quit = true;
+                            sendToServer("hit", sd);
+                            
                         }
                         else if(STANDBUTTON && window == TABLE){
-                            quit = true;
+                            sendToServer("stand", sd);
                         }
                         else if(DOUBLEBUTTON && window == TABLE){
                             quit = true;
