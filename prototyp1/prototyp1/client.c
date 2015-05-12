@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     recive.set = SDLNet_AllocSocketSet(1);
     SDLNet_AddSocket(recive.set, sd);
     recive.quit = &quit;
-    SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
+    
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
@@ -58,8 +58,8 @@ int main(int argc, char **argv)
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
-    }
-
+    }else SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
+    
     quit = 0;
     int ID=0;
     bool engang = true;
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
             fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
             exit(EXIT_FAILURE);
         }
-        printf("ready= %s\n",red);
+        //printf("ready= %s\n",red);
         ready = atoi(red);
         //ready = 1;
         while (ready==1)
@@ -162,11 +162,12 @@ int reciveInfo(void* info){
     bool go = true;
     while(go)
     {
-        if((temp = SDLNet_CheckSockets(recive->set, 0))>0) {
+        if(SDLNet_CheckSockets(recive->set, 10)>0) {
+            printf("Oj nu finns det info!\n");
             if(SDLNet_TCP_Recv(sd, &tableInfo, sizeof(tableInfo))<0){
                 fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
             }
-            printf("Oj nu finns det info!\n");
+            
             
 
             for(i = 0;i<MAXCLIENTS;i++)
@@ -181,12 +182,11 @@ int reciveInfo(void* info){
             
             
             
-        }else if(temp == -1){
-            fprintf(stderr, "SDLNet_CheckSockets: %s\n",SDLNet_GetError());
-            go = false;
-        }
-        else{
+        }else{
+            //fprintf(stderr, "SDLNet_CheckSockets: %s\n",SDLNet_GetError());
+            //go = false;
             //printf("Inget att hämta!\n");
+            //SDL_Delay(500);
         }
         
         
