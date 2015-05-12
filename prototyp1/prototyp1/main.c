@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "SDL.h"
+#include "SDL_TTF.h"
 
 
 
@@ -323,6 +325,8 @@ int main( int argc, char* args[] ){
     }
 
     //Apply the imaged to the screen
+    apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), table, gWindow);
+    apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), message, gWindow);
 
     /*Update the screen
     if(SDL_Flip(gWindow)== -1)
@@ -472,6 +476,7 @@ bool loadMedia(){
     return success;
 #endif
     //Open the font
+    font = TTF_OpenFont("Type Keys.ttf", 20);
 
     //If there was a problem in loading the font
     if(font == NULL)
@@ -487,6 +492,8 @@ void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
+    SDL_FreeSurface(table);
+    table = NULL;
     SDL_FreeSurface (message);
 
     //Close the font what was used
