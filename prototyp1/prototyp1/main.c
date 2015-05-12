@@ -17,13 +17,13 @@
 
 
 //Screen dimension constants
-<<<<<<< HEAD
+//<<<<<<< HEAD
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
-=======
+/*=======
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 680;
->>>>>>> origin/master
+>>>>>>> origin/master*/
 
 
 void ClearScreen();
@@ -54,6 +54,15 @@ SDL_Texture* splitTexture = NULL;
 SDL_Texture* btable = NULL;
 // Surface
 SDL_Surface* gXOut = NULL;
+SDL_Surface* message = NULL;
+
+//The event structure
+SDL_Event event;
+
+//The font that's going to be used
+TTF_Font* font = NULL;
+//The color of the font
+SDL_Color textColor = {255, 255, 255};
 // Renderer
 SDL_Renderer* gRenderer = NULL;
 // Rects
@@ -61,7 +70,16 @@ SDL_Rect gSpriteClips[3]; // Sprite
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
 
+//===================================================================================================
+void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
+{
+    //Make a temporary rectangle to hold the offsets
+    SDL_Rect offset;
 
+    //Give the offsets to the rectangle
+    offset.x = x;
+    offset.y = y;
+}
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
@@ -268,6 +286,24 @@ int main( int argc, char* args[] ){
 
                 }
         }
+    //Render the text
+    message = TTF_RenderText_Solid(font, "FUNKAR DETTA ELLER?!", textColor);
+
+    //If there was an error in rendering the text
+    if(message == NULL)
+    {
+        return 1;
+    }
+
+    //Apply the imaged to the screen
+    apply_surface(0, 0, gXOut, gWindow);
+    apply_surface(0, 150, message, gWindow);
+
+    /*Update the screen
+    if(SDL_Flip(gWindow)== -1)
+    {
+        return 1;
+    }*/
     //Free resources and close SDL
     closeW();
     return 0;
@@ -304,6 +340,18 @@ bool init(){
         success = false;
     }
     return success;
+
+    //Initialize SDL ttf
+    if(TTF_Init()== -1)
+    {
+        return false;
+    }
+
+    //Set the window caption
+    SDL_WM_SetCaption("TTF Test", NULL);
+
+    //If everything initialized fine
+    return true;
 }
 //============================================LOAD MEDIA================================================
 bool loadMedia(){
@@ -313,11 +361,11 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
-<<<<<<< HEAD
-    SDL_Surface* table = NULL; = IMG_Load("bilder\\TABLE.png");
-=======
+//<<<<<<< HEAD
+    SDL_Surface* table = IMG_Load("bilder\\TABLE.png");
+//=======
     table = IMG_Load("bilder/TABLE.png");
->>>>>>> origin/master
+//>>>>>>> origin/master
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
@@ -332,7 +380,7 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-    gPlayButton = SDL_LoadBMP("bilder/testplay.bmp");
+    SDL_Surface* gPlayButton = SDL_LoadBMP("bilder/testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
@@ -403,13 +451,30 @@ bool loadMedia(){
 
     return success;
 #endif
-}
+    //Open the font
+    font = TTF_OpenFont("KeepCalm-Medium", 20);
 
+    //If there was a problem in loading the font
+    if(font == NULL)
+    {
+        return false;
+    }
+
+    //if everything loaded fine
+    return true;
+}
 //==================================================CLOSE===============================================
 void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
+    SDL_FreeSurface (message);
+
+    //Close the font what was used
+    TTF_CloseFont(font);
+
+    //Quit SDL_ttf
+    TTF_Quit();
 
     //Free the music
     Mix_FreeMusic( gMusic );
