@@ -50,6 +50,7 @@ SDL_Texture* btable = NULL;
 // Surface
 SDL_Surface* gXOut = NULL;
 SDL_Surface* message = NULL;
+SDL_Surface* table = NULL;
 
 //The event structure
 SDL_Event event;
@@ -148,28 +149,13 @@ int main( int argc, char* args[] ){
     SplitButton.x = 918;
     SplitButton.w = 93;
     SplitButton.h = 90;
-<<<<<<< HEAD
-    // NETWORK INIT
 
-=======
-    // NETWORK INIT ####################################################
-    
->>>>>>> origin/master
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-<<<<<<< HEAD
-
-
-
-    //
-=======
-    
-    // #################################################################
->>>>>>> origin/master
 
     //Event handler
     SDL_Event e;
@@ -258,22 +244,22 @@ int main( int argc, char* args[] ){
                             frame=1;
                             window=TABLE;
                             /* Open a connection with the IP provided (listen on the host's port) */
-<<<<<<< HEAD
+
                             /*if (!(sd = SDLNet_TCP_Open(&ip)))
-=======
+
                             /*if ((sd = SDLNet_TCP_Open(&ip))< 1)
->>>>>>> origin/master
+
                             {
                                 window = START;
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
                             }*/
-<<<<<<< HEAD
+
 
                         }else if(EXITBUTTON && window == START){
                             quit = true;
-=======
-                            
+
+
                         }else if(EXITBUTTON){
                             if(window == START){
                                 quit = true;
@@ -281,7 +267,7 @@ int main( int argc, char* args[] ){
                                 /* */
                                 window = START;
                             }
->>>>>>> origin/master
+
                         }else if(BETBUTTON && window == TABLE){
 
                                 quit = true;
@@ -337,8 +323,8 @@ int main( int argc, char* args[] ){
     }
 
     //Apply the imaged to the screen
-    apply_surface(0, 0, gXOut, gWindow);
-    apply_surface(0, 150, message, gWindow);
+    apply_surface(527, 539, table, gWindow);
+    apply_surface(527, 539, message, gWindow);
 
     /*Update the screen
     if(SDL_Flip(gWindow)== -1)
@@ -402,7 +388,6 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
     SDL_Surface* table = IMG_Load("bilder\\bord9999.0.png");
-    table = IMG_Load("bilder/bord9999.0.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
