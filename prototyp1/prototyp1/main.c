@@ -77,11 +77,12 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination 
 }
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
-    TCPsocket sd;
+    TCPsocket sd = NULL;
     IPaddress ip;
     char hostIP[] = "169.254.211.44";
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
+    char command[512]= {0};
     //Mark 1
     Chip1.y = 517;
     Chip1.x = 8;
@@ -192,6 +193,7 @@ int main( int argc, char* args[] ){
                 printf("Pott: %d\n",pott);
                 //User requests quit
                 if( e.type == SDL_QUIT ){
+                    sendToServer("exit", sd);
                     quit = true;
                 }//Handle key press
                 else if( e.type == SDL_KEYDOWN )
@@ -246,18 +248,20 @@ int main( int argc, char* args[] ){
                             frame=1;
                             window=TABLE;
                             /* Open a connection with the IP provided (listen on the host's port) */
-                            /*if ((sd = SDLNet_TCP_Open(&ip))< 1)
+                            if ((sd = SDLNet_TCP_Open(&ip))< 1)
                             {
                                 window = START;
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
-                            }*/
+                            }
                             
                         }else if(EXITBUTTON){
                             if(window == START){
                                 quit = true;
                             }else if (window == TABLE){
                                 /* */
+                                sendToServer("exit", sd);
+                                SDLNet_TCP_Close(sd);
                                 window = START;
                             }
                         }else if(BETBUTTON && window == TABLE){
