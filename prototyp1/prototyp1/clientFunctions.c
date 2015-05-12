@@ -17,3 +17,12 @@ void ClearScreen(){
 #endif // rest
 }
 
+int sendToServer(char command[], TCPsocket socket){
+    int success;
+    if (SDLNet_TCP_Send(socket, command, strlen(command)+1) < 0)
+    {
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        success = -1;
+    }else success = 1;
+    return success;
+}

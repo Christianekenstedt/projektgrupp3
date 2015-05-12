@@ -39,4 +39,6 @@
 
 /* FUNKTIONSDEKLARATIONER */
 
+int sendToServer(char command[], TCPsocket socket);
+
 #endif /* defined(__prototyp1__clientFunctions__) */

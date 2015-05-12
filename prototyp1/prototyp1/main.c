@@ -52,7 +52,6 @@ SDL_Texture* btable = NULL;
 // Surface
 SDL_Surface* gXOut = NULL;
 SDL_Surface* message = NULL;
-SDL_Surface* table = NULL;
 
 //The event structure
 SDL_Event event;
@@ -80,11 +79,12 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination 
 }
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){
-    TCPsocket sd;
+    TCPsocket sd = NULL;
     IPaddress ip;
     char hostIP[] = "169.254.211.44";
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0;
+    char command[512]= {0};
     //Mark 1
     Chip1.y = 517;
     Chip1.x = 8;
@@ -151,13 +151,16 @@ int main( int argc, char* args[] ){
     SplitButton.x = 918;
     SplitButton.w = 93;
     SplitButton.h = 90;
-
+    // NETWORK INIT ####################################################
+    
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
+    
+    // #################################################################
 
     //Event handler
     SDL_Event e;
@@ -192,6 +195,7 @@ int main( int argc, char* args[] ){
                 printf("Pott: %d\n",pott);
                 //User requests quit
                 if( e.type == SDL_QUIT ){
+                    sendToServer("exit", sd);
                     quit = true;
                 }//Handle key press
                 else if( e.type == SDL_KEYDOWN )
@@ -246,30 +250,22 @@ int main( int argc, char* args[] ){
                             frame=1;
                             window=TABLE;
                             /* Open a connection with the IP provided (listen on the host's port) */
-
-                            /*if (!(sd = SDLNet_TCP_Open(&ip)))
-
-                            /*if ((sd = SDLNet_TCP_Open(&ip))< 1)
-
+                            if ((sd = SDLNet_TCP_Open(&ip))< 1)
                             {
                                 window = START;
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
-                            }*/
-
-
-                        }else if(EXITBUTTON && window == START){
-                            quit = true;
-
-
+                            }
+                            
                         }else if(EXITBUTTON){
                             if(window == START){
                                 quit = true;
                             }else if (window == TABLE){
                                 /* */
+                                sendToServer("exit", sd);
+                                SDLNet_TCP_Close(sd);
                                 window = START;
                             }
-
                         }else if(BETBUTTON && window == TABLE){
 
                                 quit = true;
@@ -278,10 +274,11 @@ int main( int argc, char* args[] ){
                             pott = 0;
                         }
                         else if(HITBUTTON && window == TABLE){
-                            quit = true;
+                            sendToServer("hit", sd);
+                            
                         }
                         else if(STANDBUTTON && window == TABLE){
-                            quit = true;
+                            sendToServer("stand", sd);
                         }
                         else if(DOUBLEBUTTON && window == TABLE){
                             quit = true;
@@ -325,8 +322,13 @@ int main( int argc, char* args[] ){
     }
 
     //Apply the imaged to the screen
+<<<<<<< HEAD
     apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), table, gWindow);
     apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), message, gWindow);
+=======
+    apply_surface(0, 0, gXOut, gWindow);
+    apply_surface(0, 150, message, gWindow);
+>>>>>>> origin/master
 
     /*Update the screen
     if(SDL_Flip(gWindow)== -1)
@@ -389,8 +391,11 @@ bool loadMedia(){
 
 #ifdef _WIN32
     //Load splash image
-    SDL_Surface* table = IMG_Load("bilder\\bord9999.0.png");
+
+    SDL_Surface* table = MG_Load("bilder\\bord9999.0.png");
+
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
+    
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
