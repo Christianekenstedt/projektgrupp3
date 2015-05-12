@@ -152,14 +152,12 @@ int main( int argc, char* args[] ){
     SplitButton.w = 93;
     SplitButton.h = 90;
     // NETWORK INIT ####################################################
-    
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
     // #################################################################
 
     //Event handler
@@ -256,7 +254,6 @@ int main( int argc, char* args[] ){
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
                             }
-                            
                         }else if(EXITBUTTON){
                             if(window == START){
                                 quit = true;
@@ -275,7 +272,6 @@ int main( int argc, char* args[] ){
                         }
                         else if(HITBUTTON && window == TABLE){
                             sendToServer("hit", sd);
-                            
                         }
                         else if(STANDBUTTON && window == TABLE){
                             sendToServer("stand", sd);
@@ -395,7 +391,6 @@ bool loadMedia(){
     SDL_Surface* table = MG_Load("bilder\\bord9999.0.png");
 
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
-    
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
