@@ -46,7 +46,7 @@
 	<string.h>
 	"multiOS.h"
 
-1430828620 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1431524060 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -63,7 +63,7 @@
 
 1430921881 D
 
-1431443826 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1431524149 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
 

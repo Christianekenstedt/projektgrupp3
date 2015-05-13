@@ -31,6 +31,13 @@ int main (int argc, char *argv[])
     srand(time(NULL));
     gameInit(kortlek);
 
+/*
+    for(int u = 0;u<ANTALKORT;u++)
+    {
+        checka_kort(u,kortlek);
+        system("pause");
+    }*/
+
 /* ########################## NÄTVERKS INIT, INKL ÖPPNA SOCKET ######################################## */
     if(SDLNet_Init() < 0)
     {
@@ -242,7 +249,7 @@ int function(sinfo* incsocket)
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    blanda_kortleken(kortlek);
+    //blanda_kortleken(kortlek);
     PlayerCardInfo(0);
 }
 
