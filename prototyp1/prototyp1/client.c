@@ -17,6 +17,7 @@ int tableInfo[MAXCLIENTS+1][15];
 char saker[512];
 
 int reciveInfo(void* info);
+void stringToArray(char sendstring[]);
 
 int main(int argc, char **argv)
 {
@@ -85,7 +86,7 @@ int main(int argc, char **argv)
                 ready = 1;
             }else{
                 printf("red = %s\n",red);
-                strcpy(saker,red);
+                stringToArray(red);
                 //printf("saker = %s\n",saker);
             }
         
@@ -169,11 +170,53 @@ int main(int argc, char **argv)
 
 int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
+    int i,j;
     while (1) {
-        printf("Player: %s\n", saker);
-        //SDL_Delay(1000);
+        
+        
+        
+        SDL_Delay(4000);
     }
     
     
     return 0;
 }
+
+void stringToArray(char sendstring[])
+{
+    char temp2[10];
+    int i = 0;
+    int j = 0;
+    
+    if(strcmp(sendstring, "#")==1)
+    {
+        for (i=0; i<MAXCLIENTS; i++) {
+            
+            for (j=1; j<MAXCARDS+1; j++) {
+                if (sendstring[j] == '\0') {
+                    break;
+                }else if(sendstring[j] == '.'){
+                    j++;
+                }else
+                    strcpy(temp2, &sendstring[j]);
+                    tableInfo[i][j] = atoi(temp2);
+            }
+        }
+    }else printf("STRANG TRASIG\n");
+    SDL_Delay(100);
+    
+    for(i = 0;i<MAXCLIENTS;i++)
+    {
+        for(j = 0;j<MAXCARDS;j++)
+        {
+            
+            printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
+            
+            
+        }
+    }
+    printf("\n");
+
+
+}
+
