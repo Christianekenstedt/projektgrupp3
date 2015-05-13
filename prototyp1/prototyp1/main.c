@@ -13,8 +13,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "SDL.h"
-#include "SDL_TTF.h"
+
 
 
 
@@ -22,6 +21,8 @@
 
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
+
+Kort kortlek[ANTALKORT];
 
 void ClearScreen();
 //Starts up SDL and creates window
@@ -49,6 +50,7 @@ SDL_Texture* standTexture = NULL;
 SDL_Texture* doubleTexture = NULL;
 SDL_Texture* splitTexture = NULL;
 SDL_Texture* btable = NULL;
+SDL_Texture* kort = NULL;
 // Surface
 SDL_Surface* gXOut = NULL;
 SDL_Surface* message = NULL;
@@ -63,9 +65,10 @@ SDL_Color textColor = {255, 255, 255};
 // Renderer
 SDL_Renderer* gRenderer = NULL;
 // Rects
-SDL_Rect gSpriteClips[3]; // Sprite
+SDL_Rect gSpriteClips[3], cardSheet[52]; // Sprite
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
+SDL_Rect table1, table2;
 
 //===================================================================================================
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
@@ -83,8 +86,20 @@ int main( int argc, char* args[] ){
     IPaddress ip;
     char hostIP[] = "169.254.211.44";
     int window = 0; // Vilken Window som skall visas, main är 0.
-    int frame = 0;
+    int frame = 0, cardFrame = 0, cardFrame2=0;
     char command[512]= {0};
+    
+    srand(time(NULL));
+    table1.y = 401;
+    table1.x = 479;
+    table1.w = 72;
+    table1.h = 96;
+    
+    table2.y = 401;
+    table2.x = 519;
+    table2.w = 72;
+    table2.h = 96;
+    
     //Mark 1
     Chip1.y = 517;
     Chip1.x = 8;
@@ -151,6 +166,8 @@ int main( int argc, char* args[] ){
     SplitButton.x = 918;
     SplitButton.w = 93;
     SplitButton.h = 90;
+    
+    initiera_kortleken(kortlek);
     // NETWORK INIT ####################################################
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
@@ -179,21 +196,23 @@ int main( int argc, char* args[] ){
         }
     }
     //While application is running
-
+    bool hit = false;
     bool quit = false;
-    int x=0, y=0;
+    int x=0, y=0, cardNr=0, temp =0, id=0;
     int pott =0;
+    int myTurn = 0;
     while( !quit ){
                 frame = 0;
             //Handle events on queue
             while( SDL_PollEvent( &e ) != 0 ){
                 //ClearScreen();
                 SDL_GetMouseState(&x,&y);
-                printf("x: %d\ny: %d\n",x,y);
-                printf("Pott: %d\n",pott);
+                //printf("x: %d\ny: %d\n",x,y);
+                //printf("Pott: %d\n",pott);
+                
                 //User requests quit
                 if( e.type == SDL_QUIT ){
-                    sendToServer("exit", sd);
+                    //sendToServer("exit", sd);
                     quit = true;
                 }//Handle key press
                 else if( e.type == SDL_KEYDOWN )
@@ -254,6 +273,7 @@ int main( int argc, char* args[] ){
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
                             }
+                            myTurn = reciveFromServer(sd);
                         }else if(EXITBUTTON){
                             if(window == START){
                                 quit = true;
@@ -269,12 +289,21 @@ int main( int argc, char* args[] ){
                         }
                         else if(CLEARBUTTON && window == TABLE){
                             pott = 0;
+                            hit = false;
                         }
-                        else if(HITBUTTON && window == TABLE){
+                        else if(HITBUTTON && window == TABLE && myTurn == 1){
                             sendToServer("hit", sd);
+                            id = reciveFromServer(sd);
+                            //id = 13;
+                            printf("id recived = %d\n", id);
+                            cardFrame = IdToVisualCard(id,kortlek);
+                            //    SDL_Delay(1000);
+                            //cardFrame = rand()%51+0;
+                            printf("cardFrame = %d\n", cardFrame);
+                            hit = true;
                         }
                         else if(STANDBUTTON && window == TABLE){
-                            sendToServer("stand", sd);
+                            //sendToServer("stand", sd);
                         }
                         else if(DOUBLEBUTTON && window == TABLE){
                             quit = true;
@@ -304,6 +333,9 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
+                        if(hit == true){
+                            SDL_RenderCopy(gRenderer, kort, &cardSheet[cardFrame], &table1);
+                        }
                         SDL_RenderPresent(gRenderer);
                     }
                 }
@@ -318,13 +350,10 @@ int main( int argc, char* args[] ){
     }
 
     //Apply the imaged to the screen
-<<<<<<< HEAD
-    apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), table, gWindow);
+
+    /*apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), table, gWindow);
     apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), message, gWindow);
-=======
-    apply_surface(0, 0, gXOut, gWindow);
-    apply_surface(0, 150, message, gWindow);
->>>>>>> origin/master
+*/
 
     /*Update the screen
     if(SDL_Flip(gWindow)== -1)
@@ -472,6 +501,30 @@ bool loadMedia(){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/EXIT.bmp", SDL_GetError() );
         success = false;
     }
+    /* LADDAR KORTLEK */
+    SDL_Surface* cardPic = IMG_Load("bilder/cards.png");
+    kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
+    
+    int x=1,y=1,w=72,h=96, i;
+    for(i = 0; i<52; i++){
+        if (i == 12) {
+            x = 1;
+            y = 99;
+        }else if (i == 25){
+            x = 1;
+            y = 197;
+        }else if (i == 38){
+            x = 1;
+            y = 295;
+        }
+        cardSheet[i].x = x;
+        cardSheet[i].y = y;
+        cardSheet[i].w = w;
+        cardSheet[i].h = h;
+        x += w + 1;
+        
+    }
+    
 
     return success;
 #endif
@@ -492,10 +545,10 @@ void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
-    SDL_FreeSurface(table);
+   /* SDL_FreeSurface(table);
     table = NULL;
     SDL_FreeSurface (message);
-
+*/
     //Close the font what was used
     TTF_CloseFont(font);
 

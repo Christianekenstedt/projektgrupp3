@@ -208,6 +208,47 @@ void IdToCard(int id,Kort kortlek[])
     }
 }
 
+int IdToVisualCard(int id,Kort kortlek[])
+{
+    int i = 0, cardNr = -1, temp = 0;
+    for(i = 0;i<ANTALKORT;i++)
+    {
+        if(id == kortlek[i].kortnummer)
+        {
+            printf("\n");
+            printf("You have card:\n");
+            printf("Suite: %s\n",kortlek[i].farg);
+            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            if (strcmp(kortlek[i].farg, "hjarter")) {
+                cardNr = 26;
+                if (kortlek[i].kortvarde == 1) {
+                    temp = 0;
+                }
+                cardNr += temp;
+            }else if (strcmp(kortlek[i].farg, "spader")) {
+                cardNr = 13;
+                if (kortlek[i].kortvarde == 1) {
+                    temp = 0;
+                }
+                cardNr += temp;
+            }else if (strcmp(kortlek[i].farg, "ruter")) {
+                cardNr = 0;
+                if (kortlek[i].kortvarde == 1) {
+                    temp = 0;
+                }
+                cardNr += temp;
+            }else if (strcmp(kortlek[i].farg, "klover")) {
+                cardNr = 39;
+                if (kortlek[i].kortvarde == 1) {
+                    temp = 0;
+                }
+                cardNr += temp;
+            }
+        }
+    }
+    return cardNr;
+}
+
 void ClearScreen(){
 #ifdef _WIN32
     system("cls");

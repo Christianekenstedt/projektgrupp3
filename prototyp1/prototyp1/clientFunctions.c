@@ -26,3 +26,91 @@ int sendToServer(char command[], TCPsocket socket){
     }else success = 1;
     return success;
 }
+
+int reciveFromServer(TCPsocket socket){
+    char buffer[512];
+    if (SDLNet_TCP_Recv(socket, &buffer, strlen(buffer)+1) < 0)
+    {
+        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+    
+    return atoi(buffer);
+}
+
+int IdToVisualCard(int id,Kort kortlek[])
+{
+    int i = 0, cardNr = 0, temp = 0;
+    for(i = 0;i<ANTALKORT;i++)
+    {
+        if(id == kortlek[i].kortnummer)
+        {
+            printf("\n");
+            printf("You have card:\n");
+            printf("Suite: %s\n",kortlek[i].farg);
+            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            if (strstr(kortlek[i].farg, "Hjarter")) {
+                cardNr = 25;
+                cardNr += kortlek[i].kortvarde;
+            }else if (strstr(kortlek[i].farg, "Spader")) {
+                cardNr = 12;
+                cardNr += kortlek[i].kortvarde ;
+            }else if (strstr(kortlek[i].farg, "Ruter")) {
+                cardNr = 38;
+                cardNr += kortlek[i].kortvarde ;
+            }else if (strstr(kortlek[i].farg, "Klover")) {
+                cardNr = 0;
+                cardNr += kortlek[i].kortvarde ;
+            }
+        }
+    }
+    printf("Going to return CardNr = %d \n", cardNr);
+    return cardNr;
+}
+
+void initiera_kortleken(Kort kortleken[])
+{
+    int farg = 0,i;
+    int temp_kortvarde = 1;
+    for(i = 0;i<ANTALKORT;i++)
+    {
+        kortleken[i].kortnummer = i;
+        
+        
+        if(temp_kortvarde == 14)
+        {
+            temp_kortvarde = 1;
+        }
+        kortleken[i].kortvarde = temp_kortvarde;
+        
+        
+        if(farg == 52)
+        {
+            farg = 0;
+        }
+        
+        if(farg <= 12)
+        {
+            strcpy(kortleken[i].farg, "Klover");
+            kortleken[i].farg[6] = '\0';
+        }
+        else if(farg >= 13 && farg <= 25)
+        {
+            strcpy(kortleken[i].farg,"Spader");
+            kortleken[i].farg[6] = '\0';
+        }
+        else if(farg >= 26 && farg <= 38)
+        {
+            strcpy(kortleken[i].farg,"Hjarter");
+            kortleken[i].farg[7] = '\0';
+        }
+        else if(farg >= 39 && farg <= 51)
+        {
+            strcpy(kortleken[i].farg,"Ruter");
+            kortleken[i].farg[5] = '\0';
+        }
+        kortleken[i].upptagen = false;
+        farg++;
+        temp_kortvarde++;
+    }
+}
