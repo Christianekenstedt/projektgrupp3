@@ -18,6 +18,7 @@ int player_card[MAXCLIENTS+1][MAXCARDS];
 int function(sinfo* incsocket);
 void gameInit(Kort kortlek[]);
 void PlayerCardInfo(int option);
+char arrayToStringSend();
 
 int main (int argc, char *argv[])
 {
@@ -119,7 +120,7 @@ int main (int argc, char *argv[])
                     {
                         //printf("2.\n");
                         //system("pause");
-                        if(SDLNet_TCP_Send(clientvalue[j].socket, player_card ,sizeof(player_card)) < 0)
+                        if(SDLNet_TCP_Send(clientvalue[j].socket, arrayToStringSend() ,512+1) < 0)
                         {
                             fprintf(stderr, "SDLNet_TCP_send: %s\n", SDLNet_GetError());
                             exit(EXIT_FAILURE);
@@ -160,7 +161,7 @@ int function(sinfo* incsocket)
             {
                 engang = false;
 
-                if(SDLNet_TCP_Send(inc->socket, "1", 1) < 0) //skicka en 1:a till klienten som signal att det är dennes tur.
+                if(SDLNet_TCP_Send(inc->socket, "ready", 512+1) < 0) //skicka en 1:a till klienten som signal att det är dennes tur.
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());//======================================================================
                     exit(EXIT_FAILURE);
@@ -276,3 +277,33 @@ void PlayerCardInfo(int option)
     }
     printf("\n");
 }
+
+char arrayToStringSend()
+{
+    char sendstring[512];
+    int temp = 0;
+    char temp2[10];
+    int i = 0;
+    int j = 0;
+
+    strcpy(sendstring,"#");
+    for(i = 0;i<MAXCLIENTS;i++)
+    {
+
+        for(j = 0;j<MAXCARDS;j++)
+        {
+            temp = player_card[i][j];
+            itoa(temp,temp2,10);
+
+            strcat(sendstring,temp2);
+
+            strcat(sendstring,".");
+            //system("pause");
+        }
+    }
+    SDL_Delay(100);
+    strcat(sendstring,"\0");
+    printf("stränegn: %s\n",sendstring);
+    return sendstring;
+}
+
