@@ -29,13 +29,21 @@ int sendToServer(char command[], TCPsocket socket){
 
 int reciveFromServer(TCPsocket socket){
     char buffer[512];
-    if (SDLNet_TCP_Recv(socket, &buffer, strlen(buffer)+1) < 0)
-    {
-        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-        exit(EXIT_FAILURE);
+    int value, quit;
+    while (!quit) {
+        if (SDLNet_TCP_Recv(socket, buffer, strlen(buffer)+1) > 0)
+        {
+            printf("In Recv: buffer = %s\n", buffer);
+            value = atoi(buffer);
+            printf("In Recv: value = %d\n", value);
+            quit = 1;
+        }else {
+            fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
+            exit(EXIT_FAILURE);
+        }
     }
-    
-    return atoi(buffer);
+
+    return value;
 }
 
 int IdToVisualCard(int id,Kort kortlek[])
@@ -45,18 +53,18 @@ int IdToVisualCard(int id,Kort kortlek[])
     {
         if(id == kortlek[i].kortnummer)
         {
-            printf("\n");
-            printf("You have card:\n");
-            printf("Suite: %s\n",kortlek[i].farg);
-            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            //printf("\n");
+            //printf("You have card:\n");
+            //printf("Suite: %s\n",kortlek[i].farg);
+            //printf("Value: %d\n\n",kortlek[i].kortvarde);
             if (strstr(kortlek[i].farg, "Hjarter")) {
-                cardNr = 25;
+                cardNr = 26;
                 cardNr += kortlek[i].kortvarde;
             }else if (strstr(kortlek[i].farg, "Spader")) {
-                cardNr = 12;
+                cardNr = 13;
                 cardNr += kortlek[i].kortvarde ;
             }else if (strstr(kortlek[i].farg, "Ruter")) {
-                cardNr = 38;
+                cardNr = 39;
                 cardNr += kortlek[i].kortvarde ;
             }else if (strstr(kortlek[i].farg, "Klover")) {
                 cardNr = 0;
@@ -64,8 +72,8 @@ int IdToVisualCard(int id,Kort kortlek[])
             }
         }
     }
-    printf("Going to return CardNr = %d \n", cardNr);
-    return cardNr;
+    printf("Going to return CardNr = %d \n", cardNr-1);
+    return cardNr-1;
 }
 
 void initiera_kortleken(Kort kortleken[])

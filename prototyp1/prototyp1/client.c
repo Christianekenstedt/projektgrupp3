@@ -7,27 +7,29 @@
 
 typedef struct Reciveinfo
 {
-    TCPsocket SD;
-    int* quit;
+    TCPsocket sd;
     SDLNet_SocketSet set;
+    int* quit;
+    
 }Rinfo;
 
-TCPsocket sd;		/* Socket descriptor */
-
 int tableInfo[MAXCLIENTS+1][15];
+char saker[512];
+
 int reciveInfo(void* info);
+
 int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
 
     int quit, quit2, len, myValue=0, ready=0;
-    char buffer[512], red[1];
+    char buffer[512], red[512];
     Kort kortlek[ANTALKORT]; // Deklarerar kortlek
     bool lose = false;
     Rinfo recive;
     
     recive.set = SDLNet_AllocSocketSet(1);
-    SDLNet_AddSocket(recive.set, sd);
+    
     recive.quit = &quit;
     
     
@@ -54,11 +56,13 @@ int main(int argc, char **argv)
     }
 
     /* Open a connection with the IP provided (listen on the host's port) */
-    if (!(sd = SDLNet_TCP_Open(&ip)))
+    if (!(recive.sd = SDLNet_TCP_Open(&ip)))
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
-    }else SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
+    }
+    SDLNet_AddSocket(recive.set, recive.sd);
+    SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
     
     quit = 0;
     int ID=0;
@@ -71,20 +75,29 @@ int main(int argc, char **argv)
             engang = false;
         }
         
-        if ((SDLNet_TCP_Recv(sd , red, 1) < 0)) {
-            fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
-            exit(EXIT_FAILURE);
+        if((SDLNet_CheckSockets(recive.set, 100))>0) {
+            printf("Oj nu finns det info!\n");
+            if ((SDLNet_TCP_Recv(recive.sd , red, 512+1) < 0)) {
+                fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+                exit(EXIT_FAILURE);
+            }
+            if(strstr(red, "ready")){
+                ready = 1;
+            }else{
+                printf("red = %s\n",red);
+                strcpy(saker,red);
+                //printf("saker = %s\n",saker);
+            }
+        
         }
-        //printf("ready= %s\n",red);
-        ready = atoi(red);
-        //ready = 1;
+
         while (ready==1)
         {
             printf("Hit or Stand> ");
             scanf("%s", buffer);
             
             len = strlen(buffer) + 1;
-            if (SDLNet_TCP_Send(sd, (void *)buffer, len) < len)
+            if (SDLNet_TCP_Send(recive.sd, (void *)buffer, len) < len)
             {
                 fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
                 exit(EXIT_FAILURE);
@@ -101,9 +114,8 @@ int main(int argc, char **argv)
             if (strstr(buffer,"card") || strstr(buffer,"hit")) {
                 while (!quit2)
                 {
-                    if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
+                    if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
                     {
-                        
                         ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
                         printf("ID = %d", ID);
                         quit2 = 1;
@@ -150,49 +162,18 @@ int main(int argc, char **argv)
 
         }
     }
-    SDLNet_TCP_Close(sd);
+    SDLNet_TCP_Close(recive.sd);
     SDLNet_Quit();
-
     return EXIT_SUCCESS;
 }
+
 int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
-    int temp=0;
-    int i = 0,j = 0; //i = varje spelare, j = varje kortid i ordning
-    bool go = true;
-    while(go)
-    {
-        if(SDLNet_CheckSockets(recive->set, 10)>0) {
-            printf("Oj nu finns det info!\n");
-            if(SDLNet_TCP_Recv(sd, &tableInfo, sizeof(tableInfo))<0){
-                fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
-            }
-            
-            
-
-            for(i = 0;i<MAXCLIENTS;i++)
-            {
-                for(j = 0;j<15;j++)
-                {
-                    printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
-                }
-            }
-            printf("\n");
-            
-            
-            
-            
-        }else{
-            //fprintf(stderr, "SDLNet_CheckSockets: %s\n",SDLNet_GetError());
-            //go = false;
-            //printf("Inget att hämta!\n");
-            //SDL_Delay(500);
-        }
-        
-        
-
-        
+    while (1) {
+        printf("Player: %s\n", saker);
+        //SDL_Delay(1000);
     }
-    SDLNet_TCP_Close(sd);
+    
+    
     return 0;
 }

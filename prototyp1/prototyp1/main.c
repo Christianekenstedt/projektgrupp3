@@ -198,7 +198,8 @@ int main( int argc, char* args[] ){
     //While application is running
     bool hit = false;
     bool quit = false;
-    int x=0, y=0, cardNr=0, temp =0, id=0;
+    bool engang = true;
+    int x=0, y=0, cardNr=0, temp =0, id=-20;
     int pott =0;
     int myTurn = 0;
     while( !quit ){
@@ -273,7 +274,12 @@ int main( int argc, char* args[] ){
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
                             }
-                            myTurn = reciveFromServer(sd);
+                            
+                            /*if(engang==true && reciveFromServer(sd)){
+                                myTurn = 1;
+                                engang = false;
+                            }*/
+                            myTurn = 1;
                         }else if(EXITBUTTON){
                             if(window == START){
                                 quit = true;
@@ -292,15 +298,16 @@ int main( int argc, char* args[] ){
                             hit = false;
                         }
                         else if(HITBUTTON && window == TABLE && myTurn == 1){
+                            
                             sendToServer("hit", sd);
                             id = reciveFromServer(sd);
-                            //id = 13;
-                            printf("id recived = %d\n", id);
+                            printf("\n\nid recived = %d", id);
                             cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
                             //cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
                             hit = true;
+                            //id += 1;
                         }
                         else if(STANDBUTTON && window == TABLE){
                             //sendToServer("stand", sd);
@@ -506,7 +513,14 @@ bool loadMedia(){
     kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
     
     int x=1,y=1,w=72,h=96, i;
+    
     for(i = 0; i<52; i++){
+        
+        cardSheet[i].x = x;
+        cardSheet[i].y = y;
+        cardSheet[i].w = w;
+        cardSheet[i].h = h;
+        x = x + w + 1;
         if (i == 12) {
             x = 1;
             y = 99;
@@ -517,11 +531,6 @@ bool loadMedia(){
             x = 1;
             y = 295;
         }
-        cardSheet[i].x = x;
-        cardSheet[i].y = y;
-        cardSheet[i].w = w;
-        cardSheet[i].h = h;
-        x += w + 1;
         
     }
     
