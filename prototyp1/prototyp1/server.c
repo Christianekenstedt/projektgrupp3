@@ -1,6 +1,7 @@
 #include "multiOS.h"
 #include "gamelogic.h"
 #define MAXCLIENTS 5
+#define MAXCLIENTSANDSERVER (MAXCLIENTS+1)
 #define MAXCARDS 15
 
 typedef struct stringinfo{
@@ -13,12 +14,12 @@ typedef struct stringinfo{
 
 Kort kortlek[ANTALKORT];
 int playerturn = MAXCLIENTS-1;
-int player_card[MAXCLIENTS+1][MAXCARDS];
+int player_card[MAXCLIENTSANDSERVER][MAXCARDS]; //+1 för servern
 
 int function(sinfo* incsocket);
 void gameInit(Kort kortlek[]);
 void PlayerCardInfo(int option);
-char arrayToStringSend();
+void arrayToStringSend(char sendstring[]);
 
 int main (int argc, char *argv[])
 {
@@ -105,7 +106,7 @@ int main (int argc, char *argv[])
         {
             playerturn = MAXCLIENTS-1;
         }
-        for(i = 0;i<MAXCLIENTS;i++)
+        for(i = MAXCLIENTS-1;i>-1;i--)
         {
             //printf("recive =%d, i = %d\n",clientvalue[i].recive,i);
             //system("pause");
@@ -113,18 +114,24 @@ int main (int argc, char *argv[])
             {
                 //printf("1.\n");
                 //system("pause");
-                for(j = 0;j<MAXCLIENTS;j++)
+                for(j = MAXCLIENTS-1;j>-1;j--)
                 {
                     //printf("clientvalue[%d].clientsocket == %d\n", j,freeslots[j]);
                     if(freeslots[j] == 1)
                     {
                         //printf("2.\n");
                         //system("pause");
-                        if(SDLNet_TCP_Send(clientvalue[j].socket, arrayToStringSend() ,512+1) < 0)
+                        char sendstring[1024];
+                        arrayToStringSend(sendstring);
+
+                        printf("stranegn: %s\n",sendstring);
+
+                        if(SDLNet_TCP_Send(clientvalue[i].socket, sendstring ,1024+1) < 0)
                         {
                             fprintf(stderr, "SDLNet_TCP_send: %s\n", SDLNet_GetError());
                             exit(EXIT_FAILURE);
                         }
+
                     }
                 }
                 //system("pause");
@@ -146,8 +153,26 @@ int function(sinfo* incsocket)
     bool lose = false;
     inc->clientvalue = 0;
     bool engang = true;
+
+
+    char red[8] = {'r','e','a','d','y','4','\0'};//skickar "ready" till client när det är dennes tur
+    //char temporar[1] = {'4'};
+    //strcpy(redo,"redo");
+    //printf("ready = %s\n",redo);
+    char cnr[3];
+    int temp2 = inc->clientnumber;
+
+    itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
+
+    //printf("cnr = %c\n",cnr[0]);
+    //system("pause");
+
+    //inc->recive = 1;
+
     *(inc->clientsocket) = 1;
     printf("%d: connected\n", inc->clientnumber);
+    //printf("cnr = %s\n",cnr);
+
     while(*(inc->quit) != 1)
     {
         engang = true;
@@ -159,19 +184,22 @@ int function(sinfo* incsocket)
         {
             if(playerturn == inc->clientnumber && engang == true) //om det är din tur
             {
-                engang = false;
 
-                if(SDLNet_TCP_Send(inc->socket, "ready", 512+1) < 0) //skicka en 1:a till klienten som signal att det är dennes tur.
+                engang = false;
+                red[5] = cnr[0];//för att clienten skall veta vem denne är i nummer
+
+                if(SDLNet_TCP_Send(inc->socket, &red, 512+1) < 0) //skicka en 1:a till klienten som signal att det är dennes tur.
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());//======================================================================
                     exit(EXIT_FAILURE);
                 }
+                //system("pause");
             }
             if(SDLNet_TCP_Recv(inc->socket, buffer2, 512) > 0)
             {
                 if(strstr(buffer2,"stand"))
                 {
-                    PlayerCardInfo(1);
+                    //PlayerCardInfo(1);
                     playerturn--;
                     inc->ready = 0;
                     temp=0;
@@ -206,7 +234,7 @@ int function(sinfo* incsocket)
                     char cvalue[512],cID[512];
                     itoa(value,cvalue,10);
                     itoa(ID,cID,10);
-                    if(SDLNet_TCP_Send(inc->socket, cID, strlen(cID)+1) < 0)
+                    if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
                     {
                         fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
                     }
@@ -250,7 +278,7 @@ int function(sinfo* incsocket)
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    //blanda_kortleken(kortlek);
+    blanda_kortleken(kortlek);
     PlayerCardInfo(0);
 }
 
@@ -260,7 +288,7 @@ void PlayerCardInfo(int option)
     //1 = printar ut info om alla
 
     int i = 0,j = 0; //i = varje spelare, j = varje kortid i ordning
-    for(i = 0;i<MAXCLIENTS;i++)
+    for(i = 0;i<MAXCLIENTSANDSERVER;i++)
     {
         for(j = 0;j<MAXCARDS;j++)
         {
@@ -278,18 +306,17 @@ void PlayerCardInfo(int option)
     printf("\n");
 }
 
-char arrayToStringSend()
+void arrayToStringSend(char sendstring[])
 {
-    char sendstring[512];
+    //char sendstring[512];
     int temp = 0;
     char temp2[10];
     int i = 0;
     int j = 0;
 
     strcpy(sendstring,"#");
-    for(i = 0;i<MAXCLIENTS;i++)
+    for(i = 0;i<MAXCLIENTSANDSERVER;i++)
     {
-
         for(j = 0;j<MAXCARDS;j++)
         {
             temp = player_card[i][j];
@@ -303,7 +330,8 @@ char arrayToStringSend()
     }
     SDL_Delay(100);
     strcat(sendstring,"\0");
-    printf("stränegn: %s\n",sendstring);
-    return sendstring;
+    //strcpy()
+    //printf("stranegn: %s\n",sendstring);
+    //return sendstring;
 }
 
