@@ -10,6 +10,8 @@
 #include "clientFunctions.h"
 #include "gamelogic.h"
 #include "knappar.h"
+#include "SDL.h"
+#include "SDL_TTF.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -61,10 +63,11 @@ SDL_Surface* message = NULL;
 //The event structure
 SDL_Event event;
 
-//The font that's going to be used
+/*The font that's going to be used
 TTF_Font* font = NULL;
 //The color of the font
-SDL_Color textColor = {255, 255, 255};
+SDL_Color foregroundColor = {255, 255, 255};
+SDL_Color backgroundColor = {0, 0, 255};*/
 // Renderer
 SDL_Renderer* gRenderer = NULL;
 // Rects
@@ -91,18 +94,18 @@ int main( int argc, char* args[] ){
     int window = 0; // Vilken Window som skall visas, main är 0.
     int frame = 0, cardFrame = 0, cardFrame2=0;
     char command[512]= {0};
-    
+
     srand(time(NULL));
     table1.y = 401;
     table1.x = 479;
     table1.w = 72;
     table1.h = 96;
-    
+
     table2.y = 401;
     table2.x = 519;
     table2.w = 72;
     table2.h = 96;
-    
+
     //Mark 1
     Chip1.y = 517;
     Chip1.x = 8;
@@ -169,8 +172,8 @@ int main( int argc, char* args[] ){
     SplitButton.x = 918;
     SplitButton.w = 93;
     SplitButton.h = 90;
-    
-    initiera_kortleken(kortlek);
+
+    //initiera_kortleken(kortlek);
     // NETWORK INIT ####################################################
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
@@ -213,7 +216,7 @@ int main( int argc, char* args[] ){
                 SDL_GetMouseState(&x,&y);
                 //printf("x: %d\ny: %d\n",x,y);
                 //printf("Pott: %d\n",pott);
-                
+
                 //User requests quit
                 if( e.type == SDL_QUIT ){
                     //sendToServer("exit", sd);
@@ -271,13 +274,13 @@ int main( int argc, char* args[] ){
                             frame=1;
                             window=TABLE;
                             /* Open a connection with the IP provided (listen on the host's port) */
-                            if ((sd = SDLNet_TCP_Open(&ip))< 1)
+                            /*if ((sd = SDLNet_TCP_Open(&ip))< 1)
                             {
                                 window = START;
                                 fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                                 //exit(EXIT_FAILURE);
-                            }
-                            
+                            }*/
+
                             /*if(engang==true && reciveFromServer(sd)){
                                 myTurn = 1;
                                 engang = false;
@@ -288,7 +291,7 @@ int main( int argc, char* args[] ){
                                 quit = true;
                             }else if (window == TABLE){
                                 /* */
-                                sendToServer("exit", sd);
+                                //sendToServer("exit", sd);
                                 SDLNet_TCP_Close(sd);
                                 window = START;
                             }
@@ -301,11 +304,11 @@ int main( int argc, char* args[] ){
                             hit = false;
                         }
                         else if(HITBUTTON && window == TABLE && myTurn == 1){
-                            
-                            sendToServer("hit", sd);
-                            id = reciveFromServer(sd);
+
+                            //sendToServer("hit", sd);
+                            //id = reciveFromServer(sd);
                             printf("\n\nid recived = %d", id);
-                            cardFrame = IdToVisualCard(id,kortlek);
+                            //cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
                             //cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
@@ -331,6 +334,7 @@ int main( int argc, char* args[] ){
                         }else if(M100 && window == TABLE){
                             pott +=100;
                         }
+                        printf("Pott: %d\n", pott);
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
                             frame=2;
@@ -350,31 +354,6 @@ int main( int argc, char* args[] ){
                     }
                 }
         }
-    //Render the text
-    message = TTF_RenderText_Solid(font, "FUNKAR DETTA ELLER?!", textColor);
-
-    //If there was an error in rendering the text
-    if(message == NULL)
-    {
-        return 1;
-    }
-
-    //Apply the imaged to the screen
-<<<<<<< HEAD
-    apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), table, gWindow);
-    apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), message, gWindow);
-=======
-
-    /*apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), table, gWindow);
-    apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), message, gWindow);
-*/
->>>>>>> origin/master
-
-    /*Update the screen
-    if(SDL_Flip(gWindow)== -1)
-    {
-        return 1;
-    }*/
     //Free resources and close SDL
     closeW();
     return 0;
@@ -411,18 +390,6 @@ bool init(){
         success = false;
     }
     return success;
-
-    //Initialize SDL ttf
-    if(TTF_Init()== -1)
-    {
-        return false;
-    }
-
-    //Set the window caption
-    SDL_WM_SetCaption("TTF Test", NULL);
-
-    //If everything initialized fine
-    return true;
 }
 //============================================LOAD MEDIA================================================
 bool loadMedia(){
@@ -519,11 +486,11 @@ bool loadMedia(){
     /* LADDAR KORTLEK */
     SDL_Surface* cardPic = IMG_Load("bilder/cards.png");
     kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
-    
+
     int x=1,y=1,w=72,h=96, i;
-    
+
     for(i = 0; i<52; i++){
-        
+
         cardSheet[i].x = x;
         cardSheet[i].y = y;
         cardSheet[i].w = w;
@@ -539,35 +506,43 @@ bool loadMedia(){
             x = 1;
             y = 295;
         }
-        
+
     }
-    
+
 
     return success;
 #endif
-    //Open the font
-    font = TTF_OpenFont("Type Keys.ttf", 20);
 
-    //If there was a problem in loading the font
-    if(font == NULL)
+    //Initialize SDL ttf
+    TTF_Init();
+
+    int ritaText(SDL_Surface* table, const char* text)
     {
-        return false;
-    }
+        TTF_Font* font = TTF_OpenFont("ARIAL.TTF", 50);
 
-    //if everything loaded fine
-    return true;
+        SDL_Color color = {255, 255, 255};
+        SDL_Surface* text_surface;
+
+        text_surface = TTF_RenderText_Solid(font, text, color);
+        SDL_Rect textLocation = {SCREEN_HEIGHT/2+90, SCREEN_WIDTH/2 };
+        if (text_surface != NULL)
+        {
+            SDL_BlitSurface(text_surface, NULL, table, &textLocation);
+            SDL_FreeSurface(text_surface);
+            return 1;
+        }
+        else
+        {
+            // report error
+            return 0;
+        }
+    }
 }
 //==================================================CLOSE===============================================
 void closeW(){
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
-   /* SDL_FreeSurface(table);
-    table = NULL;
-    SDL_FreeSurface (message);
-*/
-    //Close the font what was used
-    TTF_CloseFont(font);
 
     //Quit SDL_ttf
     TTF_Quit();
