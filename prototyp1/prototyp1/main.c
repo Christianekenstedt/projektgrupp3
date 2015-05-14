@@ -10,8 +10,6 @@
 #include "clientFunctions.h"
 #include "gamelogic.h"
 #include "knappar.h"
-#include "SDL.h"
-#include "SDL_TTF.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -21,14 +19,11 @@
 
 //Screen dimension constants
 
-<<<<<<< HEAD
-=======
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
 
 Kort kortlek[ANTALKORT];
 
->>>>>>> a19ff10c98f92a947035a7265555d182a2229cd1
 void ClearScreen();
 //Starts up SDL and creates window
 bool init();
@@ -41,6 +36,7 @@ void closeW();
 Mix_Music *gMusic = NULL;
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
+SDL_Window* textWindow = NULL;
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
 //The image we will load and show on the screen
@@ -56,18 +52,16 @@ SDL_Texture* doubleTexture = NULL;
 SDL_Texture* splitTexture = NULL;
 SDL_Texture* btable = NULL;
 SDL_Texture* kort = NULL;
+SDL_Texture* pottTexture = NULL;
 // Surface
 SDL_Surface* gXOut = NULL;
-SDL_Surface* message = NULL;
+SDL_Surface* text_surface = NULL;
+//==========
+SDL_Color textColor = {255,255,255};
+TTF_Font *font = NULL;
 
 //The event structure
 SDL_Event event;
-
-/*The font that's going to be used
-TTF_Font* font = NULL;
-//The color of the font
-SDL_Color foregroundColor = {255, 255, 255};
-SDL_Color backgroundColor = {0, 0, 255};*/
 // Renderer
 SDL_Renderer* gRenderer = NULL;
 // Rects
@@ -75,6 +69,7 @@ SDL_Rect gSpriteClips[3], cardSheet[52]; // Sprite
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
 SDL_Rect table1, table2;
+SDL_Rect renderRect;
 
 //===================================================================================================
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
@@ -215,7 +210,6 @@ int main( int argc, char* args[] ){
                 //ClearScreen();
                 SDL_GetMouseState(&x,&y);
                 //printf("x: %d\ny: %d\n",x,y);
-                //printf("Pott: %d\n",pott);
 
                 //User requests quit
                 if( e.type == SDL_QUIT ){
@@ -310,7 +304,7 @@ int main( int argc, char* args[] ){
                             printf("\n\nid recived = %d", id);
                             //cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
-                            //cardFrame = rand()%51+0;
+                            cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
                             hit = true;
                             //id += 1;
@@ -347,6 +341,7 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
+                        SDL_RenderCopy(gRenderer, pottTexture, NULL, &renderRect);
                         if(hit == true){
                             SDL_RenderCopy(gRenderer, kort, &cardSheet[cardFrame], &table1);
                         }
@@ -441,6 +436,60 @@ bool loadMedia(){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\EXIT.bmp", SDL_GetError() );
         success = false;
     }
+//Laddar kortleken
+SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
+    kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
+
+    int x=1,y=1,w=72,h=96, i;
+
+    for(i = 0; i<52; i++){
+
+        cardSheet[i].x = x;
+        cardSheet[i].y = y;
+        cardSheet[i].w = w;
+        cardSheet[i].h = h;
+        x = x + w + 1;
+        if (i == 12) {
+            x = 1;
+            y = 99;
+        }else if (i == 25){
+            x = 1;
+            y = 197;
+        }else if (i == 38){
+            x = 1;
+            y = 295;
+        }
+    }
+
+    //Initialisera SDL ttf
+    if(TTF_Init() == -1)
+    {
+        return false;
+    }
+
+    int ritaText()
+    {
+        font = TTF_OpenFont("Type Keys.ttf", 50);
+        text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
+        pottTexture = NULL;
+        int w=0,h=0;
+        if(text_surface != NULL)
+        {
+            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+            w = text_surface -> w;
+            h = text_surface -> h;
+            SDL_FreeSurface(text_surface);
+        }
+        else
+        {
+            printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
+        }
+
+        SDL_Rect renderRect = {250, 300, w, h};
+        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
+        SDL_GetError();
+        return true;
+    }
     return success;
 #else
 
@@ -509,34 +558,38 @@ bool loadMedia(){
 
     }
 
-
-    return success;
-#endif
-
-    //Initialize SDL ttf
-    TTF_Init();
-
-    int ritaText(SDL_Surface* table, const char* text)
+    //Initialisera SDL ttf
+    if(TTF_Init() == -1)
     {
-        TTF_Font* font = TTF_OpenFont("ARIAL.TTF", 50);
+        return false;
+    }
 
-        SDL_Color color = {255, 255, 255};
-        SDL_Surface* text_surface;
-
-        text_surface = TTF_RenderText_Solid(font, text, color);
-        SDL_Rect textLocation = {SCREEN_HEIGHT/2+90, SCREEN_WIDTH/2 };
-        if (text_surface != NULL)
+    int ritaText()
+    {
+        font = TTF_OpenFont("Type Keys.ttf", 50);
+        text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
+        pottTexture = NULL;
+        int w=0,h=0;
+        if(text_surface != NULL)
         {
-            SDL_BlitSurface(text_surface, NULL, table, &textLocation);
+            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+            w = text_surface -> w;
+            h = text_surface -> h;
             SDL_FreeSurface(text_surface);
-            return 1;
         }
         else
         {
-            // report error
-            return 0;
+            printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
         }
+
+        SDL_Rect renderRect = {250, 300, w, h};
+        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
+        SDL_GetError();
+        return true;
     }
+
+    return success;
+#endif
 }
 //==================================================CLOSE===============================================
 void closeW(){
@@ -545,6 +598,7 @@ void closeW(){
     gXOut = NULL;
 
     //Quit SDL_ttf
+    TTF_CloseFont(font);
     TTF_Quit();
 
     //Free the music

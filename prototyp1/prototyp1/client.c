@@ -23,16 +23,21 @@ int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
 
-    int quit, quit2, len, myValue=0, ready=0;
+    int quit, quit2, len, myValue=0, ready=0, i,j;
     char buffer[512], red[512];
     Kort kortlek[ANTALKORT]; // Deklarerar kortlek
     bool lose = false;
     Rinfo recive;
+    int myClientNr = 0;
     
     recive.set = SDLNet_AllocSocketSet(1);
     
     recive.quit = &quit;
-    
+    for (i=0; i<MAXCLIENTS+1; i++) {
+        for (j=0; j<15; j++) {
+            tableInfo[i][j] = 9;
+        }
+    }
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
@@ -67,7 +72,9 @@ int main(int argc, char **argv)
     
     quit = 0;
     int ID=0;
+    char temp[2];
     bool engang = true;
+
     while (!quit)
     {
         if (engang==true) {
@@ -78,16 +85,25 @@ int main(int argc, char **argv)
         
         if((SDLNet_CheckSockets(recive.set, 100))>0) {
             printf("Oj nu finns det info!\n");
-            if ((SDLNet_TCP_Recv(recive.sd , red, 512+1) < 0)) {
+            if ((SDLNet_TCP_Recv(recive.sd , red, 1024+1) < 0)) {
                 fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
                 exit(EXIT_FAILURE);
             }
+            
+            //printf("red = %s\n",red);
+            
             if(strstr(red, "ready")){
+                temp[0] = red[5];
+                myClientNr = atoi(temp);
+                printf("My client nr: %d\n",myClientNr);
                 ready = 1;
-            }else{
-                printf("red = %s\n",red);
+                for (i=0; i<2; i++) {
+                    temp[i] = '?';
+                }
+                
+            }else if(red[0] == '#'){
                 stringToArray(red);
-                //printf("saker = %s\n",saker);
+                
             }
         
         }
@@ -136,6 +152,8 @@ int main(int argc, char **argv)
                 myValue = 0;
                 ready=0;
                 engang = true;
+                
+
             }else if (strstr(buffer, "!help")){
                 
                 printf("##################    HELP   ############################\n\n");
@@ -172,9 +190,17 @@ int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
     int i,j;
     while (1) {
-        
-        
-        
+        for(i = 0;i<MAXCLIENTS+1;i++)
+        {
+            for(j = 0;j<MAXCARDS;j++)
+            {
+                
+                printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
+                
+                
+            }
+        }
+        printf("\n");
         SDL_Delay(4000);
     }
     
@@ -184,39 +210,57 @@ int reciveInfo(void* info){
 
 void stringToArray(char sendstring[])
 {
-    char temp2[10];
+    char temp2[4];
     int i = 0;
-    int j = 0;
+    int j = 0,n=0,k=0,l=0;
     
-    if(strcmp(sendstring, "#")==1)
+    if(sendstring[n]=='#')
     {
-        for (i=0; i<MAXCLIENTS; i++) {
+        n++;
+        while (sendstring[n] != '\0') {
+            if(sendstring[n] == '.'){
+                n++;
+            }else{
+                l=n;
+                //printf("%c\n", sendstring[n]);
+                while (sendstring[n] != '.') {
+                    temp2[k] = sendstring[n];
+                    k++;
+                    n++;
+                }
+                k=0;
+                tableInfo[i][j] = atoi(temp2);
+                for (l=0; l<4; l++) {
+                    temp2[l] = '?';
+                }
+                j++;
+            }
             
-            for (j=1; j<MAXCARDS+1; j++) {
-                if (sendstring[j] == '\0') {
-                    break;
-                }else if(sendstring[j] == '.'){
-                    j++;
-                }else
-                    strcpy(temp2, &sendstring[j]);
-                    tableInfo[i][j] = atoi(temp2);
+            
+            
+            if (j == MAXCARDS) {
+                j = 0;
+                i++;
             }
         }
     }else printf("STRANG TRASIG\n");
     SDL_Delay(100);
     
-    for(i = 0;i<MAXCLIENTS;i++)
-    {
-        for(j = 0;j<MAXCARDS;j++)
-        {
-            
-            printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
-            
-            
-        }
-    }
-    printf("\n");
+    
 
 
 }
-
+/*
+ if (sendstring[j] == '\0') {
+ break;
+ }else if(sendstring[j] == '.'){
+ j++;
+ }else
+ temp2[0] = sendstring[j];
+ 
+ //strcpy(temp2, &sendstring[j]);
+ 
+ 
+ tableInfo[i][j] = atoi(temp2);
+ 
+ */
