@@ -52,7 +52,7 @@ SDL_Texture* doubleTexture = NULL;
 SDL_Texture* splitTexture = NULL;
 SDL_Texture* btable = NULL;
 SDL_Texture* kort = NULL;
-SDL_Texture* pott = NULL;
+SDL_Texture* pottTexture = NULL;
 // Surface
 SDL_Surface* gXOut = NULL;
 SDL_Surface* text_surface = NULL;
@@ -69,7 +69,7 @@ SDL_Rect gSpriteClips[3], cardSheet[52]; // Sprite
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
 SDL_Rect table1, table2;
-SDL_Rect displayRect, rectBackground, textRect;
+SDL_Rect renderRect;
 
 //===================================================================================================
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
@@ -341,6 +341,7 @@ int main( int argc, char* args[] ){
                         SDL_RenderPresent(gRenderer);
                     }else if (window==1){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
+                        SDL_RenderCopy(gRenderer, pottTexture, NULL, &renderRect);
                         if(hit == true){
                             SDL_RenderCopy(gRenderer, kort, &cardSheet[cardFrame], &table1);
                         }
@@ -470,11 +471,11 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     {
         font = TTF_OpenFont("Type Keys.ttf", 50);
         text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
-        pott = NULL;
+        pottTexture = NULL;
         int w=0,h=0;
         if(text_surface != NULL)
         {
-            pott = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
             w = text_surface -> w;
             h = text_surface -> h;
             SDL_FreeSurface(text_surface);
@@ -485,7 +486,7 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         }
 
         SDL_Rect renderRect = {250, 300, w, h};
-        int result = SDL_RenderCopyEx(gRenderer, pott, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
+        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
         SDL_GetError();
         return true;
     }
@@ -567,11 +568,11 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     {
         font = TTF_OpenFont("Type Keys.ttf", 50);
         text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
-        pott = NULL;
+        pottTexture = NULL;
         int w=0,h=0;
         if(text_surface != NULL)
         {
-            pott = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
             w = text_surface -> w;
             h = text_surface -> h;
             SDL_FreeSurface(text_surface);
@@ -582,7 +583,7 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         }
 
         SDL_Rect renderRect = {250, 300, w, h};
-        int result = SDL_RenderCopyEx(gRenderer, pott, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
+        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
         SDL_GetError();
         return true;
     }
