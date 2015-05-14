@@ -46,7 +46,7 @@
 	<string.h>
 	"multiOS.h"
 
-1430828620 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1431524591 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -54,18 +54,24 @@
 	<stdbool.h>
 	<string.h>
 
-1430828620 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+1431524509 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
 	<stdbool.h>
 	<string.h>
 
-1430848593 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1430921881 D
+
+1431534957 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
 
-1430246975 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1430922627 ent of cfef331... Server
+	"multiOS.h"
+	"gamelogic.h"
+
+1430831194 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -73,7 +79,7 @@
 	<stdbool.h>
 	<string.h>
 
-1430246975 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+1430954379 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
@@ -84,7 +90,7 @@
 	"multiOS.h"
 	"gamelogic.h"
 
-1430246975 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\multios.h
+1430833909 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\multios.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_timer.h>
 	<SDL2/SDL_thread.h>
@@ -503,4 +509,20 @@
 	<stdlib.h>
 	<string.h>
 	<stdbool.h>
+
+1430954379 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+	"clientFunctions.h"
+	"multiOS.h"
+
+1430954379 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+	<stdio.h>
+	<stdbool.h>
+	"multiOS.h"
+
+1431429852 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\main.c
+	"multiOS.h"
+	"clientFunctions.h"
+	<stdio.h>
+	<stdbool.h>
+	<string.h>
 

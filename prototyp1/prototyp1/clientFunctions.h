@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "multiOS.h"
+#include "gamelogic.h"
+
 
 /* DEFINES */
 
@@ -28,11 +30,19 @@
 #define M25 (x>Chip25.x) && ( x < Chip25.x + Chip25.w ) && ( y > Chip25.y) && (y < Chip25.y + Chip25.h)
 #define M50 (x>Chip50.x) && ( x < Chip50.x + Chip50.w ) && ( y > Chip50.y) && (y < Chip50.y + Chip50.h)
 #define M100 (x>Chip100.x) && ( x < Chip100.x + Chip100.w ) && ( y > Chip100.y) && (y < Chip100.y + Chip100.h)
+#define START 0
+#define TABLE 1
 /* VARIABLER */
 
 
 
+//Screen dimension constants
+
 /* FUNKTIONSDEKLARATIONER */
 
+int sendToServer(char command[], TCPsocket socket);
+int reciveFromServer(TCPsocket socket);
+int IdToVisualCard(int id,Kort kortlek[]);
+void initiera_kortleken(Kort kortleken[]);
 
 #endif /* defined(__prototyp1__clientFunctions__) */

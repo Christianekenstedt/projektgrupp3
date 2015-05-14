@@ -1,19 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define MAXCLIENTS 5
 #include "gamelogic.h"
 #include "multiOS.h"
 
+typedef struct Reciveinfo
+{
+    TCPsocket sd;
+    SDLNet_SocketSet set;
+    int* quit;
+    
+}Rinfo;
+
+int tableInfo[MAXCLIENTS+1][15];
+char saker[512];
+
+int reciveInfo(void* info);
+void stringToArray(char sendstring[]);
 
 int main(int argc, char **argv)
 {
     IPaddress ip;		/* Server address */
-    TCPsocket sd;		/* Socket descriptor */
+
     int quit, quit2, len, myValue=0, ready=0;
-    char buffer[512], red[1];
+    char buffer[512], red[512];
     Kort kortlek[ANTALKORT]; // Deklarerar kortlek
     bool lose = false;
+    Rinfo recive;
+    
+    recive.set = SDLNet_AllocSocketSet(1);
+    
+    recive.quit = &quit;
+    
     
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
@@ -38,12 +57,14 @@ int main(int argc, char **argv)
     }
 
     /* Open a connection with the IP provided (listen on the host's port) */
-    if (!(sd = SDLNet_TCP_Open(&ip)))
+    if (!(recive.sd = SDLNet_TCP_Open(&ip)))
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-
+    SDLNet_AddSocket(recive.set, recive.sd);
+    SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
+    
     quit = 0;
     int ID=0;
     bool engang = true;
@@ -55,27 +76,38 @@ int main(int argc, char **argv)
             engang = false;
         }
         
-        if ((SDLNet_TCP_Recv(sd , red, 1) < 0)) {
-            fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
-            exit(EXIT_FAILURE);
+        if((SDLNet_CheckSockets(recive.set, 100))>0) {
+            printf("Oj nu finns det info!\n");
+            if ((SDLNet_TCP_Recv(recive.sd , red, 512+1) < 0)) {
+                fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+                exit(EXIT_FAILURE);
+            }
+            if(strstr(red, "ready")){
+                ready = 1;
+            }else{
+                printf("red = %s\n",red);
+                stringToArray(red);
+                //printf("saker = %s\n",saker);
+            }
+        
         }
-        printf("ready= %s\n",red);
-        ready = atoi(red);
-        //ready = 1;
-        while (ready)
+
+        while (ready==1)
         {
             printf("Hit or Stand> ");
             scanf("%s", buffer);
             
             len = strlen(buffer) + 1;
-            if (SDLNet_TCP_Send(sd, (void *)buffer, len) < len)
+            if (SDLNet_TCP_Send(recive.sd, (void *)buffer, len) < len)
             {
                 fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
                 exit(EXIT_FAILURE);
             }
             
-            if(strcmp(buffer, "exit") == 0)
+            if(strcmp(buffer, "exit") == 0){
                 quit = 1;
+                ready = 0;
+            }
             if(strcmp(buffer, "quit") == 0)
                 quit = 1;
             
@@ -83,9 +115,8 @@ int main(int argc, char **argv)
             if (strstr(buffer,"card") || strstr(buffer,"hit")) {
                 while (!quit2)
                 {
-                    if (SDLNet_TCP_Recv(sd, buffer, 512) > 0)
+                    if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
                     {
-                        
                         ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
                         printf("ID = %d", ID);
                         quit2 = 1;
@@ -120,20 +151,72 @@ int main(int argc, char **argv)
                 }
                 myValue = 0;
                 lose = false;
+                
+                myValue = 0;
+                ready=0;
+                engang = true;
+            }else if (myValue==21){
+                printf("You got blackjack!\n");
+                ready = 0;
+                myValue = 0;
             }
 
         }
-        printf("UTE Ready = 0\n");
     }
-    SDLNet_TCP_Close(sd);
+    SDLNet_TCP_Close(recive.sd);
     SDLNet_Quit();
-
     return EXIT_SUCCESS;
 }
 
-/*void klar(){
-    if (SDLNet_TCP_Send(sd , "0", 1)<0) {
-        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-        exit(EXIT_FAILURE);
+int reciveInfo(void* info){
+    Rinfo* recive = (Rinfo*) info;
+    int i,j;
+    while (1) {
+        
+        
+        
+        SDL_Delay(4000);
     }
-}*/
+    
+    
+    return 0;
+}
+
+void stringToArray(char sendstring[])
+{
+    char temp2[10];
+    int i = 0;
+    int j = 0;
+    
+    if(strcmp(sendstring, "#")==1)
+    {
+        for (i=0; i<MAXCLIENTS; i++) {
+            
+            for (j=1; j<MAXCARDS+1; j++) {
+                if (sendstring[j] == '\0') {
+                    break;
+                }else if(sendstring[j] == '.'){
+                    j++;
+                }else
+                    strcpy(temp2, &sendstring[j]);
+                    tableInfo[i][j] = atoi(temp2);
+            }
+        }
+    }else printf("STRANG TRASIG\n");
+    SDL_Delay(100);
+    
+    for(i = 0;i<MAXCLIENTS;i++)
+    {
+        for(j = 0;j<MAXCARDS;j++)
+        {
+            
+            printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
+            
+            
+        }
+    }
+    printf("\n");
+
+
+}
+
