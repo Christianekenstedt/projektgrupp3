@@ -318,13 +318,8 @@ int main( int argc, char* args[] ){
     }
 
     //Apply the imaged to the screen
-<<<<<<< HEAD
     apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), table, gWindow);
     apply_surface((SCREEN_HEIGHT/2+90), (SCREEN_WIDTH/2), message, gWindow);
-=======
-    apply_surface(0, 0, gXOut, gWindow);
-    apply_surface(0, 150, message, gWindow);
->>>>>>> origin/master
 
     /*Update the screen
     if(SDL_Flip(gWindow)== -1)
@@ -388,7 +383,7 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
-    SDL_Surface* table = MG_Load("bilder\\bord9999.0.png");
+    SDL_Surface* table = IMG_Load("bilder\\bord9999.0.png");
 
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
