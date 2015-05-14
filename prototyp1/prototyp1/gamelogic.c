@@ -88,25 +88,25 @@ void initiera_kortleken(Kort kortleken[])
             farg = 0;
         }
 
-        if(farg <= 13)
+        if(farg <= 12)
         {
-            strcpy(kortleken[i].farg, "Hjarter");
-            kortleken[i].farg[7] = '\0';
+            strcpy(kortleken[i].farg, "Klover");
+            kortleken[i].farg[6] = '\0';
         }
-        else if(farg > 13 && farg <= 26)
+        else if(farg >= 13 && farg <= 25)
         {
             strcpy(kortleken[i].farg,"Spader");
             kortleken[i].farg[6] = '\0';
         }
-        else if(farg > 26 && farg <= 39)
+        else if(farg >= 26 && farg <= 38)
+        {
+            strcpy(kortleken[i].farg,"Hjarter");
+            kortleken[i].farg[7] = '\0';
+        }
+        else if(farg >= 39 && farg <= 51)
         {
             strcpy(kortleken[i].farg,"Ruter");
             kortleken[i].farg[5] = '\0';
-        }
-        else if(farg > 39 && farg <= 51)
-        {
-            strcpy(kortleken[i].farg,"Klover");
-            kortleken[i].farg[6] = '\0';
         }
         kortleken[i].upptagen = false;
         farg++;
@@ -207,6 +207,7 @@ void IdToCard(int id,Kort kortlek[])
         }
     }
 }
+
 
 void ClearScreen(){
 #ifdef _WIN32
