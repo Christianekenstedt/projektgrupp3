@@ -140,7 +140,7 @@ int dra_kort(Kort kortlek[])
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
         {
             //checka_kort(i,kortlek);
-            kortlek[i].upptagen = true; /*kortet √§r nu draget*/
+            kortlek[i].upptagen = true; /*kortet ar nu draget*/
             printf("0: %d\n", kortlek[i].kortvarde);
             blackjackvarde = kortlek[i].kortvarde;
             printf("1: %d\n", blackjackvarde);
@@ -158,7 +158,7 @@ int dra_kort(Kort kortlek[])
 int dra_ID(Kort kortlek[])
 {
 
-    int i, ID = 0; /*alla kl√§dda kort √§r v√§rda 10 i blackjack*/
+    int i, ID = 0; /*alla kladda kort ar varda 10 i blackjack*/
 
     for(i = 0;0<ANTALKORT;i++)
     {
@@ -192,7 +192,7 @@ int IdToValue(int id, Kort kortlek[])
     return value;
 }
 
-void IdToCard(int id,Kort kortlek[],int PoD)
+void IdToCard(int id,Kort kortlek[],int PoD) //PoD = player or dealer, 1 = dealer och 0 = klient
 {
     int i = 0;
     for(i = 0;i<ANTALKORT;i++)
