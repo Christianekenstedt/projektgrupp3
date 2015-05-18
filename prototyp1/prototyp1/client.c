@@ -253,22 +253,4 @@ void stringToArray(char sendstring[])
         }
     }else printf("STRANG TRASIG\n");
     SDL_Delay(100);
-
-
-
-
 }
-/*
- if (sendstring[j] == '\0') {
- break;
- }else if(sendstring[j] == '.'){
- j++;
- }else
- temp2[0] = sendstring[j];
-
- //strcpy(temp2, &sendstring[j]);
-
-
- tableInfo[i][j] = atoi(temp2);
-
- */
