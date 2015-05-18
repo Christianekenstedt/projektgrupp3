@@ -17,6 +17,8 @@
 
 #define ANTALKORTLEKAR 5
 #define ANTALKORT (ANTALKORTLEKAR*52)
+#define MAXCLIENTS 5
+#define MAXCARDS 15
 
 struct kort
 {
@@ -34,8 +36,10 @@ int dra_kort(Kort kortlek[]);
 int dra_ID(Kort kortlek[]);
 void checka_kort(int kortleksplats, Kort kortlek[]);
 int IdToValue(int id, Kort kortlek[]);
-void IdToCard(int id,Kort kortlek[]);
+void IdToCard(int id,Kort kortlek[],int PoD);
 void ClearScreen();
+int IdToVisualCard(int id,Kort kortlek[]);
+
 
 
 #endif /* defined(__prototyp1__gamelogic__) */

@@ -88,25 +88,25 @@ void initiera_kortleken(Kort kortleken[])
             farg = 0;
         }
 
-        if(farg <= 13)
+        if(farg <= 12)
         {
-            strcpy(kortleken[i].farg, "Hjarter");
-            kortleken[i].farg[7] = '\0';
+            strcpy(kortleken[i].farg, "Klover");
+            kortleken[i].farg[6] = '\0';
         }
-        else if(farg > 13 && farg <= 26)
+        else if(farg >= 13 && farg <= 25)
         {
             strcpy(kortleken[i].farg,"Spader");
             kortleken[i].farg[6] = '\0';
         }
-        else if(farg > 26 && farg <= 39)
+        else if(farg >= 26 && farg <= 38)
+        {
+            strcpy(kortleken[i].farg,"Hjarter");
+            kortleken[i].farg[7] = '\0';
+        }
+        else if(farg >= 39 && farg <= 51)
         {
             strcpy(kortleken[i].farg,"Ruter");
             kortleken[i].farg[5] = '\0';
-        }
-        else if(farg > 39 && farg <= 51)
-        {
-            strcpy(kortleken[i].farg,"Klover");
-            kortleken[i].farg[6] = '\0';
         }
         kortleken[i].upptagen = false;
         farg++;
@@ -192,7 +192,7 @@ int IdToValue(int id, Kort kortlek[])
     return value;
 }
 
-void IdToCard(int id,Kort kortlek[])
+void IdToCard(int id,Kort kortlek[],int PoD)
 {
     int i = 0;
     for(i = 0;i<ANTALKORT;i++)
@@ -200,13 +200,17 @@ void IdToCard(int id,Kort kortlek[])
         if(id == kortlek[i].kortnummer)
         {
             printf("\n");
-            printf("You have card:\n");
+            if(PoD == 1){
+                printf("DEALER have card:\n");
+
+            }else printf("You have card:\n");
             printf("Suite: %s\n",kortlek[i].farg);
-            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            printf("Value: %d\n",kortlek[i].kortvarde);
             break;
         }
     }
 }
+
 
 void ClearScreen(){
 #ifdef _WIN32
