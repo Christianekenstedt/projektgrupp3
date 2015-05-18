@@ -79,7 +79,7 @@
 	<stdbool.h>
 	<string.h>
 
-1430954379 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+1431936574 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
@@ -510,16 +510,17 @@
 	<string.h>
 	<stdbool.h>
 
-1430954379 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1431936574 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
 	"multiOS.h"
 
-1431436973 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1431936574 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
+	"gamelogic.h"
 
-1431437241 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\main.c
+1431936574 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\main.c
 	"multiOS.h"
 	"clientFunctions.h"
 	"gamelogic.h"

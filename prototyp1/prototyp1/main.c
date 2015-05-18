@@ -394,17 +394,19 @@ bool loadMedia(){
 #ifdef _WIN32
     //Load splash image
 
-    SDL_Surface* table = IMG_Load("bilder\\bord9999.0.png");
 
-    btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
+    SDL_Surface* table = IMG_Load("bilder/bord9999.0.png");
+    btable = SDL_CreateTextureFromSurface(gRenderer, table);
+
+
     if( gXOut == NULL ){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
-    gMusic = Mix_LoadMUS( "musik\\bg.wav" );
+    gMusic = Mix_LoadMUS( "musik/bg.wav" );
     if( gMusic == NULL ){
         printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
         success = false;
@@ -429,7 +431,7 @@ bool loadMedia(){
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
 
-    SDL_Surface* gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
+    SDL_Surface* gExitButton = SDL_LoadBMP("bilder/EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
     if( gExitButton == NULL ){
@@ -437,7 +439,7 @@ bool loadMedia(){
         success = false;
     }
 //Laddar kortleken
-SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
+SDL_Surface* cardPic = IMG_Load("bilder/cards.png");
     kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
 
     int x=1,y=1,w=72,h=96, i;
