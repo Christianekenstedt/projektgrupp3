@@ -8,7 +8,11 @@
 	</File>
 	<File name="..\prototyp1\gamelogic.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
+<<<<<<< HEAD
 			<Cursor1 position="2497" topLine="84" />
+=======
+			<Cursor1 position="4566" topLine="121" />
+>>>>>>> origin/master
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -192,7 +192,7 @@ int IdToValue(int id, Kort kortlek[])
     return value;
 }
 
-void IdToCard(int id,Kort kortlek[])
+void IdToCard(int id,Kort kortlek[],int PoD)
 {
     int i = 0;
     for(i = 0;i<ANTALKORT;i++)
@@ -200,9 +200,12 @@ void IdToCard(int id,Kort kortlek[])
         if(id == kortlek[i].kortnummer)
         {
             printf("\n");
-            printf("You have card:\n");
+            if(PoD == 1){
+                printf("DEALER have card:\n");
+
+            }else printf("You have card:\n");
             printf("Suite: %s\n",kortlek[i].farg);
-            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            printf("Value: %d\n",kortlek[i].kortvarde);
             break;
         }
     }
