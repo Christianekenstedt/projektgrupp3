@@ -68,7 +68,7 @@ void blanda_kortleken(Kort kortlek[])
     }
 }
 
-void initiera_kortleken(Kort kortleken[])
+/*void initiera_kortleken(Kort kortleken[])
 {
     int farg = 0,i;
     int temp_kortvarde = 1;
@@ -113,7 +113,7 @@ void initiera_kortleken(Kort kortleken[])
         farg++;
         temp_kortvarde++;
     }
-}
+}*/
 void checka_kort(int kortleksplats, Kort kortlek[])
 {
 
@@ -213,11 +213,11 @@ void IdToCard(int id,Kort kortlek[],int PoD) //PoD = player or dealer, 1 = deale
 }
 
 
-void ClearScreen(){
+/*void ClearScreen(){
 #ifdef _WIN32
     system("cls");
 #else //
     system("clear");
 #endif // rest
-}
+}*/
 

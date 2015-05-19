@@ -50,6 +50,9 @@
 		</Unit>
 		<Unit filename="../prototyp1/clientFunctions.h" />
 		<Unit filename="../prototyp1/gamelogic.h" />
+		<Unit filename="../prototyp1/knappar.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../prototyp1/knappar.h" />
 		<Unit filename="../prototyp1/main.c">
 			<Option compilerVar="CC" />

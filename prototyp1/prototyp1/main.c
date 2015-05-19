@@ -304,7 +304,7 @@ int main( int argc, char* args[] ){
 
                             id = rand()%260+0;
                             printf("\n\nid recived = %d\n", id);
-                            //cardFrame = IdToVisualCard(id,kortlek);
+                            cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
                             //cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
@@ -570,7 +570,29 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         return false;
     }
 
-    
+    int ritaText()
+    {
+        font = TTF_OpenFont("Type Keys.ttf", 50);
+        text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
+        pottTexture = NULL;
+        int w=0,h=0;
+        if(text_surface != NULL)
+        {
+            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+            w = text_surface -> w;
+            h = text_surface -> h;
+            SDL_FreeSurface(text_surface);
+        }
+        else
+        {
+            printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
+        }
+
+        SDL_Rect renderRect = {250, 300, w, h};
+        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
+        SDL_GetError();
+        return true;
+    }
 
     return success;
 #endif
@@ -597,27 +619,5 @@ void closeW(){
     SDL_Quit();
 }
 //====================================================================================================
-int ritaText()
-{
-    font = TTF_OpenFont("Type Keys.ttf", 50);
-    text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
-    pottTexture = NULL;
-    int w=0,h=0;
-    if(text_surface != NULL)
-    {
-        pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
-        w = text_surface -> w;
-        h = text_surface -> h;
-        SDL_FreeSurface(text_surface);
-    }
-    else
-    {
-        printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
-    }
-    
-    SDL_Rect renderRect = {250, 300, w, h};
-    int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
-    SDL_GetError();
-    return true;
-}
+
 

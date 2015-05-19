@@ -568,7 +568,7 @@
 	<string.h>
 	<stdbool.h>
 
-1431965245 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1432028042 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
 	"multiOS.h"
 
@@ -584,7 +584,7 @@
 1431435447 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\knappar.h
 	<stdio.h>
 
-1431964045 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\main.c
+1432028232 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\main.c
 	"multiOS.h"
 	"clientFunctions.h"
 	"gamelogic.h"
@@ -596,4 +596,12 @@
 1431940589 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
+
+1432028553 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+	"gamelogic.h"
+	<stdio.h>
+	<time.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
 
