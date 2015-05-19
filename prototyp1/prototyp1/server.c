@@ -28,9 +28,6 @@ int main (int argc, char *argv[])
     sinfo clientvalue[MAXCLIENTS] ={NULL, NULL, 0, NULL, 0, 0, 0}; //bör initsiras
     int quit = 0, ClientNumber=0;
     int freeslots[MAXCLIENTS]={0}, i, j;
-    bool engang = true;
-    int dealervalue = 0;
-    int temp = 0, plats=0;
 /* ########################## VIKTIGA SAKER ATT KÖRA ######################################## */
 
     srand(time(NULL));
@@ -98,77 +95,11 @@ int main (int argc, char *argv[])
         }
         if(playerturn == -1)
         {
-            playerturn = MAXCLIENTS;
+            playerturn = MAXCLIENTS-1;
         }
-        for(i = MAXCLIENTS-1;i>-1;i--) //kollar spelare om de är med i spel och där efter vad de ska göra.
+        for(i = MAXCLIENTS-1;i>-1;i--)
         {
-            if(playerturn == MAXCLIENTS && (freeslots[4] == 1 || freeslots[3] == 1 || freeslots[2] == 1 || freeslots[1] == 1 || freeslots[0] == 1) && engang == true)
-            {
-                engang = false;
-                temp = dra_ID(kortlek);
-                player_card[5][plats++] = temp;
-                dealervalue = IdToValue(temp,kortlek);
-
-                temp = dra_ID(kortlek);
-                player_card[5][plats++] = temp;
-                dealervalue = dealervalue + IdToValue(temp,kortlek);
-
-                printf("Dra id. %d\n",player_card[5][0]);
-                printf("Dra id. %d\n",player_card[5][1]);
-                printf("Dealer has: %d\n",dealervalue);
-
-                playerturn--;
-            }
-            else if(engang == false && playerturn == 5)//när alla spelare är klara blir det dealers tur igen
-            {
-                //====================== Servens logik ================================
-                while(dealervalue < 17)
-                {
-                    temp = dra_ID(kortlek);
-                    player_card[5][plats++] = temp;
-                    dealervalue = dealervalue + IdToValue(temp,kortlek);
-                    printf("Dealer has: %d============================================\n",dealervalue);
-                    system("pause");
-                }
-
-                //==================== skica ut vad alla har ======================
-                for(i = 0;i<MAXCLIENTS;i++)
-                {
-                    clientvalue[i].recive = 1;
-                }
-                for(i = 0;i<MAXCLIENTS;i++)
-                {
-                    for(j = MAXCLIENTS-1;j>-1;j--)
-                    {
-                        if(freeslots[j] == 1)
-                        {
-                            char sendstring[1024];
-                            arrayToStringSend(sendstring);
-                            //printf("stranegn: %s\n",sendstring);
-
-                            /*if(SDLNet_TCP_Send(clientvalue[i].socket, sendstring ,1024+1) < 0)
-                            {
-                                fprintf(stderr, "SDLNet_TCP_send: %s\n", SDLNet_GetError());
-                                exit(EXIT_FAILURE);
-                            }*/
-                        }
-                    }
-                    //clientvalue[i].recive = 0;
-                }
-                system("pause");
-
-
-                //============================= regler ============================
-                if(dealervalue > 21){
-                    printf("Dealer lose!\n");
-                    PlayerCardInfo(0);
-                }
-
-                //system("pause");
-                //PlayerCardInfo(0);
-                playerturn--;
-            }
-            else if(clientvalue[i].recive == 1)
+            if(clientvalue[i].recive == 1)
             {
                 for(j = MAXCLIENTS-1;j>-1;j--)
                 {
@@ -176,7 +107,7 @@ int main (int argc, char *argv[])
                     {
                         char sendstring[1024];
                         arrayToStringSend(sendstring);
-                        //printf("stranegn: %s\n",sendstring);
+                        printf("stranegn: %s\n",sendstring);
 
                         if(SDLNet_TCP_Send(clientvalue[i].socket, sendstring ,1024+1) < 0)
                         {
@@ -208,11 +139,6 @@ int function(sinfo* incsocket)
     int temp2 = inc->clientnumber;
     itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
     *(inc->clientsocket) = 1;
-    inc->recive = 1; //ger main tråden tillåtelse att skicka ut all info om bordet till den nya anslutna klienten
-    int ID = -1; //kort ID
-    char cvalue[512],cID[512];
-
-    SDL_Delay(1000);
 
     printf("Client %d connected\n", inc->clientnumber);
 
@@ -235,56 +161,6 @@ int function(sinfo* incsocket)
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());//======================================================================
                     exit(EXIT_FAILURE);
                 }
-
-                 //skickar första kortet till den ny anslutna klienten
-                 //SDL_Delay(1000);
-
-                    ID = dra_ID(kortlek);
-                    printf("ID: %d\n", ID);
-
-                    player_card[inc->clientnumber][temp] = ID;
-                    temp++;
-
-
-                    itoa(value,cvalue,10);
-                    itoa(ID,cID,10);
-                    if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
-                    {
-                        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-                    }
-                    IdToCard(ID,kortlek,0); //visar på skärmen en spelares spelbord
-                    inc->clientvalue = inc->clientvalue + IdToValue(ID,kortlek);
-                    if(inc->clientvalue > 21)
-                    {
-                        lose = true;
-                    }
-                    printf("Client [%d] has a card value of %d\n", inc->clientnumber, inc->clientvalue);
-
-
-                    /* skickar andra kortet till den ny anslutna klienten */
-                    SDL_Delay(1000);
-
-                    ID = dra_ID(kortlek);
-                    printf("ID: %d\n", ID);
-
-                    player_card[inc->clientnumber][temp] = ID;
-                    temp++;
-
-                    itoa(value,cvalue,10);
-                    itoa(ID,cID,10);
-                    if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
-                    {
-                        fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-                    }
-                    IdToCard(ID,kortlek,0); //visar på skärmen en spelares spelbord
-                    inc->clientvalue = inc->clientvalue + IdToValue(ID,kortlek);
-                    if(inc->clientvalue > 21)
-                    {
-                        lose = true;
-                    }
-                    printf("Client [%d] has a card value of %d\n", inc->clientnumber, inc->clientvalue);
-
-                //====================================================
             }
             if(SDLNet_TCP_Recv(inc->socket, buffer2, 512) > 0)
             {
@@ -316,12 +192,13 @@ int function(sinfo* incsocket)
                 }
                 else if (strstr(buffer2, "card") || strstr(buffer2, "hit"))
                 {
-                    ID = dra_ID(kortlek);
+                    int ID = dra_ID(kortlek);
                     printf("ID: %d\n", ID);
 
                     player_card[inc->clientnumber][temp] = ID;
                     temp++;
 
+                    char cvalue[512],cID[512];
                     itoa(value,cvalue,10);
                     itoa(ID,cID,10);
                     if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
@@ -358,7 +235,6 @@ int function(sinfo* incsocket)
                     printf("Client [%d] got Blackjack\n");
                     inc->clientvalue = 0;
                     inc->ready = 0;
-                    inc->recive = 1;
                     playerturn--;
                 }
             }else SDL_Delay(200);
@@ -371,6 +247,11 @@ void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
     blanda_kortleken(kortlek);
     PlayerCardInfo(0);
+
+    /* Tillfälligt ger dealern två påhittade IDn (För att testa klienten)*/
+    player_card[5][0] = 12;
+    player_card[5][1] = 135;
+
 }
 
 void PlayerCardInfo(int option)

@@ -168,7 +168,7 @@ int main( int argc, char* args[] ){
     SplitButton.w = 93;
     SplitButton.h = 90;
 
-    //initiera_kortleken(kortlek);
+    initiera_kortleken(kortlek);
     // NETWORK INIT ####################################################
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
@@ -301,10 +301,11 @@ int main( int argc, char* args[] ){
 
                             //sendToServer("hit", sd);
                             //id = reciveFromServer(sd);
+                            id=rand()%260+0;
                             printf("\n\nid recived = %d", id);
-                            //cardFrame = IdToVisualCard(id,kortlek);
+                            cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
-                            cardFrame = rand()%51+0;
+                            //cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
                             hit = true;
                             //id += 1;
@@ -397,7 +398,7 @@ bool loadMedia(){
     SDL_Surface* table = IMG_Load("bilder\\bord9999.0.png");
 
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
-    gXOut = SDL_LoadBMP( "bilder/background.bmp" );
+    gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
@@ -410,7 +411,7 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-    SDL_Surface* gPlayButton = SDL_LoadBMP("bilder/testplay.bmp");
+    SDL_Surface* gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 

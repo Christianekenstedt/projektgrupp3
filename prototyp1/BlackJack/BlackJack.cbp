@@ -45,14 +45,22 @@
 			<Add directory="../../../SDL2/SDL2_ttf-2.0.12/i686-w64-mingw32/lib" />
 			<Add directory="../../../SDL2/SDL2-2.0.3/i686-w64-mingw32/lib" />
 		</Linker>
+		<Unit filename="../prototyp1/clientFunctions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../prototyp1/clientFunctions.h" />
 		<Unit filename="../prototyp1/gamelogic.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../prototyp1/gamelogic.h" />
-		<Unit filename="../prototyp1/multiOS.h" />
-		<Unit filename="../prototyp1/server.c">
+		<Unit filename="../prototyp1/knappar.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../prototyp1/knappar.h" />
+		<Unit filename="../prototyp1/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../prototyp1/multiOS.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
