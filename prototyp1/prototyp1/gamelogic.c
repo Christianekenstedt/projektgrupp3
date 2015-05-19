@@ -212,11 +212,11 @@ void IdToCard(int id,Kort kortlek[],int PoD)
 }
 
 
-void ClearScreen(){
+/*void ClearScreen(){
 #ifdef _WIN32
     system("cls");
 #else //
     system("clear");
 #endif // rest
-}
+}*/
 

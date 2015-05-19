@@ -53,10 +53,10 @@ int IdToVisualCard(int id,Kort kortlek[])
     {
         if(id == kortlek[i].kortnummer)
         {
-            //printf("\n");
-            //printf("You have card:\n");
-            //printf("Suite: %s\n",kortlek[i].farg);
-            //printf("Value: %d\n\n",kortlek[i].kortvarde);
+            printf("\n");
+            printf("You have card:\n");
+            printf("Suite: %s\n",kortlek[i].farg);
+            printf("Value: %d\n\n",kortlek[i].kortvarde);
             if (strstr(kortlek[i].farg, "Hjarter")) {
                 cardNr = 26;
                 cardNr += kortlek[i].kortvarde;
@@ -76,27 +76,27 @@ int IdToVisualCard(int id,Kort kortlek[])
     return cardNr-1;
 }
 
-void initiera_kortleken(Kort kortleken[])
+/*void initiera_kortleken(Kort kortleken[])
 {
     int farg = 0,i;
     int temp_kortvarde = 1;
     for(i = 0;i<ANTALKORT;i++)
     {
         kortleken[i].kortnummer = i;
-        
-        
+
+
         if(temp_kortvarde == 14)
         {
             temp_kortvarde = 1;
         }
         kortleken[i].kortvarde = temp_kortvarde;
-        
-        
+
+
         if(farg == 52)
         {
             farg = 0;
         }
-        
+
         if(farg <= 12)
         {
             strcpy(kortleken[i].farg, "Klover");
@@ -121,4 +121,4 @@ void initiera_kortleken(Kort kortleken[])
         farg++;
         temp_kortvarde++;
     }
-}
+}*/

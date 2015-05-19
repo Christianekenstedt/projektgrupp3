@@ -61,7 +61,7 @@
 	<stdbool.h>
 	<string.h>
 
-1430921881 D
+1394940882 D
 
 1431361640 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
@@ -632,18 +632,18 @@
 	"begin_code.h"
 	"close_code.h"
 
-<<<<<<< HEAD
-1432029699 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1432032643 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
-	"gamelogic.h"
 	"multiOS.h"
 
-1432029699 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1432032482 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
 	"gamelogic.h"
-=======
+
+1432029699 .h"
+
 1394940882 c:\users\fadi\dela\projekt1\sdl2\sdl2-2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_error.h
 	"SDL_stdinc.h"
 	"begin_code.h"
@@ -654,7 +654,8 @@
 	<endian.h>
 	"begin_code.h"
 	"close_code.h"
->>>>>>> origin/master
+
+1376156552 gin/master
 
 1394940882 c:\users\fadi\dela\projekt1\sdl2\sdl2-2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_mutex.h
 	"SDL_stdinc.h"
@@ -671,8 +672,7 @@
 	<process.h>
 	"close_code.h"
 
-<<<<<<< HEAD
-1432029708 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\main.c
+1432032482 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\main.c
 	"multiOS.h"
 	"clientFunctions.h"
 	"gamelogic.h"
@@ -680,29 +680,28 @@
 	<stdio.h>
 	<stdbool.h>
 	<string.h>
-=======
+
+1432029773 
+
 1394940882 c:\users\fadi\dela\projekt1\sdl2\sdl2-2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_rwops.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
->>>>>>> origin/master
 
 1394940882 c:\users\fadi\dela\projekt1\sdl2\sdl2-2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_clipboard.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-<<<<<<< HEAD
-1432029773 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1432032576 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
-	"clientFunctions.h"
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
 	<stdbool.h>
 	<string.h>
-=======
+
 1394940882 c:\users\fadi\dela\projekt1\sdl2\sdl2-2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_cpuinfo.h
 	"SDL_stdinc.h"
 	<intrin.h>
@@ -910,5 +909,45 @@
 	"SDL.h"
 	"begin_code.h"
 	"close_code.h"
->>>>>>> origin/master
+
+1431435447 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\knappar.c
+	"knappar.h"
+
+1431435447 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\knappar.h
+	<stdio.h>
+
+1431940589 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+	<stdio.h>
+	<time.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+
+1430812449 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\prototyp1\multios.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_timer.h>
+	<SDL2/SDL_thread.h>
+	<SDL2_net/SDL_net.h>
+	<SDL2_image/SDL_image.h>
+	<SDL2_mixer/SDL_mixer.h>
+	<SDL2_ttf/SDL_ttf.h>
+	"SDL.h"
+	"SDL_net.h"
+	"SDL_image.h"
+	"SDL_mixer.h"
+	"SDL_ttf.h"
+	"SDL_timer.h"
+	"SDL_thread.h"
+	"SDL2/SDL.h"
+	"SDL2/SDL_net.h"
+	"SDL2/SDL_image.h"
+	"SDL2/SDL_mixer.h"
+	"SDL2/SDL_ttf.h"
+	"SDL2/SDL_timer.h"
+	"SDL2/SDL_thread.h"
+	<time.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
 
