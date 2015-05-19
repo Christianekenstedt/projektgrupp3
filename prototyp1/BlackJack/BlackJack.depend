@@ -46,11 +46,9 @@
 	<string.h>
 	"multiOS.h"
 
-<<<<<<< HEAD
-1431967853 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
-=======
-1430828620 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
->>>>>>> origin/master
+1394940882 D
+
+1432038636 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -58,20 +56,24 @@
 	<stdbool.h>
 	<string.h>
 
-1430921881 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+1376156552 gin/master
+	"gamelogic.h"
+	<stdio.h>
+	<time.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	"multiOS.h"
+	"gamelogic.h"
+
+1431947982 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
 	<stdbool.h>
 	<string.h>
 
-1394940882 D
-
-<<<<<<< HEAD
-1431967853 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
-=======
-1431361640 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
->>>>>>> origin/master
+1432039072 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
 
@@ -663,8 +665,6 @@
 	"begin_code.h"
 	"close_code.h"
 
-1376156552 gin/master
-
 1394940882 c:\users\fadi\dela\projekt1\sdl2\sdl2-2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_mutex.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
@@ -958,4 +958,20 @@
 	<stdlib.h>
 	<string.h>
 	<stdbool.h>
+
+1432038636 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+	"clientFunctions.h"
+	"multiOS.h"
+
+1431524509 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+	<stdio.h>
+	<stdbool.h>
+	"multiOS.h"
+	"gamelogic.h"
+
+1431438868 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\knappar.c
+	"knappar.h"
+
+1431438868 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\knappar.h
+	<stdio.h>
 
