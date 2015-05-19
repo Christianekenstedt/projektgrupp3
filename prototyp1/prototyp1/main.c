@@ -301,7 +301,8 @@ int main( int argc, char* args[] ){
 
                             //sendToServer("hit", sd);
                             //id = reciveFromServer(sd);
-                            printf("\n\nid recived = %d", id);
+                            id = rand()%260+0;
+                            printf("\n\nid recived = %d\n", id);
                             //cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
                             cardFrame = rand()%51+0;
@@ -397,10 +398,10 @@ bool loadMedia(){
     SDL_Surface* table = IMG_Load("bilder\\bord9999.0.png");
 
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
-    gXOut = SDL_LoadBMP( "bilder/background.bmp" );
+    gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
@@ -410,7 +411,7 @@ bool loadMedia(){
         success = false;
     }
     //load sprite sheet
-    SDL_Surface* gPlayButton = SDL_LoadBMP("bilder/testplay.bmp");
+    SDL_Surface* gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
 
@@ -498,6 +499,10 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
+    if( gXOut == NULL ){
+    printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
+    success = false;
+    }
     //Load music
     gMusic = Mix_LoadMUS( "musik/bg.wav" );
     if( gMusic == NULL ){
