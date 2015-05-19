@@ -68,7 +68,7 @@ void blanda_kortleken(Kort kortlek[])
     }
 }
 
-/*void initiera_kortleken(Kort kortleken[])
+void initiera_kortleken(Kort kortleken[])
 {
     int farg = 0,i;
     int temp_kortvarde = 1;
@@ -113,7 +113,7 @@ void blanda_kortleken(Kort kortlek[])
         farg++;
         temp_kortvarde++;
     }
-}*/
+}
 void checka_kort(int kortleksplats, Kort kortlek[])
 {
 
