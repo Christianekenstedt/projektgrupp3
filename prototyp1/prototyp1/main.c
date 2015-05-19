@@ -24,7 +24,13 @@ const int SCREEN_HEIGHT = 576;
 
 Kort kortlek[ANTALKORT];
 
-//void ClearScreen();
+void ClearScreen();
+//Starts up SDL and creates window
+bool init();
+//Loads media
+bool loadMedia();
+	//Frees media and shuts down SDL
+void closeW();
 
 
 // The music woll be played
@@ -294,11 +300,11 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         }
                         else if(HITBUTTON && window == TABLE && myTurn == 1){
 
-                            //sendToServer("hit", sd);
                             //id = reciveFromServer(sd);
 
                             id = rand()%260+0;
                             printf("\n\nid recived = %d\n", id);
+
                             cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
                             //cardFrame = rand()%51+0;
@@ -397,7 +403,7 @@ bool loadMedia(){ // Christian
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\background.bmp", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
@@ -495,10 +501,6 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
-    if( gXOut == NULL ){
-    printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
-    success = false;
-    }
     //Load music
     gMusic = Mix_LoadMUS( "musik/bg.wav" );
     if( gMusic == NULL ){
@@ -565,7 +567,29 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         return false;
     }
 
-    
+    int ritaText()
+    {
+        font = TTF_OpenFont("Type Keys.ttf", 50);
+        text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
+        pottTexture = NULL;
+        int w=0,h=0;
+        if(text_surface != NULL)
+        {
+            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+            w = text_surface -> w;
+            h = text_surface -> h;
+            SDL_FreeSurface(text_surface);
+        }
+        else
+        {
+            printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
+        }
+
+        SDL_Rect renderRect = {250, 300, w, h};
+        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
+        SDL_GetError();
+        return true;
+    }
 
     return success;
 #endif
@@ -592,27 +616,5 @@ void closeW(){ // Christian
     SDL_Quit();
 }
 //====================================================================================================
-int ritaText()
-{
-    font = TTF_OpenFont("Type Keys.ttf", 50);
-    text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
-    pottTexture = NULL;
-    int w=0,h=0;
-    if(text_surface != NULL)
-    {
-        pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
-        w = text_surface -> w;
-        h = text_surface -> h;
-        SDL_FreeSurface(text_surface);
-    }
-    else
-    {
-        printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
-    }
-    
-    SDL_Rect renderRect = {250, 300, w, h};
-    int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
-    SDL_GetError();
-    return true;
-}
+
 

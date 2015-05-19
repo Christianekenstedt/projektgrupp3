@@ -7,16 +7,15 @@
 //
 
 #include "clientFunctions.h"
-#include "gamelogic.h"
 #include "multiOS.h"
 
-/*void ClearScreen(){
+void ClearScreen(){
 #ifdef _WIN32
     system("cls");
 #else //
     system("clear");
 #endif // rest
-}*/
+}
 
 int sendToServer(char command[], TCPsocket socket){
     int success;

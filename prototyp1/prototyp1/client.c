@@ -29,9 +29,6 @@ int main(int argc, char **argv)
     bool lose = false;
     Rinfo recive;
     int myClientNr = 0;
-    int dealerValue = 0;
-    int pott = 500;
-    int bet;
 
     recive.set = SDLNet_AllocSocketSet(1);
 
@@ -45,11 +42,11 @@ int main(int argc, char **argv)
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
 
     /* Simple parameter checking */
-    if (argc < 3)
+    /*if (argc < 3)
     {
         fprintf(stderr, "Usage: %s host port\n", argv[0]);
         exit(EXIT_FAILURE);
-    }
+    }*/
 
     if (SDLNet_Init() < 0)
     {
@@ -58,7 +55,7 @@ int main(int argc, char **argv)
     }
 
     /* Resolve the host we are connecting to */
-    if (SDLNet_ResolveHost(&ip, "169.254.211.44", 2000) < 0)
+    if (SDLNet_ResolveHost(&ip, "127.0.0.1", 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -74,9 +71,9 @@ int main(int argc, char **argv)
     SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
 
     quit = 0;
-    int ID=0, temporar=0;
+    int ID=0;
     char temp[2];
-    bool engang = true, engang2 = true, engang3 = true;
+    bool engang = true;
 
     while (!quit)
     {
@@ -92,6 +89,9 @@ int main(int argc, char **argv)
                 fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
                 exit(EXIT_FAILURE);
             }
+
+            //printf("red = %s\n",red);
+
             if(strstr(red, "ready")){
                 temp[0] = red[5];
                 myClientNr = atoi(temp);
@@ -103,92 +103,21 @@ int main(int argc, char **argv)
 
             }else if(red[0] == '#'){
                 stringToArray(red);
-                engang3 = false;
             }
 
         }
 
         while (ready==1)
         {
-            //printf("Your balance is %d\nPlease place your bets: ",pott);
-            //scanf("%d", &bet);
-            pott -= bet;
-            
-            dealerValue = 0;
-            printf("---------- DEALER CARDS ---------------------\n");
+
             for(j = 0;j<MAXCARDS;j++)
             {
-                if (tableInfo[5][j] == -1) {
-                    temporar++;
-                }
                 if(tableInfo[5][j] != -1){
                     IdToCard(tableInfo[5][j],kortlek,1); // 0 for player, 1 for dealer
-                    dealerValue += IdToValue(tableInfo[5][j],kortlek);
-                    
                 }else j++;
-                if (temporar == MAXCARDS) {
-                    dealerValue = 0;
-                }
 
             }
-            temporar = 0;
-            printf("Dealer has %d\n", dealerValue);
-            if (dealerValue > 21) {
-                printf("Dealer lose!");
-            }
-            printf("\n---------- DEALER CARDS ---------------------\n");
-            
-            if(engang2 == true && engang3 == false){
-                SDL_Delay(1000);
-                /* HÄR SKA KLIENTEN FÅ ETT KORT */
-                //printf("INANN FOR\n");
-                int exit1 = 0, temp = 0;
-                while (!exit1 ) {
-                    if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
-                    {
-                        //printf("ID = %s", buffer);
-                        
-                        ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
-                        printf("ID = %d", ID);
-                        if (ID == 0){
-                            //exit1 = 0;
-                            printf("NU FICK VI FEL!\n");
-                        }
-                            exit1 = 1;
 
-                    }else{
-                        fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
-                        exit(EXIT_FAILURE);
-                    }
-                }
-                IdToCard(ID, kortlek,0);
-                myValue += IdToValue(ID,kortlek);
-                exit1 =0;
-                SDL_Delay(100);
-                while (!exit1) {
-                    if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
-                    {
-                        ID=atoi(buffer); // Stoppar in ID:t i variabel ID.
-                        printf("ID = %d", ID);
-                        exit1 =1;
-                    }else{
-                        fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
-                        exit(EXIT_FAILURE);
-                    }
-
-                }
-                IdToCard(ID, kortlek,0);
-                myValue += IdToValue(ID,kortlek);
-                
-                
-                //}
-                printf("You have a total of %d\n",myValue);
-                
-                /*------------------------------*/
-                engang2 = false;
-                engang3 = true;
-
-            }
 
             printf("Hit or Stand> ");
             scanf("%s", buffer);
@@ -232,7 +161,6 @@ int main(int argc, char **argv)
                 myValue = 0;
                 ready=0;
                 engang = true;
-                engang2 = true;
 
 
             }else if (strstr(buffer, "!help")){
@@ -250,18 +178,16 @@ int main(int argc, char **argv)
                 }
                 myValue = 0;
                 lose = false;
+
                 myValue = 0;
                 ready=0;
                 engang = true;
-                engang2 = true;
             }else if (myValue==21){
                 printf("You got blackjack!\n");
                 ready = 0;
                 myValue = 0;
-                engang2 = true;
             }
         }
-        
     }
     SDLNet_TCP_Close(recive.sd);
     SDLNet_Quit();
@@ -318,6 +244,8 @@ void stringToArray(char sendstring[])
                 j++;
             }
 
+
+
             if (j == MAXCARDS) {
                 j = 0;
                 i++;
@@ -325,4 +253,22 @@ void stringToArray(char sendstring[])
         }
     }else printf("STRANG TRASIG\n");
     SDL_Delay(100);
+
+
+
+
 }
+/*
+ if (sendstring[j] == '\0') {
+ break;
+ }else if(sendstring[j] == '.'){
+ j++;
+ }else
+ temp2[0] = sendstring[j];
+
+ //strcpy(temp2, &sendstring[j]);
+
+
+ tableInfo[i][j] = atoi(temp2);
+
+ */
