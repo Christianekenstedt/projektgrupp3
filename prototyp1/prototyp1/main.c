@@ -24,7 +24,7 @@ const int SCREEN_HEIGHT = 576;
 
 Kort kortlek[ANTALKORT];
 
-void ClearScreen();
+//void ClearScreen();
 //Starts up SDL and creates window
 bool init();
 //Loads media
@@ -168,7 +168,7 @@ int main( int argc, char* args[] ){
     SplitButton.w = 93;
     SplitButton.h = 90;
 
-    //initiera_kortleken(kortlek);
+    initiera_kortleken(kortlek);
     // NETWORK INIT ####################################################
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
@@ -302,9 +302,12 @@ int main( int argc, char* args[] ){
                             //sendToServer("hit", sd);
                             //id = reciveFromServer(sd);
                             printf("\n\nid recived = %d", id);
-                            //cardFrame = IdToVisualCard(id,kortlek);
+                            
+                            id = rand()%52+0;
+                            
+                            cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
-                            cardFrame = rand()%51+0;
+                            //cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
                             hit = true;
                             //id += 1;

@@ -7,15 +7,16 @@
 //
 
 #include "clientFunctions.h"
+#include "gamelogic.h"
 #include "multiOS.h"
 
-void ClearScreen(){
+/*void ClearScreen(){
 #ifdef _WIN32
     system("cls");
 #else //
     system("clear");
 #endif // rest
-}
+}*/
 
 int sendToServer(char command[], TCPsocket socket){
     int success;
@@ -53,10 +54,10 @@ int IdToVisualCard(int id,Kort kortlek[])
     {
         if(id == kortlek[i].kortnummer)
         {
-            //printf("\n");
-            //printf("You have card:\n");
-            //printf("Suite: %s\n",kortlek[i].farg);
-            //printf("Value: %d\n\n",kortlek[i].kortvarde);
+            printf("\n");
+            printf("You have card:\n");
+            printf("Suite: %s\n",kortlek[i].farg);
+            printf("Value: %d\n\n",kortlek[i].kortvarde);
             if (strstr(kortlek[i].farg, "Hjarter")) {
                 cardNr = 26;
                 cardNr += kortlek[i].kortvarde;
@@ -76,7 +77,7 @@ int IdToVisualCard(int id,Kort kortlek[])
     return cardNr-1;
 }
 
-void initiera_kortleken(Kort kortleken[])
+/*void initiera_kortleken(Kort kortleken[])
 {
     int farg = 0,i;
     int temp_kortvarde = 1;
@@ -121,4 +122,4 @@ void initiera_kortleken(Kort kortleken[])
         farg++;
         temp_kortvarde++;
     }
-}
+}*/

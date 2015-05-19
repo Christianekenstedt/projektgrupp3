@@ -7,6 +7,7 @@
 //
 
 #include "gamelogic.h"
+#include "clientFunctions.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
