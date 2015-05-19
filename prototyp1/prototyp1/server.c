@@ -203,6 +203,7 @@ int function(sinfo* incsocket)
                     player_card[inc->clientnumber][temp] = ID;
                     temp++;
 
+                    char cvalue[512],cID[512];
                     itoa(value,cvalue,10);
                     itoa(ID,cID,10);
                     if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
@@ -239,7 +240,6 @@ int function(sinfo* incsocket)
                     printf("Client [%d] got Blackjack\n");
                     inc->clientvalue = 0;
                     inc->ready = 0;
-                    inc->recive = 1;
                     playerturn--;
                 }
             }else SDL_Delay(200);
@@ -252,6 +252,11 @@ void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
     blanda_kortleken(kortlek);
     PlayerCardInfo(0);
+
+    /* Tillfälligt ger dealern två påhittade IDn (För att testa klienten)*/
+    player_card[5][0] = 12;
+    player_card[5][1] = 135;
+
 }
 
 void PlayerCardInfo(int option)
