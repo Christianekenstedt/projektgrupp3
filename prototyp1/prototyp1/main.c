@@ -24,7 +24,7 @@ const int SCREEN_HEIGHT = 576;
 
 Kort kortlek[ANTALKORT];
 
-//void ClearScreen();
+void ClearScreen();
 //Starts up SDL and creates window
 bool init();
 //Loads media
@@ -168,7 +168,7 @@ int main( int argc, char* args[] ){
     SplitButton.w = 93;
     SplitButton.h = 90;
 
-    initiera_kortleken(kortlek);
+    //initiera_kortleken(kortlek);
     // NETWORK INIT ####################################################
     /* Resolve the host we are connecting to */
     if (SDLNet_ResolveHost(&ip, hostIP, 2000) < 0)
@@ -301,12 +301,11 @@ int main( int argc, char* args[] ){
 
                             //sendToServer("hit", sd);
                             //id = reciveFromServer(sd);
-
-                            id = rand()%260+0;
-                            printf("\n\nid recived = %d\n", id);
-                            cardFrame = IdToVisualCard(id,kortlek);
+                            id=rand()%260+0;
+                            printf("\n\nid recived = %d", id);
+                            //cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
-                            //cardFrame = rand()%51+0;
+                            cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
                             hit = true;
                             //id += 1;
@@ -402,7 +401,7 @@ bool loadMedia(){
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
     if( gXOut == NULL ){
-        printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\background.bmp", SDL_GetError() );
+        printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
         success = false;
     }
     //Load music
@@ -500,10 +499,6 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder/background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
-    if( gXOut == NULL ){
-    printf( "Unable to load image %s! SDL Error: %s\n", "bilder/background.bmp", SDL_GetError() );
-    success = false;
-    }
     //Load music
     gMusic = Mix_LoadMUS( "musik/bg.wav" );
     if( gMusic == NULL ){

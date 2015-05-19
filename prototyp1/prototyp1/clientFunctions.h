@@ -43,6 +43,6 @@
 int sendToServer(char command[], TCPsocket socket);
 int reciveFromServer(TCPsocket socket);
 int IdToVisualCard(int id,Kort kortlek[]);
-//void initiera_kortleken(Kort kortleken[]);
+void initiera_kortleken(Kort kortleken[]);
 
 #endif /* defined(__prototyp1__clientFunctions__) */
