@@ -1,3 +1,8 @@
+// Grupp 3
+// Skapad av: Christian Ekenstedt, Fredrik Berntsson och Mats Levin
+// Redigerad av: Christian Ekenstedt, Fredrik Berntsson
+//
+
 #include "multiOS.h"
 #include "gamelogic.h"
 #define MAXCLIENTS 5

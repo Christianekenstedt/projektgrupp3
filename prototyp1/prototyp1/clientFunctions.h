@@ -36,6 +36,7 @@
 
 
 
+
 //Screen dimension constants
 
 /* FUNKTIONSDEKLARATIONER */
@@ -44,5 +45,12 @@ int sendToServer(char command[], TCPsocket socket);
 int reciveFromServer(TCPsocket socket);
 int IdToVisualCard(int id,Kort kortlek[]);
 //void initiera_kortleken(Kort kortleken[]);
+
+//Starts up SDL and creates window
+bool init();
+//Loads media
+bool loadMedia();
+//Frees media and shuts down SDL
+void closeW();
 
 #endif /* defined(__prototyp1__clientFunctions__) */

@@ -123,3 +123,4 @@ int IdToVisualCard(int id,Kort kortlek[])
         temp_kortvarde++;
     }
 }*/
+

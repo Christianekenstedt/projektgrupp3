@@ -25,12 +25,7 @@ const int SCREEN_HEIGHT = 576;
 Kort kortlek[ANTALKORT];
 
 //void ClearScreen();
-//Starts up SDL and creates window
-bool init();
-//Loads media
-bool loadMedia();
-	//Frees media and shuts down SDL
-void closeW();
+
 
 // The music woll be played
 Mix_Music *gMusic = NULL;
@@ -82,7 +77,7 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination 
     offset.y = y;
 }
 //=============================================MAIN==================================================
-int main( int argc, char* args[] ){
+int main( int argc, char* args[] ){                 // Christian Ekenstedt
     TCPsocket sd = NULL;
     IPaddress ip;
     char hostIP[] = "169.254.211.44";
@@ -304,7 +299,7 @@ int main( int argc, char* args[] ){
 
                             id = rand()%260+0;
                             printf("\n\nid recived = %d\n", id);
-                            //cardFrame = IdToVisualCard(id,kortlek);
+                            cardFrame = IdToVisualCard(id,kortlek);
                             //    SDL_Delay(1000);
                             //cardFrame = rand()%51+0;
                             printf("cardFrame = %d\n", cardFrame);
@@ -357,7 +352,7 @@ int main( int argc, char* args[] ){
 }
 
 //==============================================INIT=================================================
-bool init(){
+bool init(){ // Christian 
     //Initialization flag
     bool success = true;
 
@@ -389,7 +384,7 @@ bool init(){
     return success;
 }
 //============================================LOAD MEDIA================================================
-bool loadMedia(){
+bool loadMedia(){ // Christian
     //Loading success flag
     bool success = true;
 
@@ -576,7 +571,7 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
 #endif
 }
 //==================================================CLOSE===============================================
-void closeW(){
+void closeW(){ // Christian
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
