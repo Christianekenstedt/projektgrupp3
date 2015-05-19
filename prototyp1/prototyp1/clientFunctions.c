@@ -84,20 +84,20 @@ int IdToVisualCard(int id,Kort kortlek[])
     for(i = 0;i<ANTALKORT;i++)
     {
         kortleken[i].kortnummer = i;
-        
-        
+
+
         if(temp_kortvarde == 14)
         {
             temp_kortvarde = 1;
         }
         kortleken[i].kortvarde = temp_kortvarde;
-        
-        
+
+
         if(farg == 52)
         {
             farg = 0;
         }
-        
+
         if(farg <= 12)
         {
             strcpy(kortleken[i].farg, "Klover");
