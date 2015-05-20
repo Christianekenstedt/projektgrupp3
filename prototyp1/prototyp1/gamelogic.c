@@ -45,7 +45,7 @@ void blanda_kortleken(Kort kortlek[])
     bool tempupptagen = false;
 
 
-    for(i = 0;i<100000;i++)
+    for(i = 0;i<1;i++)
     {
         int temp1 = randomfunktio(0,ANTALKORT);
         int temp2 = randomfunktio(0,ANTALKORT);
