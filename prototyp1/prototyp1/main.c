@@ -69,7 +69,7 @@ SDL_Renderer* gRenderer = NULL;
 SDL_Rect gSpriteClips[3], cardSheet[52]; // Sprite
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
-SDL_Rect table1, table2;
+SDL_Rect table1[MAXCARDS], table2;
 SDL_Rect renderRect;
 
 //===================================================================================================
@@ -87,20 +87,18 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
     TCPsocket sd = NULL;
     IPaddress ip;
     char hostIP[] = "169.254.211.44";
-    int window = 0; // Vilken Window som skall visas, main är 0.
+    int window = 0, i; // Vilken Window som skall visas, main är 0.
     int frame = 0, cardFrame = 0, cardFrame2=0;
     char command[512]= {0};
+    int bordskort[11], nykort=0;
 
     srand(time(NULL));
-    table1.y = 401;
-    table1.x = 479;
-    table1.w = 72;
-    table1.h = 96;
-
-    table2.y = 401;
-    table2.x = 519;
-    table2.w = 72;
-    table2.h = 96;
+    for (i=0; i<11; i++) {
+        table1[i].y = 300;
+        table1[i].x = 475+(i*15);
+        table1[i].w = 72;
+        table1[i].h = 96;
+    }
 
     //Mark 1
     Chip1.y = 517;
@@ -306,8 +304,9 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                             printf("\n\nid recived = %d\n", id);
 
                             cardFrame = IdToVisualCard(id,kortlek);
-                            //    SDL_Delay(1000);
-                            //cardFrame = rand()%51+0;
+                            bordskort[nykort] = cardFrame;
+                            nykort++;
+                            
                             printf("cardFrame = %d\n", cardFrame);
                             hit = true;
                             //id += 1;
@@ -337,16 +336,18 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                             frame=2;
                         }
                     }
-                    if(window == 0 ){
+                    if(window == START ){
                         SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
                         SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&PlayButton);
                         SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
                         SDL_RenderPresent(gRenderer);
-                    }else if (window==1){
+                    }else if (window==TABLE){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                         SDL_RenderCopy(gRenderer, pottTexture, NULL, &renderRect);
                         if(hit == true){
-                            SDL_RenderCopy(gRenderer, kort, &cardSheet[cardFrame], &table1);
+                            for (i=0; i<nykort; i++) {
+                                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+                            }
                         }
                         SDL_RenderPresent(gRenderer);
                     }
@@ -567,7 +568,7 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         return false;
     }
 
-    int ritaText()
+    /*int ritaText()
     {
         font = TTF_OpenFont("Type Keys.ttf", 50);
         text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
@@ -589,7 +590,7 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
         SDL_GetError();
         return true;
-    }
+    }*/
 
     return success;
 #endif
