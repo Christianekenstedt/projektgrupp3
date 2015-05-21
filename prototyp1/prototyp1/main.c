@@ -32,6 +32,7 @@ bool loadMedia();
 	//Frees media and shuts down SDL
 void closeW();
 
+int ritaText(char word[]);
 
 // The music woll be played
 Mix_Music *gMusic = NULL;
@@ -72,16 +73,7 @@ SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
 SDL_Rect table1[MAXCARDS], table2;
 SDL_Rect renderRect;
 
-//===================================================================================================
-void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
-{
-    //Make a temporary rectangle to hold the offsets
-    SDL_Rect offset;
 
-    //Give the offsets to the rectangle
-    offset.x = x;
-    offset.y = y;
-}
 //=============================================MAIN==================================================
 int main( int argc, char* args[] ){                 // Christian Ekenstedt
     TCPsocket sd = NULL;
@@ -205,14 +197,13 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
     //While application is running
     bool hit = false;
     bool quit = false;
-    bool engang = true;
-    int x=0, y=0, cardNr=0, temp =0, id=-20;
-    int pott =0;
+
+    int x=0, y=0, cardNr=0, id=-1;
+    int pott = 500;
     int myTurn = 0;
+    int bet = 0;
     
-    text_surface = TTF_RenderText_Solid(font, command, textColor);
     
-    pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
     
     while( !quit ){
                 frame = 0;
@@ -332,17 +323,26 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         else if(SPLITBUTTON && window == TABLE){
                             quit = true;
                         }else if(M1 && window == TABLE){
-                            pott += 1;
+                            //pott += 1;
+                            bet = 1;
                         }else if(M5 && window == TABLE){
-                            pott +=5;
+                            //pott +=5;
+                            bet = 5;
                         }else if(M25 && window == TABLE){
-                            pott +=25;
+                            //pott +=25;
+                            bet = 25;
                         }else if(M50 && window == TABLE){
-                            pott +=50;
+                            //pott +=50;
+                            bet = 50;
                         }else if(M100 && window == TABLE){
-                            pott +=100;
+                            //pott +=100;
+                            bet = 100;
+                            
                         }
-                        printf("Pott: %d\n", pott);
+                        pott -= bet;
+                        printf("Pott: $%d\n", pott);
+                        sprintf(command, "Pott: $%d",pott);
+                        bet = 0;
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
                             frame=2;
@@ -352,11 +352,12 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
                         SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&PlayButton);
                         SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
-                        SDL_RenderCopy(gRenderer, pottTexture,NULL,&renderRect);
+                        //SDL_RenderCopy(gRenderer, pottTexture,NULL,&renderRect);
                         SDL_RenderPresent(gRenderer);
                     }else if (window==TABLE){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                         SDL_RenderCopy(gRenderer, pottTexture, NULL, &renderRect);
+                        ritaText(command);
                         if(hit == true){
                             for (i=0; i<nykort; i++) {
                                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
@@ -484,33 +485,6 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         }
     }
 
-    //Initialisera SDL ttf
-    
-
-    /*int ritaText()
-    {
-        font = TTF_OpenFont("Type Keys.ttf", 50);
-        text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
-        pottTexture = NULL;
-        int w=0,h=0;
-        if(text_surface != NULL)
-        {
-            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
-            w = text_surface -> w;
-            h = text_surface -> h;
-            SDL_FreeSurface(text_surface);
-        }
-        else
-        {
-            printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
-        }
-
-        SDL_Rect renderRect = {250, 300, w, h};
-        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
-        SDL_GetError();
-        return true;
-    }*/
-    font = TTF_OpenFont("fonts\\KeepCalm-Medium.ttf", 28);
     return success;
 #else
 
@@ -578,42 +552,6 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         }
 
     }
-
-    //Initialisera SDL ttf
-    if(TTF_Init() == -1)
-    {
-        return false;
-    }
-
-    /*int ritaText()
-    {
-        font = TTF_OpenFont("Type Keys.ttf", 50);
-        text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
-        pottTexture = NULL;
-        int w=0,h=0;
-        if(text_surface != NULL)
-        {
-            pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
-            w = text_surface -> w;
-            h = text_surface -> h;
-            SDL_FreeSurface(text_surface);
-        }
-        else
-        {
-            printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
-        }
-
-        SDL_Rect renderRect = {250, 300, w, h};
-        int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
-        SDL_GetError();
-        return true;
-    }*/
-    
-    /* TTF TEST*/
-    font = TTF_OpenFont("fonts/KeepCalm-Medium.ttf", 28);
-    
-    
-    
     
     
     SDL_GetError();
@@ -646,4 +584,27 @@ void closeW(){ // Christian
 }
 //====================================================================================================
 
+int ritaText(char word[]) // fick det att funka (Christian)
+{
+    #ifdef __WIN
+    font = TTF_OpenFont("fonts\\KeepCalm-Medium.ttf", 28);
+    #else
+    font = TTF_OpenFont("fonts/KeepCalm-Medium.ttf", 28);
+    #endif
+    text_surface = TTF_RenderText_Solid(font, word, textColor);
+    if(text_surface != NULL)
+    {
+        pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+    }
+    else
+    {
+        printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
+    }
+    
+    
+    pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+
+    SDL_GetError();
+    return true;
+}
 
