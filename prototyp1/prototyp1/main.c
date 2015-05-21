@@ -71,7 +71,7 @@ SDL_Renderer* gRenderer = NULL;
 SDL_Rect gSpriteClips[3], cardSheet[52]; // Sprite
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
-SDL_Rect table1[MAXCARDS], table2;
+SDL_Rect table1[MAXCARDS], table2[MAXCARDS],table3[MAXCARDS], table4[MAXCARDS],table5[MAXCARDS];
 SDL_Rect renderRect,renderRect2;
 
 
@@ -99,11 +99,36 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
 
     srand(time(NULL));
     for (i=0; i<11; i++) {
-        table1[i].y = 300;
-        table1[i].x = 475+(i*15);
+        table1[i].y = 120;
+        table1[i].x = 164+(i*15);
         table1[i].w = 72;
         table1[i].h = 96;
     }
+    for (i=0; i<11; i++) {
+        table2[i].y = 210;
+        table2[i].x = 320+(i*15);
+        table2[i].w = 72;
+        table2[i].h = 96;
+    }
+    for (i=0; i<11; i++) {
+        table3[i].y = 300;
+        table3[i].x = 475+(i*15);
+        table3[i].w = 72;
+        table3[i].h = 96;
+    }
+    for (i=0; i<11; i++) {
+        table4[i].y = 216;
+        table4[i].x = 620+(i*15);
+        table4[i].w = 72;
+        table4[i].h = 96;
+    }
+    for (i=0; i<11; i++) {
+        table5[i].y = 125;
+        table5[i].x = 760+(i*15);
+        table5[i].w = 72;
+        table5[i].h = 96;
+    }
+
 
     //Mark 1
     Chip1.y = 517;
@@ -345,7 +370,7 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         }else if(M100 && window == TABLE){
                             money -=100;
                             bet += 100;
-                            
+
                         }
                        // money -= bet;
                         printf("Bet: $%d",bet);
@@ -354,7 +379,7 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         printf("Money: $%d\n", money);
                         sprintf(command, "Money: $%d",money);
                         //bet = 0;
-                    
+
 
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
@@ -376,11 +401,15 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                             bet = 0;
                         }
                         ritaText(command,renderRect);
-                        
-                        
+
+
                         if(hit == true){
                             for (i=0; i<nykort; i++) {
                                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+                                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table2[i]);
+                                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table3[i]);
+                                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table4[i]);
+                                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table5[i]);
                             }
                         }
                         SDL_RenderPresent(gRenderer);

@@ -81,7 +81,7 @@
 	"multiOS.h"
 	"gamelogic.h"
 
-1432150107 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1432220198 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -89,7 +89,7 @@
 	<stdbool.h>
 	<string.h>
 
-1432133695 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.h
+1432220198 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
@@ -100,7 +100,7 @@
 	"multiOS.h"
 	"gamelogic.h"
 
-1432133695 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\multios.h
+1432220198 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\multios.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_timer.h>
 	<SDL2/SDL_thread.h>
@@ -520,11 +520,11 @@
 	<string.h>
 	<stdbool.h>
 
-1432133695 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1432220198 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
 	"multiOS.h"
 
-1432133695 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1432220198 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
@@ -539,7 +539,7 @@
 	<stdbool.h>
 	<string.h>
 
-1432133695 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\knappar.h
+1432220198 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\knappar.h
 	<stdio.h>
 
 1394940882 c:\users\fadi\dela\projekt1\sdl2\sdl2-2.0.3\x86_64-w64-mingw32\include\sdl2\sdl.h
@@ -975,6 +975,6 @@
 1431438868 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\knappar.h
 	<stdio.h>
 
-1432133695 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\knappar.c
+1432220198 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\knappar.c
 	"knappar.h"
 
