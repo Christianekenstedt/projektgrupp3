@@ -32,7 +32,7 @@ bool loadMedia();
 	//Frees media and shuts down SDL
 void closeW();
 
-int ritaText(char word[]);
+int ritaText(char word[], SDL_Rect position);
 
 // The music woll be played
 Mix_Music *gMusic = NULL;
@@ -356,8 +356,8 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         SDL_RenderPresent(gRenderer);
                     }else if (window==TABLE){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
-                        SDL_RenderCopy(gRenderer, pottTexture, NULL, &renderRect);
-                        ritaText(command);
+                        
+                        ritaText(command,renderRect);
                         if(hit == true){
                             for (i=0; i<nykort; i++) {
                                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
@@ -460,8 +460,8 @@ bool loadMedia(){ // Christian
         printf( "Unable to load image %s! SDL Error: %s\n", "bilder\\EXIT.bmp", SDL_GetError() );
         success = false;
     }
-//Laddar kortleken
-SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
+    //Laddar kortleken
+    SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
 
     int x=1,y=1,w=72,h=96, i;
@@ -485,7 +485,7 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         }
     }
 
-    return success;
+
 #else
 
     //Load splash image
@@ -556,10 +556,10 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     
     SDL_GetError();
 
-    /**/
 
+    
+    #endif
     return success;
-#endif
 }
 //==================================================CLOSE===============================================
 void closeW(){ // Christian
@@ -584,7 +584,7 @@ void closeW(){ // Christian
 }
 //====================================================================================================
 
-int ritaText(char word[]) // fick det att funka (Christian)
+int ritaText(char word[], SDL_Rect position) // fick det att funka (Christian)
 {
     #ifdef __WIN
     font = TTF_OpenFont("fonts\\KeepCalm-Medium.ttf", 28);
@@ -598,11 +598,10 @@ int ritaText(char word[]) // fick det att funka (Christian)
     }
     else
     {
-        printf("Error! Kan en rendera surface! SDL_ttf Error: %s\n", TTF_GetError());
+        printf("Error! Kan en rendrera surface! SDL_ttf Error: %s\n", TTF_GetError());
     }
     
-    
-    pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+    SDL_RenderCopy(gRenderer, pottTexture, NULL, &position);
 
     SDL_GetError();
     return true;
