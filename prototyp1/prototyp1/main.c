@@ -208,6 +208,7 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
     int money = 500;
     int myTurn = 0;
     int bet = 0;
+    bool klar = false;
 
 
 
@@ -298,8 +299,8 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                                 window = START;
                             }
                         }else if(BETBUTTON && window == TABLE){
-
-                                quit = true;
+                            //bet = 0;
+                            klar = true;
                         }
                         else if(CLEARBUTTON && window == TABLE){
                             bet = 0;
@@ -330,27 +331,30 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         else if(SPLITBUTTON && window == TABLE){
                             quit = true;
                         }else if(M1 && window == TABLE){
-                            //pott += 1;
+                            money -= 1;
                             bet += 1;
                         }else if(M5 && window == TABLE){
-                            //pott +=5;
+                            money -=5;
                             bet += 5;
                         }else if(M25 && window == TABLE){
-                            //pott +=25;
+                            money -=25;
                             bet += 25;
                         }else if(M50 && window == TABLE){
-                            //pott +=50;
+                            money -=50;
                             bet += 50;
                         }else if(M100 && window == TABLE){
                             money -=100;
                             bet += 100;
-
+                            
                         }
                        // money -= bet;
                         printf("Bet: $%d",bet);
+
                         sprintf(command2,"Bet: $%d",bet);
                         printf("Money: $%d\n", money);
                         sprintf(command, "Money: $%d",money);
+                        //bet = 0;
+                    
 
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
@@ -366,8 +370,14 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                     }else if (window==TABLE){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
 
-                        ritaText(command,renderRect);
                         ritaText(command2,renderRect2);
+                        if(klar == true){
+                            //money -= bet;
+                            bet = 0;
+                        }
+                        ritaText(command,renderRect);
+                        
+                        
                         if(hit == true){
                             for (i=0; i<nykort; i++) {
                                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
