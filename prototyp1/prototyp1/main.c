@@ -401,6 +401,12 @@ bool init(){ // Christian
         fprintf(stderr,"SDL_CreateRenderer: %s\n", SDL_GetError());
         success = false;
     }
+    
+    if(TTF_Init() == -1)
+    {
+        return false;
+    }
+    
     return success;
 }
 //============================================LOAD MEDIA================================================
@@ -479,12 +485,9 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     }
 
     //Initialisera SDL ttf
-    if(TTF_Init() == -1)
-    {
-        return false;
-    }
+    
 
-    int ritaText()
+    /*int ritaText()
     {
         font = TTF_OpenFont("Type Keys.ttf", 50);
         text_surface = TTF_RenderText_Solid(font, "FUNKAR DETTA?!", textColor);
@@ -506,7 +509,8 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         int result = SDL_RenderCopyEx(gRenderer, pottTexture, NULL, &renderRect, 0.0, NULL, SDL_FLIP_NONE);
         SDL_GetError();
         return true;
-    }
+    }*/
+    font = TTF_OpenFont("fonts\\KeepCalm-Medium.ttf", 28);
     return success;
 #else
 
