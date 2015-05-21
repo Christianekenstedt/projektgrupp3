@@ -348,7 +348,7 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         }
                        // money -= bet;
                         printf("Bet: $%d",bet);
-                        sprintf(command2,"Bet: $%d");
+                        sprintf(command2,"Bet: $%d",bet);
                         printf("Money: $%d\n", money);
                         sprintf(command, "Money: $%d",money);
 
