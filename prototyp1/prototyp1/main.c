@@ -32,7 +32,8 @@ bool loadMedia();
 	//Frees media and shuts down SDL
 void closeW();
 
-int ritaText(char word[], SDL_Rect position);
+int ritaMoney(char word[], SDL_Rect position);
+int ritaBett(char word[],SDL_Rect position);
 
 // The music woll be played
 Mix_Music *gMusic = NULL;
@@ -71,7 +72,7 @@ SDL_Rect gSpriteClips[3], cardSheet[52]; // Sprite
 SDL_Rect ExitRect, ClearButton, HitButton, StandButton, DoubleButton, SplitButton, BetButton, PlayButton; // fasta knappar
 SDL_Rect Chip1,Chip5,Chip25,Chip50,Chip100; // Marker
 SDL_Rect table1[MAXCARDS], table2;
-SDL_Rect renderRect;
+SDL_Rect renderRect,renderRect2;
 
 
 //=============================================MAIN==================================================
@@ -81,16 +82,21 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
     char hostIP[] = "169.254.211.44";
     int window = 0, i; // Vilken Window som skall visas, main är 0.
     int frame = 0, cardFrame = 0, cardFrame2=0;
-    char command[512] = "Pott: $500";
+    char command[512];
+    char command2[512];
     int bordskort[11], nykort=0;
-    
+
     renderRect.x = 420;
     renderRect.y = 517;
     renderRect.h = 60;
     renderRect.w = 250;
-    
-    
-    
+
+    renderRect2.x = 230;
+    renderRect2.y = 450;
+    renderRect2.h = 50;
+    renderRect2.w = 230;
+
+
     srand(time(NULL));
     for (i=0; i<11; i++) {
         table1[i].y = 300;
@@ -199,12 +205,12 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
     bool quit = false;
 
     int x=0, y=0, cardNr=0, id=-1;
-    int pott = 500;
+    int money = 500;
     int myTurn = 0;
     int bet = 0;
-    
-    
-    
+
+
+
     while( !quit ){
                 frame = 0;
             //Handle events on queue
@@ -296,7 +302,8 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                                 quit = true;
                         }
                         else if(CLEARBUTTON && window == TABLE){
-                            pott = 0;
+                            bet = 0;
+                            money=500;
                             hit = false;
                         }
                         else if(HITBUTTON && window == TABLE && myTurn == 1){
@@ -309,7 +316,7 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                             cardFrame = IdToVisualCard(id,kortlek);
                             bordskort[nykort] = cardFrame;
                             nykort++;
-                            
+
                             printf("cardFrame = %d\n", cardFrame);
                             hit = true;
                             //id += 1;
@@ -324,25 +331,27 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                             quit = true;
                         }else if(M1 && window == TABLE){
                             //pott += 1;
-                            bet = 1;
+                            bet += 1;
                         }else if(M5 && window == TABLE){
                             //pott +=5;
-                            bet = 5;
+                            bet += 5;
                         }else if(M25 && window == TABLE){
                             //pott +=25;
-                            bet = 25;
+                            bet += 25;
                         }else if(M50 && window == TABLE){
                             //pott +=50;
-                            bet = 50;
+                            bet += 50;
                         }else if(M100 && window == TABLE){
-                            //pott +=100;
-                            bet = 100;
-                            
+                            money -=100;
+                            bet += 100;
+
                         }
-                        pott -= bet;
-                        printf("Pott: $%d\n", pott);
-                        sprintf(command, "Pott: $%d",pott);
-                        bet = 0;
+                       // money -= bet;
+                        printf("Bet: $%d",bet);
+                        sprintf(command2,"Bet: $%d");
+                        printf("Money: $%d\n", money);
+                        sprintf(command, "Money: $%d",money);
+
                     }else if(e.type == SDL_MOUSEMOTION){
                         if(PLAYBUTTON){ //Innanför knappen?
                             frame=2;
@@ -356,8 +365,9 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         SDL_RenderPresent(gRenderer);
                     }else if (window==TABLE){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
-                        
+
                         ritaText(command,renderRect);
+                        ritaText(command2,renderRect2);
                         if(hit == true){
                             for (i=0; i<nykort; i++) {
                                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
@@ -373,7 +383,7 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
 }
 
 //==============================================INIT=================================================
-bool init(){ // Christian 
+bool init(){ // Christian
     //Initialization flag
     bool success = true;
 
@@ -402,12 +412,12 @@ bool init(){ // Christian
         fprintf(stderr,"SDL_CreateRenderer: %s\n", SDL_GetError());
         success = false;
     }
-    
+
     if(TTF_Init() == -1)
     {
         return false;
     }
-    
+
     return success;
 }
 //============================================LOAD MEDIA================================================
@@ -552,12 +562,12 @@ bool loadMedia(){ // Christian
         }
 
     }
-    
-    
+
+
     SDL_GetError();
 
 
-    
+
     #endif
     return success;
 }
@@ -600,7 +610,7 @@ int ritaText(char word[], SDL_Rect position) // fick det att funka (Christian)
     {
         printf("Error! Kan en rendrera surface! SDL_ttf Error: %s\n", TTF_GetError());
     }
-    
+
     SDL_RenderCopy(gRenderer, pottTexture, NULL, &position);
 
     SDL_GetError();
