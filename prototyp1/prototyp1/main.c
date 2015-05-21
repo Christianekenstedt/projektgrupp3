@@ -58,7 +58,7 @@ SDL_Texture* pottTexture = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* text_surface = NULL;
 //==========
-SDL_Color textColor = {255,255,255};
+SDL_Color textColor = {255,255,255,255};
 TTF_Font *font = NULL;
 
 //The event structure
@@ -89,9 +89,16 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
     char hostIP[] = "169.254.211.44";
     int window = 0, i; // Vilken Window som skall visas, main är 0.
     int frame = 0, cardFrame = 0, cardFrame2=0;
-    char command[512]= {0};
+    char command[512] = "Pott: $500";
     int bordskort[11], nykort=0;
-
+    
+    renderRect.x = 420;
+    renderRect.y = 517;
+    renderRect.h = 60;
+    renderRect.w = 250;
+    
+    
+    
     srand(time(NULL));
     for (i=0; i<11; i++) {
         table1[i].y = 300;
@@ -202,6 +209,11 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
     int x=0, y=0, cardNr=0, temp =0, id=-20;
     int pott =0;
     int myTurn = 0;
+    
+    text_surface = TTF_RenderText_Solid(font, command, textColor);
+    
+    pottTexture = SDL_CreateTextureFromSurface(gRenderer, text_surface);
+    
     while( !quit ){
                 frame = 0;
             //Handle events on queue
@@ -340,6 +352,7 @@ int main( int argc, char* args[] ){                 // Christian Ekenstedt
                         SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
                         SDL_RenderCopy(gRenderer,mPlayButton,&gSpriteClips[frame],&PlayButton);
                         SDL_RenderCopy(gRenderer,exitTexture,NULL,&ExitRect);
+                        SDL_RenderCopy(gRenderer, pottTexture,NULL,&renderRect);
                         SDL_RenderPresent(gRenderer);
                     }else if (window==TABLE){
                         SDL_RenderCopy(gRenderer, btable, NULL, NULL);
@@ -591,6 +604,17 @@ SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
         SDL_GetError();
         return true;
     }*/
+    
+    /* TTF TEST*/
+    font = TTF_OpenFont("fonts/KeepCalm-Medium.ttf", 28);
+    
+    
+    
+    
+    
+    SDL_GetError();
+
+    /**/
 
     return success;
 #endif
