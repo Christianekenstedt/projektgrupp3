@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA108E8E1B0E00FF0030B02C /* clientFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = AA9D95931AFA0CA4003873AF /* clientFunctions.c */; };
-		AA108E8F1B0E00FF0030B02C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F911ADFE6A1009DE13C /* main.c */; };
-		AA108E901B0E00FF0030B02C /* gamelogic.c in Sources */ = {isa = PBXBuildFile; fileRef = AA8020081AEF7F6E00328A30 /* gamelogic.c */; };
 		AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */; };
 		AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */; };
+		AA7B87811B13096A001551D4 /* client.c in Sources */ = {isa = PBXBuildFile; fileRef = AA2069511AE7A04700626976 /* client.c */; };
+		AA7B87821B13096A001551D4 /* gamelogic.c in Sources */ = {isa = PBXBuildFile; fileRef = AA8020081AEF7F6E00328A30 /* gamelogic.c */; };
 		AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F981ADFE71E009DE13C /* SDL2_image.framework */; };
 		AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F991ADFE71E009DE13C /* SDL2_net.framework */; };
 		AAF82F9D1ADFE71E009DE13C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F9A1ADFE71E009DE13C /* SDL2.framework */; };
@@ -160,9 +159,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA108E8E1B0E00FF0030B02C /* clientFunctions.c in Sources */,
-				AA108E8F1B0E00FF0030B02C /* main.c in Sources */,
-				AA108E901B0E00FF0030B02C /* gamelogic.c in Sources */,
+				AA7B87811B13096A001551D4 /* client.c in Sources */,
+				AA7B87821B13096A001551D4 /* gamelogic.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
