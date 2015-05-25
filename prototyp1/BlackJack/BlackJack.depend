@@ -73,7 +73,11 @@
 	<stdbool.h>
 	<string.h>
 
+<<<<<<< HEAD
 1432568296 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+=======
+1432039072 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+>>>>>>> origin/master
 	"multiOS.h"
 	"gamelogic.h"
 
@@ -524,13 +528,13 @@
 	"clientFunctions.h"
 	"multiOS.h"
 
-1432220198 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1432541895 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
 	"gamelogic.h"
 
-1432216008 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\main.c
+1432553645 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\main.c
 	"multiOS.h"
 	"clientFunctions.h"
 	"gamelogic.h"
@@ -959,11 +963,11 @@
 	<string.h>
 	<stdbool.h>
 
-1432137500 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1432038636 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
 	"multiOS.h"
 
-1432040624 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1431524509 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"

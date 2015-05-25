@@ -17,7 +17,6 @@ int tableInfo[MAXCLIENTS+1][15];
 char saker[512];
 
 int reciveInfo(void* info);
-int whoWon(int playerValue, int dealerValue, int bet, bool blackjack);
 void stringToArray(char sendstring[]);
 
 int main(int argc, char **argv)
@@ -31,9 +30,8 @@ int main(int argc, char **argv)
     Rinfo recive;
     int myClientNr = 0;
     int dealerValue = 0;
-    int bank = 500;
-    int bet = 0;
-    bool betround = true, blackjack = false;
+    int pott = 500;
+    int bet;
     
     recive.set = SDLNet_AllocSocketSet(1);
     
@@ -60,7 +58,7 @@ int main(int argc, char **argv)
     }
     
     /* Resolve the host we are connecting to */
-    if (SDLNet_ResolveHost(&ip, "169.254.211.44", 2000) < 0)
+    if (SDLNet_ResolveHost(&ip, "127.0.0.1", 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -114,18 +112,8 @@ int main(int argc, char **argv)
         {
             //printf("Your balance is %d\nPlease place your bets: ",pott);
             //scanf("%d", &bet);
-            if (betround) {
-                
-                printf("Your balance: $%d\n", bank);
-                printf("Place your bets please: ");
-                scanf("%d", &bet);
-                
-                bank -= bet;
-                
-                betround = false;
-            }
+            pott -= bet;
             
-            printf("Balance: %d\n", bank);
             dealerValue = 0;
             printf("---------- DEALER CARDS ---------------------\n");
             for(j = 0;j<MAXCARDS;j++)
@@ -272,9 +260,6 @@ int main(int argc, char **argv)
                 myValue = 0;
                 engang2 = true;
             }
-            
-            bank += whoWon(myValue, dealerValue, bet, blackjack);
-            printf("Your balance is: $%d \n", bank);
         }
         
     }
@@ -340,23 +325,4 @@ void stringToArray(char sendstring[])
         }
     }else printf("STRANG TRASIG\n");
     SDL_Delay(100);
-}
-
-int whoWon(int playerValue, int dealerValue, int bet, bool blackjack){
-    int won=0;
-    
-    if (dealerValue < 21) {
-        if (playerValue < 21) {
-            if (playerValue > dealerValue) {
-                won = bet * 2;
-            }else if (playerValue == dealerValue){
-                won = bet;
-            }
-        }
-    }else if (blackjack){
-        won = bet * 3; // Hur många gånger pengarna får man vid blackjack?
-    }else won = bet * 2;
-    
-    
-    return won;
 }
