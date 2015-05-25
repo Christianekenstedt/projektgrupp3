@@ -7,9 +7,10 @@
 
 typedef struct Reciveinfo
 {
-    TCPsocket sd;
+    TCPsocket sd, tableSocket;
     SDLNet_SocketSet set;
     int* quit;
+    IPaddress ip;
     
 }Rinfo;
 
@@ -21,7 +22,7 @@ void stringToArray(char sendstring[]);
 
 int main(int argc, char **argv)
 {
-    IPaddress ip;		/* Server address */
+    		/* Server address */
     
     int quit, quit2, len, myValue=0, ready=0, i,j;
     char buffer[512], red[512];
@@ -30,12 +31,19 @@ int main(int argc, char **argv)
     Rinfo recive;
     int myClientNr = 0;
     int dealerValue = 0;
+<<<<<<< HEAD
+    int bank = 500;
+    int bet = 0;
+    bool betround = true, blackjack = false, endround = false;
+=======
     int pott = 500;
     int bet;
+>>>>>>> origin/master
     
-    recive.set = SDLNet_AllocSocketSet(1);
+    recive.set = SDLNet_AllocSocketSet(2);
     
     recive.quit = &quit;
+    
     for (i=0; i<MAXCLIENTS+1; i++) {
         for (j=0; j<15; j++) {
             tableInfo[i][j] = -1;
@@ -58,19 +66,25 @@ int main(int argc, char **argv)
     }
     
     /* Resolve the host we are connecting to */
+<<<<<<< HEAD
+    if (SDLNet_ResolveHost(&recive.ip, "169.254.211.44", 2000) < 0)
+=======
     if (SDLNet_ResolveHost(&ip, "127.0.0.1", 2000) < 0)
+>>>>>>> origin/master
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
     
     /* Open a connection with the IP provided (listen on the host's port) */
-    if (!(recive.sd = SDLNet_TCP_Open(&ip)))
+    if (!(recive.sd = SDLNet_TCP_Open(&recive.ip)))
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    SDLNet_AddSocket(recive.set, recive.sd);
+    SDLNet_TCP_AddSocket(recive.set, recive.sd);
+    //SDLNet_TCP_AddSocket(recive.set, recive.tableSocket);
+    
     SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
     
     quit = 0;
@@ -100,12 +114,7 @@ int main(int argc, char **argv)
                 for (i=0; i<2; i++) {
                     temp[i] = '?';
                 }
-                
-            }else if(red[0] == '#'){
-                stringToArray(red);
-                engang3 = false;
             }
-            
         }
         
         while (ready==1)
@@ -138,10 +147,10 @@ int main(int argc, char **argv)
             }
             printf("\n---------- DEALER CARDS ---------------------\n");
             
-            if(engang2 == true && engang3 == false){
+            if(engang2 == true ){
                 SDL_Delay(1000);
                 /* HÄR SKA KLIENTEN FÅ ETT KORT */
-                //printf("INANN FOR\n");
+                printf("INANN FOR\n");
                 int exit1 = 0, temp = 0;
                 while (!exit1 ) {
                     if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
@@ -186,8 +195,6 @@ int main(int argc, char **argv)
                 
                 /*------------------------------*/
                 engang2 = false;
-                engang3 = true;
-                
             }
             
             printf("Hit or Stand> ");
@@ -233,6 +240,7 @@ int main(int argc, char **argv)
                 ready=0;
                 engang = true;
                 engang2 = true;
+                endround = true;
                 
                 
             }else if (strstr(buffer, "!help")){
@@ -260,6 +268,24 @@ int main(int argc, char **argv)
                 myValue = 0;
                 engang2 = true;
             }
+<<<<<<< HEAD
+            
+            if (endround) {
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                bank += whoWon(myValue, dealerValue, bet, blackjack);
+                printf("Your balance is: $%d \n", bank);
+                endround = false;
+            }
+=======
+>>>>>>> origin/master
         }
         
     }
@@ -270,22 +296,34 @@ int main(int argc, char **argv)
 
 int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
-    int i,j;
-    /*while (1) {
-     for(i = 0;i<MAXCLIENTS+1;i++)
-     {
-     for(j = 0;j<MAXCARDS;j++)
-     {
-     
-     printf("Player [%d][%d] = %d\n",i,j,tableInfo[i][j]);
-     
-     
-     }
-     }
-     printf("\n");
-     SDL_Delay(4000);
-     }*/
+    char red[1024+1];
+
+    if (SDLNet_ResolveHost(&recive->ip, "169.254.211.44", 2001) < 0)
+    {
+        fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
     
+    /* Open a connection with the IP provided (listen on the host's port) */
+    if (!(recive->tableSocket = SDLNet_TCP_Open(&recive->ip)))
+    {
+        fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+
+    while (1) {
+        SDL_Delay(100);
+            if ((SDLNet_TCP_Recv(recive->tableSocket , red, 1024+1) > 0)) {
+                if (red[0] == '#') {
+                    //printf("NU FICK JAG TABLEINFO!!\n");
+                    stringToArray(red);
+                    //printf("%s\n", red);
+                }
+            }else {
+                fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+                exit(EXIT_FAILURE);
+            }
+    }
     
     return 0;
 }
