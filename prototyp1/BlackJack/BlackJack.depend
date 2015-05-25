@@ -73,7 +73,7 @@
 	<stdbool.h>
 	<string.h>
 
-1432039072 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1432137500 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
 
@@ -959,11 +959,11 @@
 	<string.h>
 	<stdbool.h>
 
-1432038636 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1432137500 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
 	"multiOS.h"
 
-1431524509 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1432040624 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
