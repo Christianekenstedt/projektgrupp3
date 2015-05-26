@@ -57,10 +57,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../prototyp1/knappar.h" />
-		<Unit filename="../prototyp1/main.c">
+		<Unit filename="../prototyp1/multiOS.h" />
+		<Unit filename="../prototyp1/server.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../prototyp1/multiOS.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -22,6 +22,7 @@ int playerturn = MAXCLIENTS-1;
 int player_card[MAXCLIENTSANDSERVER][MAXCARDS]; //+1 för servern
 int freeslots[MAXCLIENTS]={0};
 bool connected[MAXCLIENTS];
+bool endround = false;
 
 int function(sinfo* incsocket);
 void gameInit(Kort kortlek[]);
@@ -132,11 +133,13 @@ int main (int argc, char *argv[])
                 printf("Dra id. %d\n",player_card[5][1]);
                 printf("Dealer has: %d\n",dealervalue);
 
+                endround = true;
                 playerturn--;
             }
             else if(engang == false && playerturn == 5)//när alla spelare är klara blir det dealers tur igen
             {
                 //====================== Servens logik ================================
+                endround = false;
                 while(dealervalue < 17)
                 {
                     temp = dra_ID(kortlek);
@@ -154,9 +157,43 @@ int main (int argc, char *argv[])
                 {
                     printf("Dealer got blackjack!");
                 }
+
+                printf("Spel startar om 15 sek\n");
+                SDL_Delay(5000);
+                printf("Spel startar om 10 sek\n");
+                SDL_Delay(500);
+                printf("Spel startar om 5 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 4 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 3 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 2 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 1 sek\n");
+                SDL_Delay(1000);
+                printf("Nytt spel\n=============================================");
+
+
+                for(i = MAXCLIENTS-1; i > -1; i--)
+                {
+                    if(connected[i])
+                    {
+                        printf("Skicka: @");
+                        if(SDLNet_TCP_Send(clientvalue[i].socket, "@" ,512+1) < 0)
+                        {
+                            fprintf(stderr, "SDLNet_TCP_send: %s\n", SDLNet_GetError());
+                            exit(EXIT_FAILURE);
+                        }
+                    }
+                }
                 //system("pause");
+
+
+
                 engang = true;
                 plats = 0;
+                //gör redo för en ny omgång
                 PlayerCardInfo(0);
                 //playerturn--;
             }
@@ -176,13 +213,11 @@ int updateFunction()
     int j = 0;
     char sendstring[1024];
 
-
     if(SDLNet_ResolveHost(&ip, NULL, 2001) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-
     if(((listen = SDLNet_TCP_Open(&ip)) == NULL))
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
@@ -192,14 +227,12 @@ int updateFunction()
     {
         connected[i] = false;
     }
-    int t = 0;
+    //int t = 0;
     while(true)
     {
-        //SDL_Delay(3000);
-        printf("t = %d\n",t);
-        t++;
-
-
+        SDL_Delay(1000);
+        //printf("t = %d\n",t);
+        //t++;
         for(i = 0; i < MAXCLIENTS; i++)
         {
             if(freeslots[i] == 1 && !connected[i])
@@ -212,11 +245,8 @@ int updateFunction()
                 }
                 connected[i] = true;
                 printf("Connected %d = true\n", i);
-
-
             }
         }
-
         for(i = MAXCLIENTS-1; i > -1; i--)
         {
             if(connected[i])
@@ -232,7 +262,6 @@ int updateFunction()
                     exit(EXIT_FAILURE);
                 }
             }
-
         }
     }
 
@@ -270,7 +299,7 @@ int function(sinfo* incsocket)
         {
             inc->ready = 1;
         }
-        while((inc->ready)==1)
+        while((inc->ready)==1 && endround == true)
         {
             if(playerturn == inc->clientnumber && engang == true) //om det är din tur
             {
@@ -349,6 +378,7 @@ int function(sinfo* incsocket)
                     printf("Client %d sent server shutdown!\n", inc->clientnumber);
                 }
                 else if(strstr(buffer2, "exit")){
+                    connected[inc->clientnumber] = false;
                     *(inc->clientsocket) = 0;
                     inc->ready = 0;
                     SDLNet_TCP_Close(inc->socket);
@@ -415,7 +445,7 @@ int function(sinfo* incsocket)
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    //blanda_kortleken(kortlek);
+    blanda_kortleken(kortlek);
     PlayerCardInfo(0);
 }
 
