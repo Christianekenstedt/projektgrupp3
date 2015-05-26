@@ -282,7 +282,9 @@ int function(sinfo* incsocket)
     char red[8] = {'r','e','a','d','y','4','\0'};//skickar "ready" till client när det är dennes tur
     char cnr[3];
     int temp2 = inc->clientnumber;
+
     itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
+    //sprintf(cnr,"%d",temp2);
     *(inc->clientsocket) = 1;
     inc->recive = 1; //ger main tråden tillåtelse att skicka ut all info om bordet till den nya anslutna klienten
     int ID = -1; //kort ID
@@ -291,6 +293,7 @@ int function(sinfo* incsocket)
     SDL_Delay(1000);
 
     printf("Client %d connected\n", inc->clientnumber);
+    //system("pause");
 
     while(*(inc->quit) != 1)
     {
@@ -322,8 +325,9 @@ int function(sinfo* incsocket)
                 temp++;
 
 
-                itoa(value,cvalue,10);
-                itoa(ID,cID,10);
+                //itoa(value,cvalue,10);
+                //itoa(ID,cID,10);
+                sprintf(cID,"%d",ID);
                 if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
@@ -346,8 +350,9 @@ int function(sinfo* incsocket)
                 player_card[inc->clientnumber][temp] = ID;
                 temp++;
 
-                itoa(value,cvalue,10);
-                itoa(ID,cID,10);
+                //itoa(value,cvalue,10);
+                //itoa(ID,cID,10);
+                sprintf(cID,"%d",ID);
                 if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
@@ -398,8 +403,9 @@ int function(sinfo* incsocket)
                     player_card[inc->clientnumber][temp] = ID;
                     temp++;
 
-                    itoa(value,cvalue,10);
-                    itoa(ID,cID,10);
+                    //itoa(value,cvalue,10);
+                    //itoa(ID,cID,10);
+                    sprintf(cID,"%d",ID);
                     if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
                     {
                         fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
@@ -484,7 +490,8 @@ void arrayToStringSend(char sendstring[])
         for(j = 0;j<MAXCARDS;j++)
         {
             temp = player_card[i][j];
-            itoa(temp,temp2,10);
+            //itoa(temp,temp2,10);
+            sprintf(temp2,"%d",temp);
             strcat(sendstring,temp2);
             strcat(sendstring,".");
         }
