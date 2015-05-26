@@ -112,9 +112,9 @@ int main(int argc, char **argv)                     //main takes ipadress and po
     renderer = SDL_CreateRenderer(Window, -1, 0);
 
 #ifdef _WIN32
-  TTF_Font* gen = TTF_OpenFont("newroman.regular.ttf", 20);
+  TTF_Font* gen = TTF_OpenFont("fonts\\newroman.regular.ttf", 20);
 #else 
-  TTF_Font* gen = TTF_OpenFont("newroman.regular.ttf", 20);
+  TTF_Font* gen = TTF_OpenFont("fonts/newroman.regular.ttf", 20);
 #endif
     while (!quit)
     {
