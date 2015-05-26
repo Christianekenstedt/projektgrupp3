@@ -7,3 +7,7 @@
 //
 
 #include "knappar.h"
+#include "multiOS.h"
+#include "gamelogic.h"
+
+

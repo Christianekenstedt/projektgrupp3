@@ -7,7 +7,9 @@
 //
 
 #include "clientFunctions.h"
-#include "multiOS.h"
+
+//#include "multiOS.h"
+//#include "gamelogic.h"
 
 
 int sendToServer(char command[], TCPsocket socket){

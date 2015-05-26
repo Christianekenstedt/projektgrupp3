@@ -7,14 +7,17 @@
 //
 
 #include "gamelogic.h"
+#include "multiOS.h"
+#include "clientFunctions.h"
+#include "knappar.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 
-#define ANTALKORTLEKAR 5
-#define ANTALKORT (ANTALKORTLEKAR*52)
+//#define ANTALKORTLEKAR 5
+//#define ANTALKORT (ANTALKORTLEKAR*52)
 
 
 int randomfunktio(int minimum, int maximum)
