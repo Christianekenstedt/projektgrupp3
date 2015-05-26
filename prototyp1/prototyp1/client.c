@@ -31,14 +31,11 @@ int main(int argc, char **argv)
     Rinfo recive;
     int myClientNr = 0;
     int dealerValue = 0;
-<<<<<<< HEAD
+
     int bank = 500;
     int bet = 0;
     bool betround = true, blackjack = false, endround = false;
-=======
-    int pott = 500;
-    int bet;
->>>>>>> origin/master
+
     
     recive.set = SDLNet_AllocSocketSet(2);
     
@@ -66,11 +63,9 @@ int main(int argc, char **argv)
     }
     
     /* Resolve the host we are connecting to */
-<<<<<<< HEAD
+
     if (SDLNet_ResolveHost(&recive.ip, "169.254.211.44", 2000) < 0)
-=======
-    if (SDLNet_ResolveHost(&ip, "127.0.0.1", 2000) < 0)
->>>>>>> origin/master
+
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -268,7 +263,6 @@ int main(int argc, char **argv)
                 myValue = 0;
                 engang2 = true;
             }
-<<<<<<< HEAD
             
             if (endround) {
                 
@@ -284,8 +278,6 @@ int main(int argc, char **argv)
                 printf("Your balance is: $%d \n", bank);
                 endround = false;
             }
-=======
->>>>>>> origin/master
         }
         
     }
