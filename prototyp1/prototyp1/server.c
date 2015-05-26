@@ -1,3 +1,8 @@
+// Grupp 3
+// Skapad av: Christian Ekenstedt, Fredrik Berntsson och Mats Levin
+// Redigerad av: Christian Ekenstedt, Fredrik Berntsson
+//
+
 #include "multiOS.h"
 #include "gamelogic.h"
 #define MAXCLIENTS 5
@@ -332,13 +337,11 @@ int function(sinfo* incsocket)
             {
                 if(strstr(buffer2,"stand"))
                 {
-                    //PlayerCardInfo(1);
                     playerturn--;
                     inc->ready = 0;
                     temp=0;
                     inc->clientvalue = 0;
                     inc->recive = 1;
-                    //connected[inc->clientnumber] = false;
                 }
                 if(strstr(buffer2, "quit"))
                 {
@@ -395,7 +398,6 @@ int function(sinfo* incsocket)
                     lose = false;
                     playerturn--;
                     inc->ready = 0;
-                    //connected[inc->clientnumber] = false;
                 }
                 else if(inc->clientvalue == 21)
                 {
@@ -403,7 +405,6 @@ int function(sinfo* incsocket)
                     inc->clientvalue = 0;
                     inc->ready = 0;
                     inc->recive = 1;
-                    //connected[inc->clientnumber] = false;
                     playerturn--;
                 }
             }else SDL_Delay(200);
