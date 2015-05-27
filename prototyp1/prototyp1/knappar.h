@@ -7,9 +7,8 @@
 //
 
 #ifndef __prototyp1__knappar__
-#define __prototyp1__knappar__
 
-#include <stdio.h>
+#define __prototyp1__knappar__
 
 
 

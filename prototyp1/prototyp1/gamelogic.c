@@ -7,14 +7,17 @@
 //
 
 #include "gamelogic.h"
+#include "multiOS.h"
+#include "clientFunctions.h"
+#include "knappar.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 
-#define ANTALKORTLEKAR 5
-#define ANTALKORT (ANTALKORTLEKAR*52)
+//#define ANTALKORTLEKAR 5
+//#define ANTALKORT (ANTALKORTLEKAR*52)
 
 
 int randomfunktio(int minimum, int maximum)
@@ -45,7 +48,7 @@ void blanda_kortleken(Kort kortlek[])
     bool tempupptagen = false;
 
 
-    for(i = 0;i<1;i++)
+    for(i = 0;i<100000;i++)
     {
         int temp1 = randomfunktio(0,ANTALKORT);
         int temp2 = randomfunktio(0,ANTALKORT);
@@ -204,6 +207,7 @@ void IdToCard(int id,Kort kortlek[],int PoD)
                 printf("DEALER have card:\n");
 
             }else printf("You have card:\n");
+            
             printf("Suite: %s\n",kortlek[i].farg);
             printf("Value: %d\n",kortlek[i].kortvarde);
             break;

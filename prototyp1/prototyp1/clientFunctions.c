@@ -7,7 +7,9 @@
 //
 
 #include "clientFunctions.h"
-#include "multiOS.h"
+
+//#include "multiOS.h"
+//#include "gamelogic.h"
 
 
 int sendToServer(char command[], TCPsocket socket){
@@ -22,7 +24,7 @@ int sendToServer(char command[], TCPsocket socket){
 
 int reciveFromServer(TCPsocket socket){
     char buffer[512];
-    int value, quit;
+    int value = 0, quit;
     while (!quit) {
         if (SDLNet_TCP_Recv(socket, buffer, strlen(buffer)+1) > 0)
         {

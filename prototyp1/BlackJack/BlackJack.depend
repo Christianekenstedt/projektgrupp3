@@ -1,16 +1,12 @@
 # depslib dependency file v1.0
-1430217928 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\main.c
+1432568786 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\main.c
 	"multiOS.h"
+	"clientFunctions.h"
+	"gamelogic.h"
+	"knappar.h"
 	<stdio.h>
 	<stdbool.h>
 	<string.h>
-	"SDL.h"
-	"SDL_net.h"
-	"SDL_image.h"
-	"SDL_mixer.h"
-	"SDL_ttf.h"
-	"SDL_timer.h"
-	"SDL_thread.h"
 
 1430218451 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\multios.h
 	<SDL2/SDL.h>
@@ -46,9 +42,9 @@
 	<string.h>
 	"multiOS.h"
 
-1394940882 D
+1431947982 D
 
-1432038636 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1432652463 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
@@ -56,13 +52,15 @@
 	<stdbool.h>
 	<string.h>
 
-1376156552 gin/master
+1432039072 gin/master
 	"gamelogic.h"
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
 	<stdbool.h>
 	<string.h>
+	"multiOS.h"
+	"gamelogic.h"
 	"multiOS.h"
 	"gamelogic.h"
 
@@ -73,7 +71,7 @@
 	<stdbool.h>
 	<string.h>
 
-1432039072 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1432653284 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
 
@@ -959,11 +957,11 @@
 	<string.h>
 	<stdbool.h>
 
-1432038636 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1432652463 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
 	"multiOS.h"
 
-1431524509 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1432568786 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"

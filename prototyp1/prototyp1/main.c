@@ -16,7 +16,6 @@
 
 
 
-
 //Screen dimension constants
 
 const int SCREEN_WIDTH = 1024;
@@ -134,7 +133,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     for (i=0; i<11; i++)
     {
         table4[i].y = 216;
-        table4[i].x = 620+(i*15);
+	        table4[i].x = 620+(i*15);
         table4[i].w = 72;
         table4[i].h = 96;
     }
@@ -617,7 +616,8 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 }
                 else if(DOUBLEBUTTON && window == TABLE)
                 {
-                    quit = true;
+                    system("./prototyp1");
+                    //quit = true;
                 }
                 else if(SPLITBUTTON && window == TABLE)
                 {
@@ -625,31 +625,61 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 }
                 else if(M1 && window == TABLE)
                 {
+
+			if(money < 0)
+                        {
+                                break;
+                        }
+
                     money -= 1;
                     bet += 1;
 
                 }
+
                 else if(M5 && window == TABLE)
                 {
+
+		 	if(money < 0)
+                        {
+                                break;
+                        }
+
                     money -=5;
                     bet += 5;
-
                 }
+
                 else if(M25 && window == TABLE)
                 {
+
+			if(money < 0)
+                        {
+                                break;
+                        }
+
                     money -=25;
                     bet += 25;
-
                 }
+
                 else if(M50 && window == TABLE)
                 {
+
+			if(money < 0)
+       	                {
+                                break;
+                        }
+
                     money -=50;
-
                     bet += 50;
-
                 }
+
                 else if(M100 && window == TABLE)
                 {
+
+			if(money < 0)
+                        {
+                                break;
+                        }
+
                     money -=100;
                     bet += 100;
 
@@ -661,7 +691,6 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 printf("Money: $%d\n", money);
                 sprintf(command, "Money: $%d",money);
                 //bet = 0;
-
 
             }
             else if(e.type == SDL_MOUSEMOTION)
@@ -686,29 +715,40 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 ritaText(command,renderRect);
 
 
-                    if(hit == true)
-                    {
-                        for (i=0; i<nykort; i++)
-                        {
-                            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+                    //if(hit == true)
+                    //{
+                        //for (i=0; i<nykort; i++)
+                        //{
+                            //SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
 
-                        }
-                    }
+                        //}
+                    //}
 
 
                     if(myClientNr == 0)
                     {
                         if(hit == true)
-                    {
-                        for (i=0; i<nykort; i++)
                         {
-                            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
 
-                        }
-                    }
+				if(money < 0)
+				{
+					break;
+				}
+                        	for (i=0; i<nykort; i++)
+                        	{
+                            		SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+
+                        	}
+                    	}
 
                         if(bet == 1 || bet <= 4)
                         {
+
+				if(money < 0)
+				{
+					break;
+				}
+
                             for(i = 0; i < bet; i++)
                             {
 
@@ -719,6 +759,11 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
 
                         else if(bet==5 || bet <= 24 )
                         {
+				if(money < 0)
+				{
+					break;
+				}
+
                             for(i = 0; i < (bet / 5); i++)
                             {
                                 SDL_RenderCopy(gRenderer, pokerchip5, NULL, &Betcirkel1_5[i]);
@@ -727,6 +772,11 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
 
                         else if(bet==25 || bet <= 49)
                         {
+
+				if(money < 0)
+				{
+					break;
+				}
                             for(i = 0; i < (bet / 25); i++)
                             {
                                 SDL_RenderCopy(gRenderer, pokerchip25, NULL, &Betcirkel1_25[i]);
@@ -735,6 +785,11 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
 
                         else if(bet == 50 && bet > 50 || bet <= 99)
                         {
+
+				if(money < 0)
+				{
+					break;
+				}
                             for(i = 0; i < (bet / 50); i++)
                             {
                                 SDL_RenderCopy(gRenderer, pokerchip50, NULL, &Betcirkel1_50[i]);
@@ -743,25 +798,30 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
 
                         else if(bet == 100 || bet > 100)
                         {
+
+				if(money < 0)
+				{
+					break;
+				}
                             for(i = 0; i < (bet / 100); i++)
                             {
                                 SDL_RenderCopy(gRenderer, pokerchip100, NULL, &Betcirkel1_100[i]);
                             }
-
-
+                        }
                     }
 
 
                     if(myClientNr == 1)
                     {
                         if(hit == true)
-                    {
-                        for (i=0; i<nykort; i++)
-                        {
-                            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table2[i]);
+                    	{
+                        	for (i=0; i<nykort; i++)
+                        	{
+                            		SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table2[i]);
 
-                        }
-                    }
+                        	}
+                    	}
+
                         if(bet == 1 || bet <= 4)
                         {
                             for(i = 0; i < bet; i++)
@@ -770,7 +830,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet ==5 || bet < 25)
+                        else if(bet ==5 || bet <= 24)
                         {
                             for(i = 0; i<(bet/5); i++)
                             {
@@ -778,7 +838,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 25 || bet < 50)
+                        else if(bet == 25 || bet <= 49)
                         {
                             for(i = 0; i <(bet/25); i++)
                             {
@@ -786,7 +846,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 50 || bet < 100)
+                        else if(bet == 50 || bet <= 99)
                         {
                             for(i = 0; i < (bet/50); i++)
                             {
@@ -794,7 +854,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 100)
+                        else if(bet == 100 || bet > 100)
                         {
                             for(i = 0; i < (bet / 100); i++)
                             {
@@ -807,10 +867,10 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     if(myClientNr == 2)
                     {
                         if(hit == true)
-                    {
-                        for (i=0; i<nykort; i++)
-                        {
-                            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table3[i]);
+                    	{
+                        	for (i=0; i<nykort; i++)
+                        	{
+                            		SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table3[i]);
 
                         }
                     }
@@ -823,7 +883,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 5 || bet < 25)
+                        else if(bet == 5 || bet <= 24)
                         {
                             for(i = 0; i < (bet/5); i++)
                             {
@@ -831,7 +891,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 25 || bet < 50)
+                        else if(bet == 25 || bet <= 49)
                         {
                             for(i = 0; i < (bet/25); i++)
                             {
@@ -839,7 +899,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 50  || bet < 100)
+                        else if(bet == 50  || bet <= 99)
                         {
                             for(i = 0; i < (bet/50); i++)
                             {
@@ -847,7 +907,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 100)
+                        else if(bet == 100 || bet > 100)
                         {
                             for(i = 0; i < (bet/100); i++)
                             {
@@ -862,13 +922,13 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     if(myClientNr == 3)
                     {
                         if(hit == true)
-                    {
-                        for (i=0; i<nykort; i++)
-                        {
-                            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table4[i]);
+                    	{
+                        	for (i=0; i<nykort; i++)
+                        	{
+                            		SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table4[i]);
 
-                        }
-                    }
+                        	}
+                    	}
                         if(bet == 1 || bet <= 4)
                         {
                             for(i = 0; i < bet; i++)
@@ -877,7 +937,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 5 || bet < 25)
+                        else if(bet == 5 || bet <= 24)
                         {
                             for(i = 0; i < (bet/5); i++)
                             {
@@ -885,7 +945,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 25 || bet < 50)
+                        else if(bet == 25 || bet <= 49)
                         {
                             for(i = 0; i < (bet/25); i++)
                             {
@@ -893,7 +953,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 50 || bet < 100)
+                        else if(bet == 50 || bet <= 99)
                         {
                             for(i = 0; i < (bet/50); i++)
                             {
@@ -901,7 +961,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 100)
+                        else if(bet == 100 || bet > 100)
                         {
                             for(i = 0; i < (bet/100); i++)
                             {
@@ -913,13 +973,14 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     if(myClientNr == 4)
                     {
                         if(hit == true)
-                    {
-                        for (i=0; i<nykort; i++)
-                        {
-                            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table5[i]);
+                    	{
+                        	for (i=0; i<nykort; i++)
+                        	{
+                            		SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table5[i]);
 
-                        }
-                    }
+                        	}
+                    	}
+
                         if(bet == 1 || bet <= 4)
                         {
                             for(i = 0; i < bet; i++)
@@ -928,7 +989,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 5 || bet < 25)
+                        else if(bet == 5 || bet <= 24)
                         {
                             for(i = 0; i < (bet/5); i++)
                             {
@@ -936,7 +997,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 25 || bet < 50)
+                        else if(bet == 25 || bet <= 49)
                         {
                             for(i = 0; i < (bet/25); i++)
                             {
@@ -944,7 +1005,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 50 || bet < 100)
+                        else if(bet == 50 || bet <= 99)
                         {
                             for(i = 0; i < (bet/50); i++)
                             {
@@ -952,7 +1013,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             }
                         }
 
-                        else if(bet == 100)
+                        else if(bet == 100 || bet > 100)
                         {
                             for(i = 0; i < (bet/100); i++)
                             {
@@ -967,10 +1028,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     }
                     ritaText(command,renderRect);
 
-
-
-
-                }
+                //}   tillhör if(myClientNr== 0)
                 SDL_RenderPresent(gRenderer);
             }
         }
@@ -1206,7 +1264,20 @@ bool loadMedia()  // Christian
 
     SDL_GetError();
 
+    SDL_Surface* temp100 = IMG_Load("bilder/100mark_mini.png");
+    pokerchip100 = SDL_CreateTextureFromSurface(gRenderer, temp100);
 
+    SDL_Surface* temp50 = IMG_Load("bilder/50mark_mini.png");
+    pokerchip50 = SDL_CreateTextureFromSurface(gRenderer, temp50);
+
+    SDL_Surface* temp25 = IMG_Load("bilder/25mark_mini.png");
+    pokerchip25 = SDL_CreateTextureFromSurface(gRenderer, temp25);
+
+    SDL_Surface* temp5 = IMG_Load("bilder/5mark_mini.png");
+    pokerchip5 = SDL_CreateTextureFromSurface(gRenderer, temp5);
+
+    SDL_Surface* temp1 = IMG_Load("bilder/1mark_mini.png");
+    pokerchip1 = SDL_CreateTextureFromSurface(gRenderer, temp1);
 
 #endif
     return success;
