@@ -49,20 +49,18 @@ int main(int argc, char **argv)
     initiera_kortleken(kortlek); // bygger upp kortleken så man kan använda och jämföra ID med ett kort.
     
     /* Simple parameter checking */
-    if (argc < 3)
+    /*if (argc < 3)
     {
         fprintf(stderr, "Usage: %s host port\n", argv[0]);
         exit(EXIT_FAILURE);
-    }
+    }*/
     
     if (SDLNet_Init() < 0)
     {
         fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
-    /* Resolve the host we are connecting to */
-    if (SDLNet_ResolveHost(&recive.ip, "193.10.39.174", 2000) < 0)
+    if (SDLNet_ResolveHost(&recive.ip, "169.254.211.44", 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -75,7 +73,6 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     SDLNet_TCP_AddSocket(recive.set, recive.sd);
-    //SDLNet_TCP_AddSocket(recive.set, recive.tableSocket);
     
     SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
     

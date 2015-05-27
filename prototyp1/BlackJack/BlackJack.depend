@@ -44,8 +44,11 @@
 
 1431947982 D
 
-1432652463 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
+1432659619 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.c
 	"gamelogic.h"
+	"multiOS.h"
+	"clientFunctions.h"
+	"knappar.h"
 	<stdio.h>
 	<time.h>
 	<stdlib.h>
@@ -64,14 +67,10 @@
 	"multiOS.h"
 	"gamelogic.h"
 
-1431947982 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
-	<stdio.h>
-	<time.h>
-	<stdlib.h>
+1432659619 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\gamelogic.h
 	<stdbool.h>
-	<string.h>
 
-1432653284 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
+1432745645 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\server.c
 	"multiOS.h"
 	"gamelogic.h"
 
@@ -957,21 +956,22 @@
 	<string.h>
 	<stdbool.h>
 
-1432652463 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
+1432659619 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.c
 	"clientFunctions.h"
-	"multiOS.h"
 
-1432568786 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
+1432659619 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\clientfunctions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
 	"gamelogic.h"
-
-1431438868 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\knappar.c
 	"knappar.h"
 
-1431438868 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\knappar.h
-	<stdio.h>
+1432659619 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\knappar.c
+	"knappar.h"
+	"multiOS.h"
+	"gamelogic.h"
+
+1432659619 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\prototyp1\knappar.h
 
 1432220198 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\prototyp1\knappar.c
 	"knappar.h"

@@ -1,8 +1,3 @@
-// Grupp 3
-// Skapad av: Christian Ekenstedt, Fredrik Berntsson och Mats Levin
-// Redigerad av: Christian Ekenstedt, Fredrik Berntsson
-//
-
 #include "multiOS.h"
 #include "gamelogic.h"
 #define MAXCLIENTS 5
@@ -157,7 +152,6 @@ int main (int argc, char *argv[])
                 {
                     printf("Dealer got blackjack!");
                 }
-
                 printf("Spel startar om 15 sek\n");
                 SDL_Delay(5000);
                 printf("Spel startar om 10 sek\n");
@@ -188,9 +182,6 @@ int main (int argc, char *argv[])
                     }
                 }
                 //system("pause");
-
-
-
                 engang = true;
                 plats = 0;
                 //gör redo för en ny omgång
@@ -264,8 +255,6 @@ int updateFunction()
             }
         }
     }
-
-
     return 0;
 }
 
