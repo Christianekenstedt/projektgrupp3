@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		AA3B17951AE64A8C00EEF9F6 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17931AE64A8C00EEF9F6 /* SDL2_mixer.framework */; };
 		AA3B17961AE64A8C00EEF9F6 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3B17941AE64A8C00EEF9F6 /* SDL2_ttf.framework */; };
-		AAC6E7DC1B14C70F00A72538 /* clientFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = AA9D95931AFA0CA4003873AF /* clientFunctions.c */; };
-		AAC6E7DD1B14C70F00A72538 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F911ADFE6A1009DE13C /* main.c */; };
-		AAC6E7DE1B14C70F00A72538 /* knappar.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA3F2221B021F3D000E07A6 /* knappar.c */; };
-		AAC6E7DF1B14C70F00A72538 /* gamelogic.c in Sources */ = {isa = PBXBuildFile; fileRef = AA8020081AEF7F6E00328A30 /* gamelogic.c */; };
+		AAC6E7E11B14DE3700A72538 /* clientFunctions.c in Sources */ = {isa = PBXBuildFile; fileRef = AA9D95931AFA0CA4003873AF /* clientFunctions.c */; };
+		AAC6E7E21B14DE3700A72538 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AAF82F911ADFE6A1009DE13C /* main.c */; };
+		AAC6E7E31B14DE3700A72538 /* knappar.c in Sources */ = {isa = PBXBuildFile; fileRef = AAA3F2221B021F3D000E07A6 /* knappar.c */; };
+		AAC6E7E41B14DE3700A72538 /* gamelogic.c in Sources */ = {isa = PBXBuildFile; fileRef = AA8020081AEF7F6E00328A30 /* gamelogic.c */; };
 		AAF82F9B1ADFE71E009DE13C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F981ADFE71E009DE13C /* SDL2_image.framework */; };
 		AAF82F9C1ADFE71E009DE13C /* SDL2_net.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F991ADFE71E009DE13C /* SDL2_net.framework */; };
 		AAF82F9D1ADFE71E009DE13C /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAF82F9A1ADFE71E009DE13C /* SDL2.framework */; };
@@ -161,10 +161,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAC6E7DC1B14C70F00A72538 /* clientFunctions.c in Sources */,
-				AAC6E7DD1B14C70F00A72538 /* main.c in Sources */,
-				AAC6E7DE1B14C70F00A72538 /* knappar.c in Sources */,
-				AAC6E7DF1B14C70F00A72538 /* gamelogic.c in Sources */,
+				AAC6E7E11B14DE3700A72538 /* clientFunctions.c in Sources */,
+				AAC6E7E21B14DE3700A72538 /* main.c in Sources */,
+				AAC6E7E31B14DE3700A72538 /* knappar.c in Sources */,
+				AAC6E7E41B14DE3700A72538 /* gamelogic.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

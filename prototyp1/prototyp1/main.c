@@ -616,7 +616,8 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 }
                 else if(DOUBLEBUTTON && window == TABLE)
                 {
-                    quit = true;
+                    system("./prototyp1");
+                    //quit = true;
                 }
                 else if(SPLITBUTTON && window == TABLE)
                 {
