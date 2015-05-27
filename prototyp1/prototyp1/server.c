@@ -158,21 +158,8 @@ int main (int argc, char *argv[])
                     printf("Dealer got blackjack!");
                 }
 
-                printf("Spel startar om 15 sek\n");
+                printf("Spelresultat om 5 sekunder..\n");
                 SDL_Delay(5000);
-                printf("Spel startar om 10 sek\n");
-                SDL_Delay(500);
-                printf("Spel startar om 5 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 4 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 3 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 2 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 1 sek\n");
-                SDL_Delay(1000);
-                printf("Nytt spel\n=============================================");
 
 
                 for(i = MAXCLIENTS-1; i > -1; i--)
@@ -187,7 +174,23 @@ int main (int argc, char *argv[])
                         }
                     }
                 }
+                printf("Dealer har: %d");
                 //system("pause");
+                printf("Spel startar om 15 sek\n");
+                SDL_Delay(5000);
+                printf("Spel startar om 10 sek\n");
+                SDL_Delay(5000);
+                printf("Spel startar om 5 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 4 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 3 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 2 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 1 sek\n");
+                SDL_Delay(1000);
+                printf("Nytt spel\n=============================================");
 
 
 
