@@ -293,6 +293,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
             while (ready == 1) {
 
                 SDL_Delay(10);
+                SDL_GetMouseState(&x,&y);
                 SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                 hit = false;
                 playerPosition(5, bet, hit, nykort, money, bordskort);
@@ -383,10 +384,18 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                         else if(HITBUTTON && window == TABLE && myTurn == 1)
                         {
                               hit = true;
+                              sendToServer("hit", recive.sd);
+                              id = reciveFromServer(recive.sd);
+                              bordskort[nykort++] = IdToVisualCard(id,kortlek);
+                              hit = true;
+                              playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
+                              SDL_RenderPresent(gRenderer);
+
                         }
                         else if(STANDBUTTON && window == TABLE)
                         {
-                              //sendToServer("stand", recive.sd);
+                              sendToServer("stand", recive.sd);
+                              id = reciveFromServer(recive.sd);
                         }
                         else if(DOUBLEBUTTON && window == TABLE)
                         {
