@@ -1,8 +1,3 @@
-// Grupp 3
-// Skapad av: Christian Ekenstedt, Fredrik Berntsson och Mats Levin
-// Redigerad av: Christian Ekenstedt, Fredrik Berntsson
-//
-
 #include "multiOS.h"
 #include "gamelogic.h"
 #define MAXCLIENTS 5
@@ -76,7 +71,6 @@ int main (int argc, char *argv[])
         clientvalue[i].ready = 0;
         clientvalue[i].recive = 0;
     }
-    printf("Blackjack Server started\n");
     while(ClientNumber < MAXCLIENTS+1)
     {
         for (i=0; i<MAXCLIENTS; i++)
@@ -158,9 +152,21 @@ int main (int argc, char *argv[])
                 {
                     printf("Dealer got blackjack!");
                 }
-
-                printf("Spelresultat om 5 sekunder..\n");
+                printf("Spel startar om 15 sek\n");
                 SDL_Delay(5000);
+                printf("Spel startar om 10 sek\n");
+                SDL_Delay(500);
+                printf("Spel startar om 5 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 4 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 3 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 2 sek\n");
+                SDL_Delay(1000);
+                printf("Spel startar om 1 sek\n");
+                SDL_Delay(1000);
+                printf("Nytt spel\n=============================================");
 
 
                 for(i = MAXCLIENTS-1; i > -1; i--)
@@ -175,26 +181,7 @@ int main (int argc, char *argv[])
                         }
                     }
                 }
-                printf("Dealer har: %d");
                 //system("pause");
-                printf("Spel startar om 15 sek\n");
-                SDL_Delay(5000);
-                printf("Spel startar om 10 sek\n");
-                SDL_Delay(5000);
-                printf("Spel startar om 5 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 4 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 3 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 2 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 1 sek\n");
-                SDL_Delay(1000);
-                printf("Nytt spel\n=============================================");
-
-
-
                 engang = true;
                 plats = 0;
                 //gör redo för en ny omgång
@@ -268,8 +255,6 @@ int updateFunction()
             }
         }
     }
-
-
     return 0;
 }
 
@@ -287,8 +272,8 @@ int function(sinfo* incsocket)
     char cnr[3];
     int temp2 = inc->clientnumber;
 
-    //itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
-    sprintf(cnr,"%d",temp2);
+    itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
+    //sprintf(cnr,"%d",temp2);
     *(inc->clientsocket) = 1;
     inc->recive = 1; //ger main tråden tillåtelse att skicka ut all info om bordet till den nya anslutna klienten
     int ID = -1; //kort ID
