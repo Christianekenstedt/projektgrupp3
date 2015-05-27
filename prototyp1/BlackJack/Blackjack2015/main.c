@@ -296,11 +296,12 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                 hit = false;
                 playerPosition(5, bet, hit, nykort, money, bordskort);
-                nykort++;
+                //nykort++;
                 //SDL_RenderPresent(gRenderer);
                 hit = true;
-                bordskort[nykort++] = IdToVisualCard(tableInfo[5][1], kortlek);
-                playerPosition(5, bet, hit, nykort, money, bordskort);
+                bordskort[1] = IdToVisualCard(tableInfo[5][1], kortlek);
+                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[1]], &tableDealer[1]);
+                //playerPosition(5, bet, hit, nykort, money, bordskort);
                 //SDL_RenderPresent(gRenderer);
                 nykort = 0;
                 printf("DEALER HAVE ID = %d\n",tableInfo[5][1]);

@@ -20,7 +20,7 @@ typedef struct Reciveinfo
     SDLNet_SocketSet set;
     int* quit1;
     IPaddress ip;
-    
+
 }Rinfo;
 
 Kort kortlek[ANTALKORT];
@@ -35,32 +35,38 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     Rinfo recive;
     TCPsocket sd = NULL;
     IPaddress ip;
-    
+
     char hostIP[] = "169.254.211.44", command[512],command2[512];
     int window = 0, frame = 0, cardFrame = 0, myClientNr=0,bet = 0, myTurn = 0, money = 500, x=0, y=0, id=-1;
     int bordskort[11], nykort=0, quit1, j, i;
     bool hit = false, quit = false, klar = false, engang = true;
-    
+
     char red[10];
     int temp[10], ready = 0;
-    
+
     /* =============================INITIERINGAR ====================================================*/
-    
+
+    if (SDLNet_Init() < 0)
+    {
+        fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
+        exit(EXIT_FAILURE);
+    }
+
     srand(time(NULL));
     positionInit(); // Initierar positioner for knappar osv.
     initiera_kortleken(kortlek); // inti the card deck.
-    
+
     recive.set = SDLNet_AllocSocketSet(2); //
     recive.quit1 = &quit1; //
     SDLNet_TCP_AddSocket(recive.set, recive.sd);
-    
+
     for (i=0; i<MAXCLIENTS+1; i++) { // Nollställer arrayen som innehåller idn på kort.
         for (j=0; j<15; j++) {
             tableInfo[i][j] = -1;
         }
     }
-    
-    
+
+
 
     /* =============================================================================================*/
     // ############################ NETWORK INIT ####################################################
@@ -70,11 +76,11 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
 
-    
+
+
     // ############################# NETWORK INIT END ###############################################
-    
+
     //Event handler
     SDL_Event e;
     //Start up SDL and create window
@@ -94,14 +100,14 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
             //Main loop flag
             //Play the music
             Mix_PlayMusic( gMusic, -1 );
-            
+
             SDL_SetRenderDrawColor(gRenderer, 0xFF,0xFF,0xFF,0xFF);
             SDL_RenderClear(gRenderer);
         }
     }
     //While application is running
 
-    
+
     while( !quit )
     {
         frame = 0;
@@ -155,7 +161,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
                         exit(EXIT_FAILURE);
                     }
-                    
+
                     // Starts the update thread.
                     window=TABLE;
                     SDL_DetachThread(SDL_CreateThread(reciveInfo, "Recive-thread", (void*)&recive));
@@ -187,16 +193,16 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 }
                 else if(HITBUTTON && window == TABLE && myTurn == 1)
                 {
-                    
+
                     //id = reciveFromServer(sd);
-                    
+
                     id = rand()%260+0;
                     printf("\n\nid recived = %d\n", id);
-                    
+
                     cardFrame = IdToVisualCard(id,kortlek);
                     bordskort[nykort] = cardFrame;
                     nykort++;
-                    
+
                     printf("cardFrame = %d\n", cardFrame);
                     hit = true;
                 }
@@ -217,33 +223,33 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     money -= 1;
                     bet += 1;
                 }
-                
+
                 else if(M5 && window == TABLE)
                 {
                     money -=5;
                     bet += 5;
                 }
-                
+
                 else if(M25 && window == TABLE)
                 {
                     money -=25;
                     bet += 25;
                 }
-                
+
                 else if(M50 && window == TABLE)
                 {
                     money -=50;
                     bet += 50;
                 }
-                
+
                 else if(M100 && window == TABLE)
                 {
                     money -=100;
                     bet += 100;
-                    
+
                 }
                 printf("Bet: $%d\n",bet);
-                
+
                 sprintf(command2,"Bet: $%d",bet);
                 printf("Money: $%d\n", money);
                 sprintf(command, "Money: $%d",money);*/
@@ -254,10 +260,10 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 {
                     frame=2;
                 }
-                
+
             }
         }
-        
+
         if(window == START )
         {
             SDL_RenderCopy(gRenderer,bTexture,NULL,NULL);
@@ -285,21 +291,22 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
             }
 
             while (ready == 1) {
-                
+
                 SDL_Delay(10);
                 SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                 hit = false;
                 playerPosition(5, bet, hit, nykort, money, bordskort);
-                nykort++;
+                //nykort++;
                 //SDL_RenderPresent(gRenderer);
                 hit = true;
-                bordskort[nykort++] = IdToVisualCard(tableInfo[5][1], kortlek);
-                playerPosition(5, bet, hit, nykort, money, bordskort);
+                bordskort[1] = IdToVisualCard(tableInfo[5][1], kortlek);
+                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[1]], &tableDealer[1]);
+                //playerPosition(5, bet, hit, nykort, money, bordskort);
                 //SDL_RenderPresent(gRenderer);
                 nykort = 0;
                 printf("DEALER HAVE ID = %d\n",tableInfo[5][1]);
-                
-                
+
+
                 while (SDL_PollEvent( &e ) != 0)
                 {
                     //User requests quit
@@ -394,30 +401,30 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                               money -= 1;
                               bet += 1;
                           }
-                          
+
                           else if(M5 && window == TABLE)
                           {
                               money -=5;
                               bet += 5;
                           }
-                          
+
                           else if(M25 && window == TABLE)
                           {
                               money -=25;
                               bet += 25;
                           }
-                          
+
                           else if(M50 && window == TABLE)
                           {
                               money -=50;
                               bet += 50;
                           }
-                          
+
                           else if(M100 && window == TABLE)
                           {
                               money -=100;
                               bet += 100;
-                          
+
                           }
                           printf("Bet: $%d\n",bet);
                           sprintf(command2,"Bet: $%d",bet);
@@ -429,20 +436,20 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 //ritaText(command2,renderRect2);
                 //ritaText(command,renderRect);
                 // playerPosition takes the client number you have to placve your cards and chips on the right position.
-                
-                
+
+
                 // Game progress here!
                 // 0. Recive "ready command"
                 // 1. Place your bets.
                 // 2. Recive 2 cards
                 // 3. Hit or stand
-                
-                
+
+
                 /* ======================================================*/
                 /* BET ROUND */
-                
+
                 /* BET ROUND ENDS*/
-                
+
                 /* RECIVE 2 CARDS FROM THE DEALER */
                 if (engang == true) {
                     SDL_RenderPresent(gRenderer);
@@ -453,7 +460,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                         if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
                         {
                             //printf("ID = %s", buffer);
-                            
+
                             id=atoi(buffer); // Stoppar in ID:t i variabel ID.
                             printf("ID = %d", id);
                             if (id == 0){
@@ -461,7 +468,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                                 printf("NU FICK VI FEL!\n");
                             }
                             exit1 = 1;
-                            
+
                         }else{
                             fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
                             exit(EXIT_FAILURE);
@@ -484,7 +491,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                             fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
                             exit(EXIT_FAILURE);
                         }
-                        
+
                     }
                     printf("id = %d\n", id);
                     bordskort[nykort++] = IdToVisualCard(id, kortlek);
@@ -494,15 +501,15 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     SDL_RenderPresent(gRenderer);
                     hit = false;
                     engang = false;
-                    
+
                     printf("uppdaterad\n");
-                    
+
                 }
-                
-                
+
+
                 /* CHOSE HIT OR STAND */
-                
-                
+
+
                 //playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
                 //ready = 0;
                 //SDL_RenderPresent(gRenderer);
@@ -525,20 +532,20 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
 int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
     char red[1024+1];
-    
+
     if (SDLNet_ResolveHost(&recive->ip, "169.254.211.44", 2001) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
+
     /* Open a connection with the IP provided (listen on the host's port) */
     if (!(recive->tableSocket = SDLNet_TCP_Open(&recive->ip)))
     {
         fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
     }
-    
+
     while (1) {
         SDL_Delay(100);
         if ((SDLNet_TCP_Recv(recive->tableSocket , red, 1024+1) > 0)) {
