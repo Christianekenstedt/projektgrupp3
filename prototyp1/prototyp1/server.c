@@ -76,6 +76,7 @@ int main (int argc, char *argv[])
         clientvalue[i].ready = 0;
         clientvalue[i].recive = 0;
     }
+    printf("Blackjack Server started\n");
     while(ClientNumber < MAXCLIENTS+1)
     {
         for (i=0; i<MAXCLIENTS; i++)
@@ -283,8 +284,8 @@ int function(sinfo* incsocket)
     char cnr[3];
     int temp2 = inc->clientnumber;
 
-    itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
-    //sprintf(cnr,"%d",temp2);
+    //itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
+    sprintf(cnr,"%d",temp2);
     *(inc->clientsocket) = 1;
     inc->recive = 1; //ger main tråden tillåtelse att skicka ut all info om bordet till den nya anslutna klienten
     int ID = -1; //kort ID
