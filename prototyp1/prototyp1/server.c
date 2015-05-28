@@ -66,6 +66,8 @@ int main (int argc, char *argv[])
 
     /* =============================================================================== */
 
+    printf("Server started\n");
+
     for(i=0;i<MAXCLIENTS;i++){ //initierar allt
         clientvalue[i].clientsocket = 0;
         clientvalue[i].ready = 0;
@@ -133,60 +135,76 @@ int main (int argc, char *argv[])
             }
             else if(engang == false && playerturn == 5)//när alla spelare är klara blir det dealers tur igen
             {
-                //====================== Servens logik ================================
-                endround = false;
-                while(dealervalue < 17)
+                if((freeslots[4] == 1 || freeslots[3] == 1 || freeslots[2] == 1 || freeslots[1] == 1 || freeslots[0] == 1))
                 {
-                    temp = dra_ID(kortlek);
-                    player_card[5][plats++] = temp;
-                    dealervalue = dealervalue + IdToValue(temp,kortlek);
-                    printf("Dealer has: %d============================================\n",dealervalue);
-                    //system("pause");
-                }
-                //============================= regler ============================
-                if(dealervalue > 21){
-                    printf("Dealer lose!\n");
-                    //PlayerCardInfo(0);
-                }
-                else if (dealervalue == 21)
-                {
-                    printf("Dealer got blackjack!");
-                }
-                printf("Spel startar om 15 sek\n");
-                SDL_Delay(5000);
-                printf("Spel startar om 10 sek\n");
-                SDL_Delay(500);
-                printf("Spel startar om 5 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 4 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 3 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 2 sek\n");
-                SDL_Delay(1000);
-                printf("Spel startar om 1 sek\n");
-                SDL_Delay(1000);
-                printf("Nytt spel\n=============================================");
-
-
-                for(i = MAXCLIENTS-1; i > -1; i--)
-                {
-                    if(connected[i])
+                    //====================== Servens logik ================================
+                    endround = false;
+                    while(dealervalue < 17)
                     {
-                        printf("Skicka: @");
-                        if(SDLNet_TCP_Send(clientvalue[i].socket, "@" ,512+1) < 0)
+                        temp = dra_ID(kortlek);
+                        player_card[5][plats++] = temp;
+                        dealervalue = dealervalue + IdToValue(temp,kortlek);
+                        printf("Dealer has: %d============================================\n",dealervalue);
+                        //system("pause");
+                    }
+                    //============================= regler ============================
+                    if(dealervalue > 21){
+                        printf("Dealer lose!\n");
+                        //PlayerCardInfo(0);
+                    }
+                    else if (dealervalue == 21)
+                    {
+                        printf("Dealer got blackjack!");
+                    }
+                    printf("Dealern kontrollerar resultat, 5 sek\n");
+                    SDL_Delay(5000);
+
+
+                    for(i = MAXCLIENTS-1; i > -1; i--)
+                    {
+                        if(connected[i])
                         {
-                            fprintf(stderr, "SDLNet_TCP_send: %s\n", SDLNet_GetError());
-                            exit(EXIT_FAILURE);
+                            printf("Skicka: @");
+                            if(SDLNet_TCP_Send(clientvalue[i].socket, "@" ,512+1) < 0)
+                            {
+                                fprintf(stderr, "SDLNet_TCP_send: %s\n", SDLNet_GetError());
+                                exit(EXIT_FAILURE);
+                            }
                         }
                     }
+
+                    printf("=============================================\nSpel startar om 10 sek\n");
+                    SDL_Delay(5000);
+                    printf("Spel startar om 5 sek\n");
+                    SDL_Delay(1000);
+                    printf("Spel startar om 4 sek\n");
+                    SDL_Delay(1000);
+                    printf("Spel startar om 3 sek\n");
+                    SDL_Delay(1000);
+                    printf("Spel startar om 2 sek\n");
+                    SDL_Delay(1000);
+                    printf("Spel startar om 1 sek\n");
+                    SDL_Delay(1000);
+                    printf("Nytt spel\n=============================================");
+
+                    //system("pause");
+                    engang = true;
+                    plats = 0;
+                    //gör redo för en ny omgång
+                    PlayerCardInfo(0);
+                    //playerturn--;
                 }
-                //system("pause");
-                engang = true;
-                plats = 0;
-                //gör redo för en ny omgång
-                PlayerCardInfo(0);
-                //playerturn--;
+                else
+                {
+                    SDL_Delay(1);//för att intre printsatserna ska blandas
+                    printf("\nAlla spelare disconnectade, vantar pa nya anslutningar..");
+                    endround = false;
+                    engang = true;
+                    plats = 0;
+                    //gör redo för en ny omgång
+                    PlayerCardInfo(0);
+                    break;
+                }
             }
         }
     }
@@ -274,7 +292,7 @@ int function(sinfo* incsocket)
 
     itoa(temp2,cnr,10);//lägger clientnummret i en separat variabel
     //sprintf(cnr,"%d",temp2);
-    *(inc->clientsocket) = 1;
+    *(inc->clientsocket) = (int)1;
     inc->recive = 1; //ger main tråden tillåtelse att skicka ut all info om bordet till den nya anslutna klienten
     int ID = -1; //kort ID
     char cvalue[512],cID[512];
@@ -440,7 +458,7 @@ int function(sinfo* incsocket)
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    blanda_kortleken(kortlek);
+    //blanda_kortleken(kortlek);
     PlayerCardInfo(0);
 }
 
