@@ -462,7 +462,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     nykort = 0;
                     printf("DEALER HAVE ID = %d\nAnd a value of %d\n",tableInfo[5][1], dealerValue);
                     
-                    SDL_RenderPresent(gRenderer);
+                    //SDL_RenderPresent(gRenderer);
                     SDL_Delay(500);
                     int exit1 = 0;
                     char buffer[512];
@@ -490,7 +490,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     hit = true;
                     //SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[0]], &tableDealer[0]);
                     playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
-                    SDL_RenderPresent(gRenderer);
+                    //SDL_RenderPresent(gRenderer);
                     exit1 = 0;
                     while (!exit1) {
                         if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
@@ -509,12 +509,13 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     hit = true;
                     //SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[1]], &table5[1]);
                     playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
-                    SDL_RenderPresent(gRenderer);
+                    
                     hit = false;
                     engang = false;
                     myValue += IdToValue(id,kortlek);
 
                     //printf("uppdaterad\n");
+                    SDL_RenderPresent(gRenderer);
 
                 }
 
@@ -654,6 +655,9 @@ int reciveInfo(void* info){
             fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
             exit(EXIT_FAILURE);
         }
+        
+        
+        
     }
     return 0;
 }
