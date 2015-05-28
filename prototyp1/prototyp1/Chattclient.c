@@ -119,7 +119,13 @@ int main(int argc, char **argv)                     //main takes ipadress and po
     #endif
 
     //TTF_Font* gen = TTF_OpenFont("newroman.regular.ttf", 20);
-    SDL_Surface* Background = IMG_Load("Chattbg.png");
+    
+    
+#ifdef _WIN32
+    SDL_Surface* Background = IMG_Load("bilder\\Chattbg.png");
+#else
+    SDL_Surface* Background = IMG_Load("bilder/Chattbg.png");
+#endif
     SDL_Texture* Backgroundtexture = SDL_CreateTextureFromSurface(renderer, Background);
     SDL_FreeSurface(Background);
 
