@@ -5,26 +5,26 @@
 #include <stdlib.h>
 #include <string.h>
 #include "multiOS.h"
-#define LENGTH 41
-#define LENGTH2 36
+#define LENGTH 41                                   //Length of input row
+#define LENGTH2 36                                  //Length of printed strnig row
 
-typedef struct Reciveinfo                           //Deklarerar structen som används för att spara data
+typedef struct Reciveinfo                           //Declare the struct used for client data
 {
-  TCPsocket SD;                                     //socket som kopplar till servern
-  int* quit;                                        //pointer till quit
-  SDLNet_SocketSet sset;                            //Ett socketset som SD kan stoppas i så att checksockets funktionen kan användas
-  SDL_mutex* mutex;
-  char Rendertext[17][65];
-  int Recive;
+  TCPsocket SD;                                     //socket that connects to the server
+  int* quit;                                        //pointer to quit
+  SDLNet_SocketSet sset;                            //A socketset that SD is put into so the checksocket function can be used
+  SDL_mutex* mutex;                                 //A SDL_mutex used to lock specific resourses so that colitions are avoided
+  char Rendertext[17][65];                          //The twodimentional array used as rows when text is printed in the window
+  int Recive;                   //bör kunnas tas bort
 }Rinfo;
 
-int function(void* incinfo);
-void Rendertext(SDL_Renderer* renderer, char* text, int x, int y, TTF_Font* gen);
+int function(void* incinfo);                        //function that recives strings and splits them into rows of printable length
+void Rendertext(SDL_Renderer* renderer, char* text, int x, int y, TTF_Font* gen);       //Render function
 
-int main(int argc, char **argv)                     //main takes ipadress and port number as inputs
+int main(int argc, char **argv)                     //main has a predefined type where these inputs are expected
 {
   IPaddress ip;		                            // Server address
-  int quit, len, namelenght, i;
+  int quit, len, namelenght, i;                 //declaration of variables
   char buffer[512] = {0};
   char writtentext[500] = {0};
   char name[12];
@@ -44,7 +44,7 @@ int main(int argc, char **argv)                     //main takes ipadress and po
 
 
   Recivestruct.sset = SDLNet_AllocSocketSet(1);     //Allocates space for the sockets that are gonna be put into the socketset
-  Recivestruct.mutex = SDL_CreateMutex();
+  Recivestruct.mutex = SDL_CreateMutex();           //initializes the mutexes
 
   /*if (argc < 3)
     {
@@ -52,21 +52,21 @@ int main(int argc, char **argv)                     //main takes ipadress and po
       exit(EXIT_FAILURE);
     }*/
 
-  if (SDLNet_Init() < 0)
+  if (SDLNet_Init() < 0)                            //initializes SDL_net so the functions can be used
     {
       fprintf(stderr, "SDLNet_Init: %s\n", SDLNet_GetError());
       exit(EXIT_FAILURE);
     }
 
   // Resolve the host we are connecting to
-  if (SDLNet_ResolveHost(&ip, "193.10.39.174", 2002) < 0)
+  if (SDLNet_ResolveHost(&ip, "193.10.39.174", 2002) < 0)           //containes the information needed for conection to the server
     {
       fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
       exit(EXIT_FAILURE);
     }
 
   // Open a connection with the IP provided (listen on the host's port)
-  if (!(Recivestruct.SD = SDLNet_TCP_Open(&ip)))
+  if (!(Recivestruct.SD = SDLNet_TCP_Open(&ip)))                    //connects the SD struct in the client to a struct on the server
     {
       fprintf(stderr, "SDLNet_TCP_Open: %s\n", SDLNet_GetError());
       exit(EXIT_FAILURE);
@@ -75,10 +75,10 @@ int main(int argc, char **argv)                     //main takes ipadress and po
   // Send messages
   namelenght = 0;
   printf("Write name:\n");
-  fgets(name,12,stdin);
-  namelenght = strlen(name)+1;
-  name[namelenght-2] = ':';
-  name[namelenght-1] = ' ';
+  fgets(name,12,stdin);                 //gets the name a player entered
+  namelenght = strlen(name)+1;          //gets length of name and adds one so that a space can be added
+  name[namelenght-2] = ':';             //ends the name with:
+  name[namelenght-1] = ' ';             //adds space before the pronted text
   //printf("%d\n", namelenght);
   //printf("%s\n", name);
 
@@ -119,8 +119,8 @@ int main(int argc, char **argv)                     //main takes ipadress and po
     #endif
 
     //TTF_Font* gen = TTF_OpenFont("newroman.regular.ttf", 20);
-    
-    
+
+
 #ifdef _WIN32
     SDL_Surface* Background = IMG_Load("bilder\\Chattbg.png");
 #else
