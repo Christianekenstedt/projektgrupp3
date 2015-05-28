@@ -39,10 +39,10 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     char hostIP[] = "169.254.211.44", command[512],command2[512];
     int window = 0, frame = 0, cardFrame = 0, myClientNr=0,bet = 0, myTurn = 0, money = 500, x=0, y=0, id=-1;
     int bordskort[11], nykort=0, quit1, j, i;
-    bool hit = false, quit = false, klar = false, engang = true;
+    bool hit = false, quit = false, klar = false, engang = true, endround = false, stand = false, blackjack = false;
 
     char red[10];
-    int temp[10], ready = 0;
+    int temp[10], ready = 0, myValue = 0, dealerValue = 0, temporar = 0;
 
     /* =============================INITIERINGAR ====================================================*/
 
@@ -71,7 +71,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     /* =============================================================================================*/
     // ############################ NETWORK INIT ####################################################
 
-    if (SDLNet_ResolveHost(&recive.ip, "192.168.0.16", 2000) < 0)
+    if (SDLNet_ResolveHost(&recive.ip, "169.254.211.44", 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -291,21 +291,17 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
             }
 
             while (ready == 1) {
-
+                
+                // Game progress here!
+                // 0. Recive "ready command" - Check
+                // 1. Place your bets.
+                // 2. Recive 2 cards - Check
+                // 3. Hit or stand - In progress
+                
                 SDL_Delay(10);
                 SDL_GetMouseState(&x,&y);
                 SDL_RenderCopy(gRenderer, btable, NULL, NULL);
-                hit = false;
-                playerPosition(5, bet, hit, nykort, money, bordskort);
-                //nykort++;
-                //SDL_RenderPresent(gRenderer);
-                hit = true;
-                bordskort[1] = IdToVisualCard(tableInfo[5][1], kortlek);
-                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[1]], &tableDealer[1]);
-                //playerPosition(5, bet, hit, nykort, money, bordskort);
-                //SDL_RenderPresent(gRenderer);
-                nykort = 0;
-                printf("DEALER HAVE ID = %d\n",tableInfo[5][1]);
+                
 
 
                 while (SDL_PollEvent( &e ) != 0)
@@ -314,6 +310,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     if( e.type == SDL_QUIT )
                     {
                         sendToServer("exit", recive.sd);
+                        SDLNet_TCP_Close(recive.sd);
                         quit = true;
                         ready = 0;
                     }//Handle key press
@@ -355,7 +352,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     }
                     else if(e.type == SDL_MOUSEBUTTONDOWN)
                     {
-                        printf("NU TRYCKER VI NER MUSKNAPPEN!\n");
+                        //printf("NU TRYCKER VI NER MUSKNAPPEN!\n");
                         if(EXITBUTTON)
                         {
                             if(window == START)
@@ -384,18 +381,12 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                         else if(HITBUTTON && window == TABLE && myTurn == 1)
                         {
                               hit = true;
-                              sendToServer("hit", recive.sd);
-                              id = reciveFromServer(recive.sd);
-                              bordskort[nykort++] = IdToVisualCard(id,kortlek);
-                              hit = true;
-                              playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
-                              SDL_RenderPresent(gRenderer);
+                            
 
                         }
                         else if(STANDBUTTON && window == TABLE)
                         {
-                              sendToServer("stand", recive.sd);
-                              id = reciveFromServer(recive.sd);
+                            stand = true;
                         }
                         else if(DOUBLEBUTTON && window == TABLE)
                         {
@@ -447,11 +438,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                 // playerPosition takes the client number you have to placve your cards and chips on the right position.
 
 
-                // Game progress here!
-                // 0. Recive "ready command"
-                // 1. Place your bets.
-                // 2. Recive 2 cards
-                // 3. Hit or stand
+                
 
 
                 /* ======================================================*/
@@ -461,6 +448,20 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
 
                 /* RECIVE 2 CARDS FROM THE DEALER */
                 if (engang == true) {
+                    
+                    hit = false;
+                    playerPosition(5, bet, hit, nykort, money, bordskort);
+                    //nykort++;
+                    //SDL_RenderPresent(gRenderer);
+                    hit = true;
+                    bordskort[1] = IdToVisualCard(tableInfo[5][1], kortlek);
+                    SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[1]], &tableDealer[1]);
+                    dealerValue += IdToValue(tableInfo[5][1],kortlek);
+                    //playerPosition(5, bet, hit, nykort, money, bordskort);
+                    //SDL_RenderPresent(gRenderer);
+                    nykort = 0;
+                    printf("DEALER HAVE ID = %d\nAnd a value of %d\n",tableInfo[5][1], dealerValue);
+                    
                     SDL_RenderPresent(gRenderer);
                     SDL_Delay(500);
                     int exit1 = 0;
@@ -485,6 +486,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     }
                     printf("id = %d\n", id);
                     bordskort[nykort++] = IdToVisualCard(id, kortlek);
+                    myValue += IdToValue(id,kortlek);
                     hit = true;
                     //SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[0]], &tableDealer[0]);
                     playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
@@ -510,14 +512,101 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     SDL_RenderPresent(gRenderer);
                     hit = false;
                     engang = false;
+                    myValue += IdToValue(id,kortlek);
 
-                    printf("uppdaterad\n");
+                    //printf("uppdaterad\n");
 
                 }
 
 
                 /* CHOSE HIT OR STAND */
-
+                if(hit == true){
+                    
+                    sendToServer("hit", recive.sd);
+                    
+                    int exit1 = 0;
+                    char buffer[512];
+                    while (!exit1 ) {
+                        if (SDLNet_TCP_Recv(recive.sd, buffer, 512) > 0)
+                        {
+                            //printf("ID = %s", buffer);
+                            
+                            id=atoi(buffer); // Stoppar in ID:t i variabel ID.
+                            printf("ID = %d", id);
+                            if (id == 0){
+                                //exit1 = 0;
+                                printf("NU FICK VI FEL!\n");
+                            }
+                            exit1 = 1;
+                            
+                        }else{
+                            fprintf(stderr, "SDLNet_TCP_Recv: %s\n", SDLNet_GetError());
+                            exit(EXIT_FAILURE);
+                        }
+                    }
+                    printf("id = %d\n", id);
+                    bordskort[nykort++] = IdToVisualCard(id, kortlek);
+                    myValue += IdToValue(id,kortlek);
+                    hit = true;
+                    //SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[0]], &tableDealer[0]);
+                    //playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
+                    
+                    playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
+                    SDL_RenderPresent(gRenderer);
+                    
+                    hit = false;
+                }else if (stand == true){
+                    sendToServer("stand", recive.sd);
+                    endround = true;
+                    stand = false;
+                }
+                
+                if (myValue > 21) {
+                    endround = true;
+                }
+                /* END ROUND */
+                if (endround){
+                    
+                    if(SDLNet_TCP_Recv(recive.sd, red, 512+1) < 0){
+                        fprintf(stderr, "SDLNet_TCP_Recv: %s", SDLNet_GetError());
+                        exit(EXIT_FAILURE);
+                    }
+                    if (red[0] == '@') {
+                        printf("\n-------------------------------Round ended!\n---------------------------\n");
+                    }
+                    
+                    // RÄKNA DEALERS KORT!
+                    printf("\n---------------------------------Dealer Plays-----------------------------------\n");
+                    dealerValue = 0;
+                    for(j = 0;j<MAXCARDS;j++)
+                    {
+                        if (tableInfo[5][j] == -1) {
+                            temporar++;
+                        }
+                        if(tableInfo[5][j] != -1){
+                            IdToCard(tableInfo[5][j],kortlek,1); // 0 for player, 1 for dealer
+                            dealerValue += IdToValue(tableInfo[5][j],kortlek);
+                            
+                        }else j++;
+                        if (temporar == MAXCARDS) {
+                            dealerValue = 0;
+                        }
+                        
+                    }
+                    printf("\n---------------------------------Dealer done!-----------------------------------\n");
+                    temporar = 0;
+                    printf("\nDealer have %d\nMy value %d\n\n", dealerValue,myValue);
+                    
+                    printf("\n--------------------------------------------------------------------------------\n");
+                    money += whoWon(myValue, dealerValue, bet, blackjack);
+                    printf("Your balance is: $%d \n\n", money);
+                    
+                    
+                    myValue = 0;
+                    engang = true;
+                    endround = false;
+                }
+                /* */
 
                 //playerPosition(myClientNr, bet, hit, nykort, money, bordskort);
                 //ready = 0;
@@ -542,7 +631,7 @@ int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
     char red[1024+1];
 
-    if (SDLNet_ResolveHost(&recive->ip, "192.168.0.16", 2001) < 0)
+    if (SDLNet_ResolveHost(&recive->ip, "169.254.211.44", 2001) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
