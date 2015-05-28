@@ -749,3 +749,30 @@ void stringToArray(char sendstring[])
     }else printf("STRANG TRASIG\n");
     SDL_Delay(100);
 }
+
+int whoWon(int playerValue, int dealerValue, int bet, bool blackjack){
+    int won=0;
+    
+    if (blackjack){
+        printf("Won = %d\n", (won = bet * 3));
+        return (won = bet * 3); // Hur många gånger pengarna får man vid blackjack?
+    }
+    
+    if (dealerValue < 21) {
+        if (playerValue < 21) {
+            if (playerValue > dealerValue) {
+                won = bet * 2;
+            }else if (playerValue == dealerValue){
+                won = bet;
+            }
+        }
+    }else won = bet*2;
+    
+    if (playerValue>21 || (dealerValue > playerValue && dealerValue < 21 )) {
+        won=0;
+    }
+    
+    printf("Won = %d\n", won);
+    blackjack=false;
+    return won;
+}
