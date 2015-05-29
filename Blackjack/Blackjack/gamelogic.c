@@ -194,10 +194,11 @@ void IdToCard(int id,Kort kortlek[],int PoD)
             if(PoD == 1){
                 printf("DEALER have card:\n");
                 
-            }else printf("You have card:\n");
+            }
+            //else printf("You have card:\n");
             
-            printf("Suite: %s\n",kortlek[i].farg);
-            printf("Value: %d\n",kortlek[i].kortvarde);
+            //printf("Suite: %s\n",kortlek[i].farg);
+            //printf("Value: %d\n",kortlek[i].kortvarde);
             break;
         }
     }

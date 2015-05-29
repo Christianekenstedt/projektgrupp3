@@ -399,10 +399,10 @@ int IdToVisualCard(int id,Kort kortlek[])
     {
         if(id == kortlek[i].kortnummer)
         {
-            printf("\n");
-            printf("You have card:\n");
-            printf("Suite: %s\n",kortlek[i].farg);
-            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            //printf("\n");
+            //printf("You have card:\n");
+            //printf("Suite: %s\n",kortlek[i].farg);
+            //printf("Value: %d\n\n",kortlek[i].kortvarde);
             if (strstr(kortlek[i].farg, "Hjarter")) {
                 cardNr = 26;
                 cardNr += kortlek[i].kortvarde;
@@ -418,7 +418,7 @@ int IdToVisualCard(int id,Kort kortlek[])
             }
         }
     }
-    printf("Going to return CardNr = %d \n", cardNr-1);
+    //printf("Going to return CardNr = %d \n", cardNr-1);
     return cardNr-1;
 }
 
@@ -753,6 +753,7 @@ void stringToArray(char sendstring[])
 int whoWon(int playerValue, int dealerValue, int bet, bool blackjack){
     int won=0;
     
+    printf("bet = %d\n", bet);
     if (blackjack){
         printf("Won = %d\n", (won = bet * 3));
         return (won = bet * 3); // Hur många gånger pengarna får man vid blackjack?
