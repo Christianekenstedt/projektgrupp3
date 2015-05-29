@@ -72,11 +72,8 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     /* =============================================================================================*/
     // ############################ NETWORK INIT ####################################################
 
-<<<<<<< HEAD
-    if (SDLNet_ResolveHost(&recive.ip, "130.237.84.235", 10000) < 0)
-=======
-    if (SDLNet_ResolveHost(&recive.ip, IPADRESS, 2000) < 0)
->>>>>>> origin/master
+
+    if (SDLNet_ResolveHost(&recive.ip, IPADRESS, 10000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -548,11 +545,8 @@ int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
     char red[1024+1];
 
-<<<<<<< HEAD
-    if (SDLNet_ResolveHost(&recive->ip, "130.237.84.235", 10001) < 0)
-=======
-    if (SDLNet_ResolveHost(&recive->ip, IPADRESS, 2001) < 0)
->>>>>>> origin/master
+
+    if (SDLNet_ResolveHost(&recive->ip, IPADRESS, 10001) < 0)
     {
         //f
         printf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());

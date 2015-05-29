@@ -154,10 +154,10 @@ int main (int argc, char *argv[])
                     }
                     else if (dealervalue == 21)
                     {
-                        printf("Dealer got blackjack!");
+                        printf("Dealer got blackjack!\n");
                     }
                     printf("Dealern kontrollerar resultat, 5 sek\n");
-                    SDL_Delay(5000);
+                    SDL_Delay(1000);
 
 
                     for(i = MAXCLIENTS-1; i > -1; i--)
@@ -173,8 +173,8 @@ int main (int argc, char *argv[])
                         }
                     }
 
-                    printf("=============================================\nSpel startar om 10 sek\n");
-                    SDL_Delay(5000);
+                    //printf("=============================================\nSpel startar om 10 sek\n");
+                    //SDL_Delay(5000);
                     printf("Spel startar om 5 sek\n");
                     SDL_Delay(1000);
                     printf("Spel startar om 4 sek\n");
@@ -349,7 +349,7 @@ int function(sinfo* incsocket)
 
 
                 /* skickar andra kortet till den ny anslutna klienten */
-                SDL_Delay(1000);
+                SDL_Delay(10);
 
                 ID = dra_ID(kortlek);
                 printf("ID: %d\n", ID);
@@ -407,7 +407,7 @@ int function(sinfo* incsocket)
                     ID = dra_ID(kortlek);
                     printf("ID: %d\n", ID);
 
-                    player_card[inc->clientnumber][temp] = ID;
+                    player_card[inc->clientnumber][temp] = ID; //lägger in kortet till 2D arrayen
                     temp++;
 
                     //itoa(value,cvalue,10);
@@ -441,6 +441,7 @@ int function(sinfo* incsocket)
                     lose = false;
                     playerturn--;
                     inc->ready = 0;
+                    temp=0;
                 }
                 else if(inc->clientvalue == 21)
                 {
@@ -449,6 +450,7 @@ int function(sinfo* incsocket)
                     inc->ready = 0;
                     inc->recive = 1;
                     playerturn--;
+                    temp=0;
                 }
             }else SDL_Delay(200);
         }
