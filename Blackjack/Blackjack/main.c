@@ -13,6 +13,7 @@
 #include "gamelogic.h"
 #include "functions.h"
 #include "coordinates.h"
+#define IPADRESS "130.229.175.182"
 
 typedef struct Reciveinfo
 {
@@ -36,7 +37,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     TCPsocket sd = NULL;
     IPaddress ip;
 
-    char hostIP[] = "169.254.211.44", command[512],command2[512];
+    char  command[512],command2[512];
     int window = 0, frame = 0, cardFrame = 0, myClientNr=0,bet = 0, myTurn = 0, money = 500, x=0, y=0, id=-1;
     int bordskort[11], nykort=0, quit1, j, i;
     bool hit = false, quit = false, klar = false, engang = true, endround = false, stand = false, blackjack = false;
@@ -71,7 +72,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     /* =============================================================================================*/
     // ############################ NETWORK INIT ####################################################
 
-    if (SDLNet_ResolveHost(&recive.ip, "169.254.211.44", 2000) < 0)
+    if (SDLNet_ResolveHost(&recive.ip, IPADRESS, 10000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -621,7 +622,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
             //SDL_RenderPresent(gRenderer);
         }
 
-        printf("utanför\n");
+        //printf("utanför\n");
     }
     //Free resources and close SDL
     closeW();
@@ -632,7 +633,7 @@ int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
     char red[1024+1];
 
-    if (SDLNet_ResolveHost(&recive->ip, "169.254.211.44", 2001) < 0)
+    if (SDLNet_ResolveHost(&recive->ip, IPADRESS, 10001) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
