@@ -641,6 +641,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     betround = true;
                     kortantal = 0;
                     nykort = 0;
+                    ready = 0;
                     //SDL_RenderClear(gRenderer);
                     SDL_RenderCopy(gRenderer, btable, NULL, NULL);
                     SDL_RenderPresent(gRenderer);
