@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    if(SDLNet_ResolveHost(&ip, NULL, 2000) < 0)
+    if(SDLNet_ResolveHost(&ip, NULL, 10000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -222,7 +222,7 @@ int updateFunction()
     int j = 0;
     char sendstring[1024];
 
-    if(SDLNet_ResolveHost(&ip, NULL, 2001) < 0)
+    if(SDLNet_ResolveHost(&ip, NULL, 10001) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -239,7 +239,7 @@ int updateFunction()
     //int t = 0;
     while(true)
     {
-        SDL_Delay(1000);
+        SDL_Delay(100);
         //printf("t = %d\n",t);
         //t++;
         for(i = 0; i < MAXCLIENTS; i++)
@@ -334,11 +334,11 @@ int function(sinfo* incsocket)
 
                 //itoa(value,cvalue,10);
                 //itoa(ID,cID,10);
-                sprintf(cID,"%d",ID);
+                /*sprintf(cID,"%d",ID);
                 if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-                }
+                }*/
                 IdToCard(ID,kortlek,0); //visar på skärmen en spelares spelbord
                 inc->clientvalue = inc->clientvalue + IdToValue(ID,kortlek);
                 if(inc->clientvalue > 21)
@@ -359,11 +359,11 @@ int function(sinfo* incsocket)
 
                 //itoa(value,cvalue,10);
                 //itoa(ID,cID,10);
-                sprintf(cID,"%d",ID);
+                /*sprintf(cID,"%d",ID);
                 if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
                 {
                     fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-                }
+                }*/
                 IdToCard(ID,kortlek,0); //visar på skärmen en spelares spelbord
                 inc->clientvalue = inc->clientvalue + IdToValue(ID,kortlek);
                 if(inc->clientvalue > 21)
@@ -412,11 +412,11 @@ int function(sinfo* incsocket)
 
                     //itoa(value,cvalue,10);
                     //itoa(ID,cID,10);
-                    sprintf(cID,"%d",ID);
+                    /*sprintf(cID,"%d",ID);
                     if(SDLNet_TCP_Send(inc->socket, cID, 512) < 0)
                     {
                         fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
-                    }
+                    }*/
                     IdToCard(ID,kortlek,0); //visar på skärmen en spelares spelbord
                     inc->clientvalue = inc->clientvalue + IdToValue(ID,kortlek);
                     if(inc->clientvalue > 21)
