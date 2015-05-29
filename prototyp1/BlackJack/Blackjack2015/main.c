@@ -13,6 +13,7 @@
 #include "gamelogic.h"
 #include "functions.h"
 #include "coordinates.h"
+#define IPADRESS "130.229.175.182"
 
 typedef struct Reciveinfo
 {
@@ -71,7 +72,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
     /* =============================================================================================*/
     // ############################ NETWORK INIT ####################################################
 
-    if (SDLNet_ResolveHost(&recive.ip, "169.254.211.44", 2000) < 0)
+    if (SDLNet_ResolveHost(&recive.ip, IPADRESS, 2000) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
@@ -542,7 +543,7 @@ int reciveInfo(void* info){
     Rinfo* recive = (Rinfo*) info;
     char red[1024+1];
 
-    if (SDLNet_ResolveHost(&recive->ip, "169.254.211.44", 2001) < 0)
+    if (SDLNet_ResolveHost(&recive->ip, IPADRESS, 2001) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
         exit(EXIT_FAILURE);
