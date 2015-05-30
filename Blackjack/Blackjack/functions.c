@@ -365,7 +365,7 @@ int ritaText(char word[], SDL_Rect position) // fick det att funka (Christian)
 
 int sendToServer(char command[], TCPsocket socket){
     int success;
-    if (SDLNet_TCP_Send(socket, command, strlen(command)+1) < 0)
+    if (SDLNet_TCP_Send(socket, command, 512) < 0)
     {
         fprintf(stderr, "SDLNet_TCP_Send: %s\n", SDLNet_GetError());
         success = -1;
