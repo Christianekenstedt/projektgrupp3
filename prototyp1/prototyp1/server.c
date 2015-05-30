@@ -507,4 +507,6 @@ void arrayToStringSend(char sendstring[])
     }
     SDL_Delay(100);
     strcat(sendstring,"\0");
+    //printf("STRING IS: %s\n", sendstring);
+    //system("pause");
 }
