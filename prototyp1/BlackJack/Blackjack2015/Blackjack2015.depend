@@ -6,7 +6,7 @@
 1432743247 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\coordinates.h
 	<stdio.h>
 
-1432743247 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
+1433004226 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
@@ -40,18 +40,18 @@
 	<string.h>
 	<stdbool.h>
 
-1432743247 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.h
+1433004249 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.h
 	<stdio.h>
 	<stdbool.h>
 
-1432743247 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
+1433004153 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
 	"functions.h"
 	"gamelogic.h"
 
-1432743247 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
+1433004193 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
 	"gamelogic.h"
 
-1432744946 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
+1433008479 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
 	<stdio.h>
 	<stdbool.h>
 	<string.h>
@@ -121,7 +121,8 @@
 	"functions.h"
 	"coordinates.h"
 
-<<<<<<< HEAD
+1432746337 D
+
 1432756279 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\coordinates.c
 	"coordinates.h"
 	"functions.h"
@@ -130,7 +131,7 @@
 	<stdio.h>
 
 1432756279 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
-=======
+
 1432746337 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\coordinates.c
 	"coordinates.h"
 	"functions.h"
@@ -139,17 +140,12 @@
 	<stdio.h>
 
 1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
->>>>>>> origin/master
+
+1432898038 gin/master
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
 	"gamelogic.h"
-
-<<<<<<< HEAD
-1432756279 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\multios.h
-=======
-1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\multios.h
->>>>>>> origin/master
 	<SDL2/SDL.h>
 	<SDL2/SDL_timer.h>
 	<SDL2/SDL_thread.h>
@@ -176,8 +172,18 @@
 	<stdlib.h>
 	<string.h>
 	<stdbool.h>
+	<stdio.h>
+	<stdbool.h>
+	<string.h>
+	"multiOS.h"
+	"gamelogic.h"
+	"functions.h"
+	"coordinates.h"
 
-<<<<<<< HEAD
+1432756279 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\multios.h
+
+1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\multios.h
+
 1432756279 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.h
 	<stdio.h>
 	<stdbool.h>
@@ -190,7 +196,7 @@
 	"gamelogic.h"
 
 1432898988 source:c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
-=======
+
 1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.h
 	<stdio.h>
 	<stdbool.h>
@@ -203,12 +209,4 @@
 	"gamelogic.h"
 
 1432898038 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
->>>>>>> origin/master
-	<stdio.h>
-	<stdbool.h>
-	<string.h>
-	"multiOS.h"
-	"gamelogic.h"
-	"functions.h"
-	"coordinates.h"
 

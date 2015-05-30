@@ -34,23 +34,23 @@ void blanda_kortleken(Kort kortlek[])
     int tempnummer = 0, i;
     int temp_kortvarde = 0;
     bool tempupptagen = false;
-    
-    
+
+
     for(i = 0;i<100000;i++)
     {
         int temp1 = randomfunktio(0,ANTALKORT);
         int temp2 = randomfunktio(0,ANTALKORT);
-        
+
         strcpy(tempfarg, kortlek[temp1].farg);
         tempnummer = kortlek[temp1].kortnummer;
         tempupptagen = kortlek[temp1].upptagen;
         temp_kortvarde = kortlek[temp1].kortvarde;
-        
+
         strcpy(kortlek[temp1].farg, kortlek[temp2].farg);
         kortlek[temp1].kortnummer = kortlek[temp2].kortnummer;
         kortlek[temp1].upptagen = kortlek[temp2].upptagen;
         kortlek[temp1].kortvarde = kortlek[temp2].kortvarde;
-        
+
         strcpy(kortlek[temp2].farg, tempfarg);
         kortlek[temp2].kortnummer = tempnummer;
         kortlek[temp2].upptagen = tempupptagen;
@@ -65,20 +65,20 @@ void initiera_kortleken(Kort kortleken[])
     for(i = 0;i<ANTALKORT;i++)
     {
         kortleken[i].kortnummer = i;
-        
-        
+
+
         if(temp_kortvarde == 14)
         {
             temp_kortvarde = 1;
         }
         kortleken[i].kortvarde = temp_kortvarde;
-        
-        
+
+
         if(farg == 52)
         {
             farg = 0;
         }
-        
+
         if(farg <= 12)
         {
             strcpy(kortleken[i].farg, "Klover");
@@ -106,11 +106,11 @@ void initiera_kortleken(Kort kortleken[])
 }
 void checka_kort(int kortleksplats, Kort kortlek[])
 {
-    
+
     printf("Farg: \t\t%s (%d)\n", kortlek[kortleksplats].farg, kortleksplats);
     printf("Kortnummer: \t%d \n", kortlek[kortleksplats].kortnummer);
     printf("Kortvarde: \t%d \n", kortlek[kortleksplats].kortvarde);
-    
+
     if(kortlek[kortleksplats].upptagen == true)
     {
         printf("Upptagen: \tTrue\n");
@@ -123,9 +123,9 @@ void checka_kort(int kortleksplats, Kort kortlek[])
 
 int dra_kort(Kort kortlek[])
 {
-    
+
     int i, blackjackvarde = 0; /*alla kl√§dda kort √§r v√§rda 10 i blackjack*/
-    
+
     for(i = 0;0<ANTALKORT;i++)
     {
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
@@ -148,9 +148,9 @@ int dra_kort(Kort kortlek[])
 
 int dra_ID(Kort kortlek[])
 {
-    
+
     int i, ID = 0; /*alla kl√§dda kort √§r v√§rda 10 i blackjack*/
-    
+
     for(i = 0;0<ANTALKORT;i++)
     {
         if(kortlek[i].upptagen == false) /*hittar ett ledigt kort*/
@@ -193,11 +193,12 @@ void IdToCard(int id,Kort kortlek[],int PoD)
             printf("\n");
             if(PoD == 1){
                 printf("DEALER have card:\n");
-                
-            }else printf("You have card:\n");
-            
-            printf("Suite: %s\n",kortlek[i].farg);
-            printf("Value: %d\n",kortlek[i].kortvarde);
+
+            }
+            //else printf("You have card:\n");
+
+            //printf("Suite: %s\n",kortlek[i].farg);
+            //printf("Value: %d\n",kortlek[i].kortvarde);
             break;
         }
     }

@@ -70,7 +70,7 @@ bool init()  // Christian
 {
     //Initialization flag
     bool success = true;
-    
+
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 )
     {
@@ -104,12 +104,12 @@ bool init()  // Christian
         fprintf(stderr,"SDL_CreateRenderer: %s\n", SDL_GetError());
         success = false;
     }
-    
+
     if(TTF_Init() == -1)
     {
         return false;
     }
-    
+
     return success;
 }
 //============================================LOAD MEDIA================================================
@@ -117,12 +117,12 @@ bool loadMedia()  // Christian
 {
     //Loading success flag
     bool success = true;
-    
+
 #ifdef _WIN32
     //Load splash image
-    
+
     SDL_Surface* table = IMG_Load("bilder\\bord9999.0.png");
-    
+
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
     gXOut = SDL_LoadBMP( "bilder\\background.bmp" );
     bTexture = SDL_CreateTextureFromSurface(gRenderer, gXOut);
@@ -142,22 +142,22 @@ bool loadMedia()  // Christian
     SDL_Surface* gPlayButton = SDL_LoadBMP("bilder\\testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
-    
+
     gSpriteClips[ 0 ].x = 0;
     gSpriteClips[ 0 ].y = 0;
     gSpriteClips[ 0 ].w = 294;
     gSpriteClips[ 0 ].h = 107;
-    
+
     gSpriteClips[ 1 ].x = 0;
     gSpriteClips[ 1 ].y = 107;
     gSpriteClips[ 1 ].w = 294;
     gSpriteClips[ 1 ].h = 107;
-    
+
     gSpriteClips[ 2 ].x = 0;
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
-    
+
     SDL_Surface* gExitButton = SDL_LoadBMP("bilder\\EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
@@ -169,12 +169,12 @@ bool loadMedia()  // Christian
     //Laddar kortleken
     SDL_Surface* cardPic = IMG_Load("bilder\\cards.png");
     kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
-    
+
     int x=1,y=1,w=72,h=96, i;
-    
+
     for(i = 0; i<52; i++)
     {
-        
+
         cardSheet[i].x = x;
         cardSheet[i].y = y;
         cardSheet[i].w = w;
@@ -196,28 +196,28 @@ bool loadMedia()  // Christian
             y = 295;
         }
     }
-    
+
     SDL_Surface* baksida1 = IMG_Load("bilder\\baksida.png");
     baksida = SDL_CreateTextureFromSurface(gRenderer, baksida1);
-    
+
     SDL_Surface* temp100 = IMG_Load("bilder\\100mark_mini.png");
     pokerchip100 = SDL_CreateTextureFromSurface(gRenderer, temp100);
-    
+
     SDL_Surface* temp50 = IMG_Load("bilder\\50mark_mini.png");
     pokerchip50 = SDL_CreateTextureFromSurface(gRenderer, temp50);
-    
+
     SDL_Surface* temp25 = IMG_Load("bilder\\25mark_mini.png");
     pokerchip25 = SDL_CreateTextureFromSurface(gRenderer, temp25);
-    
+
     SDL_Surface* temp5 = IMG_Load("bilder\\5mark_mini.png");
     pokerchip5 = SDL_CreateTextureFromSurface(gRenderer, temp5);
-    
+
     SDL_Surface* temp1 = IMG_Load("bilder\\1mark_mini.png");
     pokerchip1 = SDL_CreateTextureFromSurface(gRenderer, temp1);
-    
-    
+
+
 #else
-    
+
     //Load splash image
     SDL_Surface* table = IMG_Load("bilder/bord9999.0.png");
     btable = SDL_CreateTextureFromSurface(gRenderer, table);
@@ -231,26 +231,26 @@ bool loadMedia()  // Christian
         success = false;
     }
     //load sprite sheet
-    
+
     SDL_Surface* gPlayButton = IMG_Load("bilder/testplay.bmp");
     SDL_SetColorKey( gPlayButton, SDL_TRUE, SDL_MapRGB( gPlayButton->format, 0xFF, 0xFF, 0xFF ) );
     mPlayButton = SDL_CreateTextureFromSurface(gRenderer, gPlayButton);
-    
+
     gSpriteClips[ 0 ].x = 0;
     gSpriteClips[ 0 ].y = 0;
     gSpriteClips[ 0 ].w = 294;
     gSpriteClips[ 0 ].h = 107;
-    
+
     gSpriteClips[ 1 ].x = 0;
     gSpriteClips[ 1 ].y = 107;
     gSpriteClips[ 1 ].w = 294;
     gSpriteClips[ 1 ].h = 107;
-    
+
     gSpriteClips[ 2 ].x = 0;
     gSpriteClips[ 2 ].y = 214;
     gSpriteClips[ 2 ].w = 294;
     gSpriteClips[ 2 ].h = 107;
-    
+
     SDL_Surface* gExitButton = SDL_LoadBMP("bilder/EXIT.bmp");
     SDL_SetColorKey( gExitButton, SDL_TRUE, SDL_MapRGB( gExitButton->format, 0xFF, 0xFF, 0xFF ) );
     exitTexture = SDL_CreateTextureFromSurface(gRenderer, gExitButton);
@@ -262,12 +262,12 @@ bool loadMedia()  // Christian
     /* LADDAR KORTLEK */
     SDL_Surface* cardPic = IMG_Load("bilder/cards.png");
     kort = SDL_CreateTextureFromSurface(gRenderer, cardPic);
-    
+
     int x=1,y=1,w=72,h=96, i;
-    
+
     for(i = 0; i<52; i++)
     {
-        
+
         cardSheet[i].x = x;
         cardSheet[i].y = y;
         cardSheet[i].w = w;
@@ -288,30 +288,30 @@ bool loadMedia()  // Christian
             x = 1;
             y = 295;
         }
-        
+
     }
-    
+
     SDL_Surface* baksida1 = IMG_Load("bilder/baksida.png");
     baksida = SDL_CreateTextureFromSurface(gRenderer, baksida1);
-    
-    
+
+
     //SDL_GetError();
-    
+
     SDL_Surface* temp100 = IMG_Load("bilder/100mark_mini.png");
     pokerchip100 = SDL_CreateTextureFromSurface(gRenderer, temp100);
-    
+
     SDL_Surface* temp50 = IMG_Load("bilder/50mark_mini.png");
     pokerchip50 = SDL_CreateTextureFromSurface(gRenderer, temp50);
-    
+
     SDL_Surface* temp25 = IMG_Load("bilder/25mark_mini.png");
     pokerchip25 = SDL_CreateTextureFromSurface(gRenderer, temp25);
-    
+
     SDL_Surface* temp5 = IMG_Load("bilder/5mark_mini.png");
     pokerchip5 = SDL_CreateTextureFromSurface(gRenderer, temp5);
-    
+
     SDL_Surface* temp1 = IMG_Load("bilder/1mark_mini.png");
     pokerchip1 = SDL_CreateTextureFromSurface(gRenderer, temp1);
-    
+
 #endif
     return success;
 }
@@ -321,19 +321,19 @@ void closeW()  // Christian
     //Deallocate surface
     SDL_FreeSurface( gXOut );
     gXOut = NULL;
-    
+
     //Quit SDL_ttf
     TTF_CloseFont(font);
     TTF_Quit();
-    
+
     //Free the music
     Mix_FreeMusic( gMusic );
     gMusic = NULL;
-    
+
     //Destroy window
     SDL_DestroyWindow( gWindow );
     gWindow = NULL;
-    
+
     //Quit SDL subsystems
     SDL_Quit();
 }
@@ -356,9 +356,9 @@ int ritaText(char word[], SDL_Rect position) // fick det att funka (Christian)
     {
         printf("Error! Kan en rendrera surface! SDL_ttf Error: %s\n", TTF_GetError());
     }
-    
+
     SDL_RenderCopy(gRenderer, pottTexture, NULL, &position);
-    
+
     SDL_GetError();
     return true;
 }
@@ -388,7 +388,7 @@ int reciveFromServer(TCPsocket socket){
             exit(EXIT_FAILURE);
         }
     }
-    
+
     return value;
 }
 
@@ -399,10 +399,10 @@ int IdToVisualCard(int id,Kort kortlek[])
     {
         if(id == kortlek[i].kortnummer)
         {
-            printf("\n");
-            printf("You have card:\n");
-            printf("Suite: %s\n",kortlek[i].farg);
-            printf("Value: %d\n\n",kortlek[i].kortvarde);
+            //printf("\n");
+            //printf("You have card:\n");
+            //printf("Suite: %s\n",kortlek[i].farg);
+            //printf("Value: %d\n\n",kortlek[i].kortvarde);
             if (strstr(kortlek[i].farg, "Hjarter")) {
                 cardNr = 26;
                 cardNr += kortlek[i].kortvarde;
@@ -418,7 +418,7 @@ int IdToVisualCard(int id,Kort kortlek[])
             }
         }
     }
-    printf("Going to return CardNr = %d \n", cardNr-1);
+    //printf("Going to return CardNr = %d \n", cardNr-1);
     return cardNr-1;
 }
 
@@ -428,64 +428,64 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
     {
         if(hit == true)
         {
-            
+
             for (i=0; i<nykort; i++)
             {
                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
-                
+
             }
         }
-        
+
         if(bet == 1 || bet <= 4)
         {
-            
-            
+
+
             for(i = 0; i < bet; i++)
             {
-                
+
                 SDL_RenderCopy(gRenderer, pokerchip1, NULL, &Betcirkel1_1[i]);
-                
+
             }
         }
-        
+
         else if(bet==5 || bet <= 24 )
         {
-            
+
             for(i = 0; i < (bet / 5); i++)
             {
                 SDL_RenderCopy(gRenderer, pokerchip5, NULL, &Betcirkel1_5[i]);
             }
         }
-        
+
         else if(bet==25 || bet <= 49)
         {
-            
+
             for(i = 0; i < (bet / 25); i++)
             {
                 SDL_RenderCopy(gRenderer, pokerchip25, NULL, &Betcirkel1_25[i]);
             }
         }
-        
+
         else if(bet == 50 && bet > 50 || bet <= 99)
         {
-            
+
             for(i = 0; i < (bet / 50); i++)
             {
                 SDL_RenderCopy(gRenderer, pokerchip50, NULL, &Betcirkel1_50[i]);
             }
         }
-        
+
         else if(bet == 100 || bet > 100)
         {
-            
+
             for(i = 0; i < (bet / 100); i++)
             {
                 SDL_RenderCopy(gRenderer, pokerchip100, NULL, &Betcirkel1_100[i]);
             }
         }
     }
-    
-    
+
+
     if(myClientNr == 1)
     {
         if(hit == true)
@@ -493,10 +493,10 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
             for (i=0; i<nykort; i++)
             {
                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table2[i]);
-                
+
             }
         }
-        
+
         if(bet == 1 || bet <= 4)
         {
             for(i = 0; i < bet; i++)
@@ -504,7 +504,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip1, NULL, &Betcirkel2_1[i]);
             }
         }
-        
+
         else if(bet ==5 || bet <= 24)
         {
             for(i = 0; i<(bet/5); i++)
@@ -512,7 +512,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip5, NULL, &Betcirkel2_5[i]);
             }
         }
-        
+
         else if(bet == 25 || bet <= 49)
         {
             for(i = 0; i <(bet/25); i++)
@@ -520,7 +520,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip25, NULL, &Betcirkel2_25[i]);
             }
         }
-        
+
         else if(bet == 50 || bet <= 99)
         {
             for(i = 0; i < (bet/50); i++)
@@ -528,7 +528,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip50, NULL, &Betcirkel2_50[i]);
             }
         }
-        
+
         else if(bet == 100 || bet > 100)
         {
             for(i = 0; i < (bet / 100); i++)
@@ -536,9 +536,9 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip100, NULL, &Betcirkel2_100[i]);
             }
         }
-        
+
     }
-    
+
     if(myClientNr == 2)
     {
         if(hit == true)
@@ -546,18 +546,18 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
             for (i=0; i<nykort; i++)
             {
                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table3[i]);
-                
+
             }
         }
         if(bet == 1 || bet <= 4)
         {
-            
+
             for(i = 0; i < bet; i++)
             {
                 SDL_RenderCopy(gRenderer, pokerchip1, NULL, &Betcirkel3_1[i]);
             }
         }
-        
+
         else if(bet == 5 || bet <= 24)
         {
             for(i = 0; i < (bet/5); i++)
@@ -565,7 +565,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip5, NULL, &Betcirkel3_5[i]);
             }
         }
-        
+
         else if(bet == 25 || bet <= 49)
         {
             for(i = 0; i < (bet/25); i++)
@@ -573,7 +573,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip25, NULL, &Betcirkel3_25[i]);
             }
         }
-        
+
         else if(bet == 50  || bet <= 99)
         {
             for(i = 0; i < (bet/50); i++)
@@ -581,7 +581,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip50, NULL, &Betcirkel3_50[i]);
             }
         }
-        
+
         else if(bet == 100 || bet > 100)
         {
             for(i = 0; i < (bet/100); i++)
@@ -589,11 +589,11 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip100, NULL, &Betcirkel3_100[i]);
             }
         }
-        
+
     }
-    
-    
-    
+
+
+
     if(myClientNr == 3)
     {
         if(hit == true)
@@ -601,7 +601,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
             for (i=0; i<nykort; i++)
             {
                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table4[i]);
-                
+
             }
         }
         if(bet == 1 || bet <= 4)
@@ -611,7 +611,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip1, NULL, &Betcirkel4_1[i]);
             }
         }
-        
+
         else if(bet == 5 || bet <= 24)
         {
             for(i = 0; i < (bet/5); i++)
@@ -619,7 +619,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip5, NULL, &Betcirkel4_5[i]);
             }
         }
-        
+
         else if(bet == 25 || bet <= 49)
         {
             for(i = 0; i < (bet/25); i++)
@@ -627,7 +627,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip25, NULL, &Betcirkel4_25[i]);
             }
         }
-        
+
         else if(bet == 50 || bet <= 99)
         {
             for(i = 0; i < (bet/50); i++)
@@ -635,7 +635,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip50, NULL, &Betcirkel4_50[i]);
             }
         }
-        
+
         else if(bet == 100 || bet > 100)
         {
             for(i = 0; i < (bet/100); i++)
@@ -644,7 +644,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
             }
         }
     }
-    
+
     if(myClientNr == 4)
     {
         if(hit == true)
@@ -652,10 +652,10 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
             for (i=0; i<nykort; i++)
             {
                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table5[i]);
-                
+
             }
         }
-        
+
         if(bet == 1 || bet <= 4)
         {
             for(i = 0; i < bet; i++)
@@ -663,7 +663,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip1, NULL, &Betcirkel5_1[i]);
             }
         }
-        
+
         else if(bet == 5 || bet <= 24)
         {
             for(i = 0; i < (bet/5); i++)
@@ -671,7 +671,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip5, NULL, &Betcirkel5_5[i]);
             }
         }
-        
+
         else if(bet == 25 || bet <= 49)
         {
             for(i = 0; i < (bet/25); i++)
@@ -679,7 +679,7 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
                 SDL_RenderCopy(gRenderer, pokerchip25, NULL, &Betcirkel5_25[i]);
             }
         }
-        
+
         else if(bet == 50 || bet <= 99)
         {
             for(i = 0; i < (bet/50); i++)
@@ -703,14 +703,14 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
             for (i=0; i<nykort; i++)
             {
                 SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &tableDealer[i]);
-                
+
             }
         }else{
             SDL_RenderCopy(gRenderer, baksida, NULL, &tableDealer[0]);
         }
     }
     //SDL_RenderPresent(gRenderer);
-    
+
 }
 
 void stringToArray(char sendstring[])
@@ -718,7 +718,7 @@ void stringToArray(char sendstring[])
     char temp2[4];
     int i = 0;
     int j = 0,n=0,k=0,l=0;
-    
+
     if(sendstring[n]=='#')
     {
         n++;
@@ -740,7 +740,7 @@ void stringToArray(char sendstring[])
                 }
                 j++;
             }
-            
+
             if (j == MAXCARDS) {
                 j = 0;
                 i++;
@@ -748,4 +748,32 @@ void stringToArray(char sendstring[])
         }
     }else printf("STRANG TRASIG\n");
     SDL_Delay(100);
+}
+
+int whoWon(int playerValue, int dealerValue, int bet, bool blackjack){
+    int won=0;
+
+    printf("bet = %d\n", bet);
+    if (blackjack){
+        printf("Won = %d\n", (won = bet * 3));
+        return (won = bet * 3); // Hur många gånger pengarna får man vid blackjack?
+    }
+
+    if (dealerValue < 21) {
+        if (playerValue < 21) {
+            if (playerValue > dealerValue) {
+                won = bet * 2;
+            }else if (playerValue == dealerValue){
+                won = bet;
+            }
+        }
+    }else won = bet*2;
+
+    if (playerValue>21 || (dealerValue > playerValue && dealerValue < 21 )) {
+        won=0;
+    }
+
+    printf("Won = %d\n", won);
+    blackjack=false;
+    return won;
 }
