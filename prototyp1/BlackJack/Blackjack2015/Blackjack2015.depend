@@ -139,7 +139,11 @@
 1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\coordinates.h
 	<stdio.h>
 
-1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
+1433014425 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
+	<stdio.h>
+	<stdbool.h>
+	"multiOS.h"
+	"gamelogic.h"
 
 1432898038 gin/master
 	<stdio.h>
@@ -201,12 +205,19 @@
 	<stdio.h>
 	<stdbool.h>
 
-1432746337 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
+1433095258 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
 	"functions.h"
 	"gamelogic.h"
 
-1432746337 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
+1433014425 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
 	"gamelogic.h"
 
-1432898038 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
+1433014425 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
+	<stdio.h>
+	<stdbool.h>
+	<string.h>
+	"multiOS.h"
+	"gamelogic.h"
+	"functions.h"
+	"coordinates.h"
 

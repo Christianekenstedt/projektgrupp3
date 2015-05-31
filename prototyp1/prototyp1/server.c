@@ -19,7 +19,7 @@ int freeslots[MAXCLIENTS]={0};
 bool connected[MAXCLIENTS];
 bool endround = false;
 
-int function(sinfo* incsocket);
+int function(void* incsocket);
 void gameInit(Kort kortlek[]);
 void PlayerCardInfo(int option);
 void arrayToStringSend(char sendstring[]);
@@ -278,9 +278,9 @@ int updateFunction()
 
 
 
-int function(sinfo* incsocket)
+int function(void* incsocket)
 {
-    sinfo* inc = (sinfo*) incsocket;
+    sinfo* inc = (void*) incsocket;
     char buffer2[512];
     int value=0,var=1, temp=0;
     bool lose = false;
