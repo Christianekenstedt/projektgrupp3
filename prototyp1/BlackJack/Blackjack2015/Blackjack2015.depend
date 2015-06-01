@@ -6,7 +6,7 @@
 1432743247 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\coordinates.h
 	<stdio.h>
 
-1433004226 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
+1433151952 d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
@@ -44,14 +44,14 @@
 	<stdio.h>
 	<stdbool.h>
 
-1433004153 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
+1433154323 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
 	"functions.h"
 	"gamelogic.h"
 
 1433004193 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
 	"gamelogic.h"
 
-1433008479 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
+1433154541 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
 	<stdio.h>
 	<stdbool.h>
 	<string.h>

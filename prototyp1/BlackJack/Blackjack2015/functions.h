@@ -88,8 +88,8 @@ int sendToServer(char command[], TCPsocket socket);
 int reciveFromServer(TCPsocket socket);
 int IdToVisualCard(int id,Kort kortlek[]);
 void initiera_kortleken(Kort kortleken[]);
-void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int bordskort[]);
+void playerPosition(int myClientNr, int bet, int hit, int nykort, bool dubbel, int money, int stand, int bordskort[]);
 void stringToArray(char sendstring[]);
-int whoWon(int playerValue, int dealerValue, int bet, bool blackjack);
+int whoWon(int playerValue, int dealerValue, int bet, bool blackjack, bool dubbel);
 
 #endif /* defined(__Blackjack__functions__) */

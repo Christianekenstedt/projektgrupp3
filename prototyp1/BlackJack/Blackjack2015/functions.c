@@ -422,15 +422,20 @@ int IdToVisualCard(int id,Kort kortlek[])
     return cardNr-1;
 }
 
-void playerPosition(int myClientNr, int bet, int hit, int nykort, /*int dubbel,*/ int money, int bordskort[]){
+void playerPosition(int myClientNr, int bet, int hit, int nykort, bool dubbel, int money, int stand, int bordskort[]){
     int i;
     if(myClientNr == 0)
     {
-        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
-           {
-              bet = (bet*2);
-              money = (money - bet);
-           }*/
+        if(dubbel == true && ((tableInfo[0][0] + tableInfo[0][1]) >= 7 && (tableInfo[0][0] + tableInfo[0][1]) <= 11))
+        {
+            money = (money - bet);
+            bet = (bet*2);
+            for(i=0; i<nykort; i++)
+            {
+                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+            }
+            stand = true;
+        }
 
         if(hit == true)
         {
@@ -495,11 +500,16 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, /*int dubbel,*
     if(myClientNr == 1)
     {
 
-        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
-           {
-              bet = (bet*2);
-              money = (money - bet);
-           }*/
+        if(dubbel == true && ((tableInfo[1][0] + tableInfo[1][1]) >= 7 && (tableInfo[1][0] + tableInfo[1][1]) <= 11))
+        {
+            money = (money - bet);
+            bet = (bet*2);
+            for(i=0; i<nykort; i++)
+            {
+                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+            }
+            stand = true;
+        }
 
         if(hit == true)
         {
@@ -555,11 +565,16 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, /*int dubbel,*
     if(myClientNr == 2)
     {
 
-        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
-           {
-              bet = (bet*2);
-              money = (money - bet);
-           }*/
+        if(dubbel == true && ((tableInfo[2][0] + tableInfo[2][1]) >= 7 && (tableInfo[2][0] + tableInfo[2][1]) <= 11))
+        {
+            money = (money - bet);
+            bet = (bet*2);
+            for(i=0; i<nykort; i++)
+            {
+                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+            }
+            stand = true;
+        }
 
         if(hit == true)
         {
@@ -617,11 +632,16 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, /*int dubbel,*
     if(myClientNr == 3)
     {
 
-        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
-           {
-              bet = (bet*2);
-              money = (money - bet);
-           }*/
+        if(dubbel == true && ((tableInfo[3][0] + tableInfo[3][1]) >= 7 && (tableInfo[3][0] + tableInfo[3][1]) <= 11))
+        {
+            money = (money - bet);
+            bet = (bet*2);
+            for(i=0; i<nykort; i++)
+            {
+                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+            }
+            stand = true;
+        }
 
         if(hit == true)
         {
@@ -675,11 +695,16 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, /*int dubbel,*
     if(myClientNr == 4)
     {
 
-        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
-           {
-              bet = (bet*2);
-              money = (money - bet);
-           }*/
+        if(dubbel == true && ((tableInfo[4][0] + tableInfo[4][1]) >= 7 && (tableInfo[4][0] + tableInfo[4][1]) <= 11))
+        {
+            money = (money - bet);
+            bet = (bet*2);
+            for(i=0; i<nykort; i++)
+            {
+                SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+            }
+            stand = true;
+        }
 
         if(hit == true)
         {
@@ -784,7 +809,7 @@ void stringToArray(char sendstring[])
     SDL_Delay(100);
 }
 
-int whoWon(int playerValue, int dealerValue, int bet, bool blackjack){
+int whoWon(int playerValue, int dealerValue, int bet, bool blackjack, bool dubbel){
     int won=0;
 
     printf("bet = %d\n", bet);
@@ -801,7 +826,13 @@ int whoWon(int playerValue, int dealerValue, int bet, bool blackjack){
                 won = bet;
             }
         }
-    }else won = bet*2;
+    }
+    else if(dubbel == true)
+    {
+        won = bet*4;
+    }
+    else won = bet*2;
+
 
     if (playerValue>21 || (dealerValue > playerValue && dealerValue < 21 )) {
         won=0;
