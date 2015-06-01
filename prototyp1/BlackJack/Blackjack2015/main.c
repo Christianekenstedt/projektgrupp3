@@ -917,6 +917,7 @@ int updateRender(int clientNr, int kortantal, int bordskort[]){
                 }
             }
         }else if (clientNr == 0) {
+
             for(j=0;j<MAXCARDS;j++)
             {
                 if(tableInfo[0][j] > 0)

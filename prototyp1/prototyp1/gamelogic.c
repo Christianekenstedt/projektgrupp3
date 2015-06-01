@@ -179,7 +179,7 @@ int dra_ID(Kort kortlek[])
 int IdToValue(int id, Kort kortlek[])
 {
     int value = 0;//kortvärdet som ska retuneras
-    int i = 0;
+    int i = 0, j = 0;
     for(i = 0;i<ANTALKORT;i++)
     {
         if(id == kortlek[i].kortnummer)
@@ -207,7 +207,7 @@ void IdToCard(int id,Kort kortlek[],int PoD)
                 printf("DEALER have card:\n");
 
             }else printf("You have card:\n");
-            
+
             printf("Suite: %s\n",kortlek[i].farg);
             printf("Value: %d\n",kortlek[i].kortvarde);
             break;
