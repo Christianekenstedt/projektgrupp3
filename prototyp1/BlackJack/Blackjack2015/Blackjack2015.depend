@@ -44,14 +44,14 @@
 	<stdio.h>
 	<stdbool.h>
 
-1433154323 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
+1433169282 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
 	"functions.h"
 	"gamelogic.h"
 
-1433004193 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
+1433189195 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
 	"gamelogic.h"
 
-1433167827 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
+1433191164 source:d:\kth\projektarbete_År1\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
 	<stdio.h>
 	<stdbool.h>
 	<string.h>

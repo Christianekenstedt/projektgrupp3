@@ -842,6 +842,40 @@ int reciveInfo(void* info){
     return 0;
 }
 
+/*int updateRender(int clientNr, int kortantal, int bordskort[]){
+    int i=0;
+    if (clientNr == 0) {
+        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 0
+        {
+            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+
+        }
+    }else if (clientNr == 1) {
+        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 1
+        {
+            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table2[i]);
+
+        }
+    }else if (clientNr == 2) {
+        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 2
+        {
+            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table3[i]);
+
+        }
+    }else if (clientNr == 3) {
+        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 3
+        {
+            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table4[i]);
+
+        }
+    }else if (clientNr == 4) {
+        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 4
+        {
+            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table5[i]);
+
+        }
+    }*/
+
 int updateRender(int clientNr, int kortantal, int bordskort[]){
     int i = 0,j=0;
     for(clientNr=MAXCLIENTS-1;clientNr>0;clientNr--)
@@ -936,5 +970,6 @@ int updateRender(int clientNr, int kortantal, int bordskort[]){
             }
         }
     }
+    //SDL_RenderPresent(gRenderer);
     return 0;
 }
