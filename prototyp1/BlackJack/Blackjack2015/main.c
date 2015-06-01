@@ -514,8 +514,8 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                         }
                         else if(SPLITBUTTON && window == TABLE)
                         {
-                            system("./prototyp1");
-                            quit = true;
+                            system("start Chattclient.exe");
+                            //quit = true;
                         }
                         else if(M1 && window == TABLE)
                         {
@@ -831,36 +831,96 @@ int reciveInfo(void* info){
 }
 
 int updateRender(int clientNr, int kortantal, int bordskort[]){
-    int i;
-    if (clientNr == 0) {
-        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 0
+    int i = 0,j=0;
+    for(clientNr=MAXCLIENTS-1;clientNr>0;clientNr--)
+    {
+        printf("clientNR4: %d\n", clientNr);
+        if (clientNr == 4)
         {
-            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+            for(j=0;j<MAXCARDS;j++)
+            {
+                if(tableInfo[4][j] > 0)
+                {
+                    for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 0
+                    {
+                        SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table5[i]);
 
-        }
-    }else if (clientNr == 1) {
-        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 1
-        {
-            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table2[i]);
+                    }
+                }
+                else if(tableInfo[4][j] == -1)
+                {
+                    break;
+                }
+            }
 
-        }
-    }else if (clientNr == 2) {
-        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 2
-        {
-            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table3[i]);
+        }else if (clientNr == 3) {
+            for(j=0;j<MAXCARDS;j++)
+            {
+                if(tableInfo[3][j] > 0)
+                {
+                    for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 0
+                    {
+                                printf("clientNR1: %d\n", clientNr);
+                        SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table4[i]);
 
-        }
-    }else if (clientNr == 3) {
-        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 3
-        {
-            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table4[i]);
+                    }
+                }
+                else if(tableInfo[3][j] == -1)
+                {
+                    break;
+                }
+            }
+        }else if (clientNr == 2) {
+            for(j=0;j<MAXCARDS;j++)
+            {
+                if(tableInfo[2][j] > 0)
+                {
+                    for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 0
+                    {
+                                printf("clientNR2: %d\n", clientNr);
+                        SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table3[i]);
 
-        }
-    }else if (clientNr == 4) {
-        for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 4
-        {
-            SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table5[i]);
+                    }
+                }
+                else if(tableInfo[2][j] == -1)
+                {
+                    break;
+                }
+            }
+        }else if (clientNr == 1) {
+            for(j=0;j<MAXCARDS;j++)
+            {
+                if(tableInfo[1][j] > 0)
+                {
+                    for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 0
+                    {
+                                printf("clientNR3: %d\n", clientNr);
+                        SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table2[i]);
 
+                    }
+                }
+                else if(tableInfo[1][j] == -1)
+                {
+                    break;
+                }
+            }
+        }else if (clientNr == 0) {
+            for(j=0;j<MAXCARDS;j++)
+            {
+                if(tableInfo[0][j] > 0)
+                {
+                    for (i=0; i<kortantal; i++) // FUNGERAR ENDAST FÖR SPELARE 0
+                    {
+                                printf("clientNR4: %d\n", clientNr);
+                        SDL_RenderCopy(gRenderer, kort, &cardSheet[bordskort[i]], &table1[i]);
+
+                    }
+                }
+                else if(tableInfo[0][j] == -1)
+                {
+                    break;
+                }
+            }
         }
     }
     return 0;
