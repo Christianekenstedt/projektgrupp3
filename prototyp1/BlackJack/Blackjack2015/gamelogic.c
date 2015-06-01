@@ -7,6 +7,9 @@
 //
 
 #include "gamelogic.h"
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 int randomfunktio(int minimum, int maximum)
 {
@@ -185,7 +188,7 @@ int IdToValue(int id, Kort kortlek[])
     {
         if(id == (13*j))
         {
-            Kort[id].kortvarde = 11;
+            kortlek[id].kortvarde = 11;
         }
     }
     return value;

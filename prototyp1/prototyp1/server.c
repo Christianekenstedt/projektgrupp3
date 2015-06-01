@@ -29,9 +29,9 @@ int main (int argc, char *argv[])
 {
     TCPsocket Listensock = NULL;
     IPaddress ip;
-    sinfo clientvalue[MAXCLIENTS] ={NULL, NULL, 0, NULL, 0, 0, 0}; //bör initsiras
+    sinfo clientvalue[MAXCLIENTS] = {{0}}; //bör initsiras
     int quit = 0, ClientNumber=0;
-    int i, j;
+    int i = 0, j = 0;
     bool engang = true;
     int dealervalue = 0;
     int temp = 0, plats=0;
@@ -222,6 +222,8 @@ int updateFunction()
     int j = 0;
     char sendstring[1024];
 
+    SDL_Delay(3000);
+
     if(SDLNet_ResolveHost(&ip, NULL, 10001) < 0)
     {
         fprintf(stderr, "SDLNet_ResolveHost: %s\n", SDLNet_GetError());
@@ -246,7 +248,6 @@ int updateFunction()
         {
             if(freeslots[i] == 1 && !connected[i])
             {
-
                 if((updatesocket[i] = SDLNet_TCP_Accept(listen))<0)
                 {
                     fprintf(stderr, "SDLNet_TCP_Accept: %s\n", SDLNet_GetError());
@@ -276,11 +277,9 @@ int updateFunction()
     return 0;
 }
 
-
-
 int function(void* incsocket)
 {
-    sinfo* inc = (void*) incsocket;
+    sinfo* inc = (sinfo*) incsocket;
     char buffer2[512];
     int value=0,var=1, temp=0;
     bool lose = false;
@@ -425,6 +424,25 @@ int function(void* incsocket)
                     }
                     printf("Client [%d] has a card value of %d\n", inc->clientnumber, inc->clientvalue);
                 }
+                else if (strstr(buffer2, "dubbel"))
+                {
+                    ID = dra_ID(kortlek);
+                    printf("ID: %d\n", ID);
+
+                    player_card[inc->clientnumber][temp] = ID; //lägger in kortet till 2D arrayen
+                    temp++;
+                    IdToCard(ID,kortlek,0); //visar på skärmen en spelares spelbord
+                    inc->clientvalue = inc->clientvalue + IdToValue(ID,kortlek);
+
+                    SDL_Delay(100);
+
+                    playerturn--;
+                    inc->ready = 0;
+                    temp=0;
+                    inc->clientvalue = 0;
+                    inc->recive = 1;
+                    printf("Client [%d] has a card value of %d\n", inc->clientnumber, inc->clientvalue);
+                }
                 else
                 {
                     printf("Client [%d] say: %s\n", inc->clientnumber, buffer2);
@@ -460,7 +478,7 @@ int function(void* incsocket)
 
 void gameInit(Kort kortlek[]){
     initiera_kortleken(kortlek);
-    //blanda_kortleken(kortlek);
+    blanda_kortleken(kortlek);
     PlayerCardInfo(0);
 }
 

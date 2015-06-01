@@ -17,8 +17,8 @@
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_mixer/SDL_mixer.h>
 #include <SDL2_ttf/SDL_ttf.h>
-#endif
-/* Windows*/
+//#endif
+/* Windows
 #ifdef _WIN32
 #include "SDL.h"
 #include "SDL_net.h"
@@ -28,8 +28,9 @@
 #include "SDL_timer.h"
 #include "SDL_thread.h"
 #endif
-/* LINUX */
-#ifdef __linux__
+/* LINUX
+#ifdef __linux__*/
+#else
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_net.h"
 #include "SDL2/SDL_image.h"
@@ -44,6 +45,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+
 
 
 #endif
