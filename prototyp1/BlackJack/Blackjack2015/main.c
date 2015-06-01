@@ -41,7 +41,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
 
     char  command[512],command2[512];
     int window = 0, frame = 0, cardFrame = 0, bet = 0, myTurn = 0, money = 500, x=0, y=0, id=-1;
-    int bordskort[11]= {0}, nykort=0, quit1, j, i;
+    int bordskort[11]= {0}, nykort=0, quit1, k, j, i;
     bool hit = false, quit = false, klar = false, engang = true, endround = false, dubbel = false, dubbelcheck = false, stand = false, blackjack = false, betround = true;
     recive.myClientNr=0;
     char red[10];
@@ -713,6 +713,18 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                     dubbel = false;
 
                 }else if (myValue > 21) {
+
+                    for(j=0;j<kortantal;j++)
+                    {
+                        for(k=0;k<ANTALKORT;k++)
+                        {
+                            if(id == (13*j))
+                            {
+                                myValue = (myValue-10);
+                            }
+                        }
+                    }
+
                     SDL_Delay(10);
                     endround = true;
                 }else if (myValue == 21){

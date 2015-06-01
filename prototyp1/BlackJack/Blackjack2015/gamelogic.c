@@ -167,7 +167,7 @@ int dra_ID(Kort kortlek[])
 int IdToValue(int id, Kort kortlek[])
 {
     int value = 0;//kortvärdet som ska retuneras
-    int i = 0;
+    int i = 0, j=0;
     for(i = 0;i<ANTALKORT;i++)
     {
         if(id == kortlek[i].kortnummer)
@@ -179,6 +179,14 @@ int IdToValue(int id, Kort kortlek[])
     if(value > 10)
     {
         value = 10;
+    }
+
+    for(j=0;j<ANTALKORT;j++)
+    {
+        if(id == (13*j))
+        {
+            Kort[id].kortvarde = 11;
+        }
     }
     return value;
 }
