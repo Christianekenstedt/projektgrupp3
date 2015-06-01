@@ -394,6 +394,7 @@ int main( int argc, char* args[] )                  // Christian Ekenstedt
                         }
                         else if(DOUBLEBUTTON && window == TABLE)
                         {
+                            //dubbel = true;
                               system("./prototyp1");
                         }
                         else if(SPLITBUTTON && window == TABLE)

@@ -422,10 +422,16 @@ int IdToVisualCard(int id,Kort kortlek[])
     return cardNr-1;
 }
 
-void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int bordskort[]){
+void playerPosition(int myClientNr, int bet, int hit, int nykort, /*int dubbel,*/ int money, int bordskort[]){
     int i;
     if(myClientNr == 0)
     {
+        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
+           {
+              bet = (bet*2);
+              money = (money - bet);
+           }*/
+
         if(hit == true)
         {
 
@@ -488,6 +494,13 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
 
     if(myClientNr == 1)
     {
+
+        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
+           {
+              bet = (bet*2);
+              money = (money - bet);
+           }*/
+
         if(hit == true)
         {
             for (i=0; i<nykort; i++)
@@ -541,6 +554,13 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
 
     if(myClientNr == 2)
     {
+
+        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
+           {
+              bet = (bet*2);
+              money = (money - bet);
+           }*/
+
         if(hit == true)
         {
             for (i=0; i<nykort; i++)
@@ -596,6 +616,13 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
 
     if(myClientNr == 3)
     {
+
+        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
+           {
+              bet = (bet*2);
+              money = (money - bet);
+           }*/
+
         if(hit == true)
         {
             for (i=0; i<nykort; i++)
@@ -647,6 +674,13 @@ void playerPosition(int myClientNr, int bet, int hit, int nykort, int money, int
 
     if(myClientNr == 4)
     {
+
+        /*if(dubbel == true && (tableInfo[0][0] == tableInfo[0][1])
+           {
+              bet = (bet*2);
+              money = (money - bet);
+           }*/
+
         if(hit == true)
         {
             for (i=0; i<nykort; i++)
