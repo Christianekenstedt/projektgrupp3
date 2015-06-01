@@ -139,7 +139,7 @@
 1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\coordinates.h
 	<stdio.h>
 
-1433184734 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
+1433014425 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.h
 	<stdio.h>
 	<stdbool.h>
 	"multiOS.h"
@@ -186,33 +186,7 @@
 
 1432756279 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\multios.h
 
-1433184980 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\multios.h
-	<SDL2/SDL.h>
-	<SDL2/SDL_timer.h>
-	<SDL2/SDL_thread.h>
-	<SDL2_net/SDL_net.h>
-	<SDL2_image/SDL_image.h>
-	<SDL2_mixer/SDL_mixer.h>
-	<SDL2_ttf/SDL_ttf.h>
-	"SDL.h"
-	"SDL_net.h"
-	"SDL_image.h"
-	"SDL_mixer.h"
-	"SDL_ttf.h"
-	"SDL_timer.h"
-	"SDL_thread.h"
-	"SDL2/SDL.h"
-	"SDL2/SDL_net.h"
-	"SDL2/SDL_image.h"
-	"SDL2/SDL_mixer.h"
-	"SDL2/SDL_ttf.h"
-	"SDL2/SDL_timer.h"
-	"SDL2/SDL_thread.h"
-	<time.h>
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<stdbool.h>
+1432746337 c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\multios.h
 
 1432756279 c:\users\fadi\dela\projekt1\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.h
 	<stdio.h>
@@ -231,17 +205,14 @@
 	<stdio.h>
 	<stdbool.h>
 
-1433184734 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
+1433095258 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\functions.c
 	"functions.h"
 	"gamelogic.h"
 
-1433185167 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
+1433014425 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\gamelogic.c
 	"gamelogic.h"
-	<string.h>
-	<stdlib.h>
-	<time.h>
 
-1433184824 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
+1433014425 source:c:\users\fredrik\documents\projekt och internetteknik\projektgrupp3\prototyp1\blackjack\blackjack2015\main.c
 	<stdio.h>
 	<stdbool.h>
 	<string.h>
